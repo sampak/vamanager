@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Users } from '@prisma/client';
 import PrismaUserToUser from 'src/adapters/prismaUserToUser';
 import { PrismaService } from 'src/prisma.service';
@@ -16,7 +16,7 @@ export class UserService {
       const user = PrismaUserToUser(prismaUser);
       return user;
     } catch (e) {
-      throw new BadRequestException('NOT_FOUND');
+      throw new UnauthorizedException('');
     }
   }
 }
