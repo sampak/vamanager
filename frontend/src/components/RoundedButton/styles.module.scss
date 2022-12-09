@@ -1,0 +1,78 @@
+@import 'src/styles/colors.scss';
+
+.button {
+  position: relative;
+  outline: none;
+  border: none;
+  padding: 8px;
+  width: 100%;
+  background: $lightButtonColor;
+  color: $fontColor;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 24px;
+
+  .shadow {
+    display: none;
+  }
+
+  &:hover {
+    background: $activeButtonColor;
+  }
+}
+
+.outline {
+  background: none;
+  border: 1px solid $lightButtonColor;
+  transition: background 1s;
+
+  .shadow {
+    z-index: 0;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0%;
+    height: 0%;
+    opacity: 0;
+    background: $lightButtonColor;
+    border-radius: 100%;
+    transition: width 1s, height 1s, opacity 1s;
+    transform: translate(-50%, -50%);
+  }
+
+  &:hover {
+    .shadow {
+      width: 200%;
+      height: 400%;
+      opacity: 1;
+    }
+  }
+}
+
+.children {
+  position: relative;
+  z-index: 5;
+}
+
+.disabled {
+  background: $disabledColor !important;
+  cursor: not-allowed;
+}
+
+.loadingAnim {
+  animation-name: loading;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

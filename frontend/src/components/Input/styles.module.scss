@@ -1,0 +1,51 @@
+@import 'src/styles/colors.scss';
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: $mainBackgroundColor;
+}
+
+.label {
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: $secondaryFontColor;
+}
+
+.inputWrapper {
+  display: flex;
+  width: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border: solid 1px $bodyFontColor;
+  border-radius: 6px;
+  color: $bodyFontColor;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.input {
+  outline: none;
+  border: none;
+  width: 100%;
+  height: 100%;
+  background: none;
+
+  &::placeholder {
+    color: $bodyFontColor;
+  }
+}
+
+.error {
+  color: $errorColor !important;
+  margin-top: 5px !important;
+  font-family: RobotoBold !important;
+  font-size: 13px !important;
+}

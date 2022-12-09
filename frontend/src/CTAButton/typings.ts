@@ -1,7 +1,6 @@
 export type { FC } from 'react';
-
 export interface Props {
+  text: string;
   className?: string;
-  children: JSX.Element | string;
-  black?: boolean;
+  onClick?: () => void;
 }

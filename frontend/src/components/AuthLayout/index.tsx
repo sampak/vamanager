@@ -1,14 +1,14 @@
 import { FC, Props } from './typings';
 import styles from './styles.module.scss';
-import Menu from 'components/Menu';
+import Logo from 'components/Logo';
 
-const HomeLayout: FC<Props> = ({ children }) => {
+const AuthLayout: FC<Props> = ({ children }) => {
   return (
-    <>
-      <Menu />
-      {children}
-    </>
+    <div className={styles.layout}>
+      <Logo size={32} className={styles.logo} />
+      <div className={styles.card}>{children}</div>
+    </div>
   );
 };
 
-export default HomeLayout;
+export default AuthLayout;

@@ -1,7 +1,9 @@
 export type { FC } from 'react';
 
 export interface Props {
-  className?: string;
   children: JSX.Element | string;
-  black?: boolean;
+  className?: string;
+  outline?: boolean;
+  disabled?: boolean;
+  isLoading?: boolean;
 }

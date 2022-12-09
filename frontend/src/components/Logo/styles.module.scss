@@ -1,0 +1,15 @@
+@import 'src/styles/colors.scss';
+
+.logo {
+  font-size: 48px;
+  user-select: none;
+}
+
+.color {
+  color: $logoColor;
+}
+
+.badge {
+  margin-left: 8px;
+  font-size: 8px;
+}
