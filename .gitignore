@@ -1,2 +1,3 @@
 ﻿node_modules
 shared/dist
+backend/.env

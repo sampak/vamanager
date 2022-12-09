@@ -1,7 +1,7 @@
 export const config = {
-  saltRounds: 10,
+  saltRounds: process.env.SALT_ROUNDS,
   jwt: {
-    secret: 'aaaaabbbbbccccc',
-    expiresIn: '3d',
+    secret: process.env.JWT_SECRET ?? 'xxxx',
+    expiresIn: process.env.JWT_EXPIRES_IN ?? '3d',
   },
 };
