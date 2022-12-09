@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id              String         @id @default(uuid())   
+  firstName             String  
+  lastName         String     
+  email String    @unique
+  password String 
+  allowShowLastName Boolean?       @default(false)
+  status      users_status @default(ACTIVE)
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+
+enum users_status {
+  ACTIVE
+  NON_ACTIVE
+  SUSPENDED
+}
