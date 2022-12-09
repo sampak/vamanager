@@ -1,0 +1,22 @@
+{
+  "name": "airline_manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/sampak.dev/airline-manager.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/sampak.dev/airline-manager/issues"
+  },
+  "homepage": "https://gitlab.com/sampak.dev/airline-manager#readme",
+  "dependencies": {
+    "class-validator": "^0.13.2"
+  }
+}
