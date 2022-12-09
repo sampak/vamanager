@@ -1,0 +1,26 @@
+@import 'src/styles/colors.scss';
+
+.wrapper {
+  margin: auto;
+  width: 75%;
+}
+
+.title {
+  margin-left: 64px;
+  margin-top: 64px;
+  font-size: 32px;
+}
+
+.subTitle {
+  margin-left: 64px;
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+.step {
+  svg {
+    circle {
+      fill: $logoColor;
+    }
+  }
+}

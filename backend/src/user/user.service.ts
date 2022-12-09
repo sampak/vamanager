@@ -14,6 +14,7 @@ export class UserService {
       });
 
       const user = PrismaUserToUser(prismaUser);
+      user.showOnbording = true;
       return user;
     } catch (e) {
       throw new UnauthorizedException('');

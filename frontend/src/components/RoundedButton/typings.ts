@@ -6,4 +6,5 @@ export interface Props {
   outline?: boolean;
   disabled?: boolean;
   isLoading?: boolean;
+  onClick?: () => void;
 }

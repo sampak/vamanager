@@ -1,6 +1,7 @@
 @import 'src/styles/colors.scss';
 
 .content {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -17,29 +18,40 @@
   width: 100%;
   padding-top: 8px;
   padding-bottom: 8px;
+
   border: solid 1px $bodyFontColor;
   border-radius: 6px;
   background: $mainBackgroundColor;
   color: $bodyFontColor;
+  color: $secondaryFontColor;
+  cursor: pointer;
+  user-select: none;
+  span {
+    padding-left: 12px;
+  }
 }
 
-.icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-left: 12px;
-  padding-right: 12px;
-}
-
-.input {
-  outline: none;
-  border: none;
+.options {
+  position: absolute;
   width: 100%;
-  height: 100%;
-  background: none;
+  user-select: none;
+  top: 84px;
+  border-radius: 8px;
+  max-height: 512px;
+  overflow: auto;
+  background: $mainBackgroundColor;
+  box-shadow: $shadowColor 0px 8px 32px;
+}
 
-  &::placeholder {
-    color: $bodyFontColor;
+.option {
+  padding-left: 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-family: RobotoRegular;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(200, 200, 200, 0.3);
   }
 }
 

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const RoundedButton: FC<Props> = ({
+  onClick,
   children,
   className,
   outline = false,
@@ -16,6 +17,7 @@ const RoundedButton: FC<Props> = ({
 
   return (
     <button
+      onClick={onClick}
       className={classNames(
         styles.button,
         outlineStyle,

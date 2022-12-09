@@ -11,11 +11,14 @@ import { useTranslation } from 'react-i18next';
 import CTAButton from 'CTAButton';
 import { useNavigate } from 'react-router-dom';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
+import authService from 'api/authService';
+import { setToken } from 'api/user';
 
 const SignIn: FC = () => {
   const navigate = useNavigate();
   const translation = useTranslation();
   const t = (key: string) => translation.t(`signIn.${key}`);
+  const { mutate: signIn, isLoading } = authService.useLogin();
 
   const initialValues = {
     email: '',
@@ -25,7 +28,13 @@ const SignIn: FC = () => {
   const handleSubmit = (e, values) => {
     e.preventDefault();
 
-    console.log('submitted');
+    signIn(values, {
+      onSuccess: (response) => {
+        setToken(response.data);
+        navigate('/workspace/1');
+      },
+      onError: (e) => {},
+    });
   };
 
   const handleSignUp = () => navigate('/auth/signup');
@@ -42,7 +51,7 @@ const SignIn: FC = () => {
         validateOnMount
         isInitialValid={false}
       >
-        {({ values, touched, handleChange, handleBlur, isValid }) => (
+        {({ values, touched, handleChange, handleBlur, isValid, errors }) => (
           <form
             onSubmit={(e) => handleSubmit(e, values)}
             className={styles.form}
@@ -56,7 +65,7 @@ const SignIn: FC = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.email}
-              error={touched.email ? t('inputEmail.error') : ''}
+              error={touched.email && errors.email ? t('inputEmail.error') : ''}
             />
             <Input
               icon={faLock}
@@ -67,9 +76,17 @@ const SignIn: FC = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               type="password"
-              error={touched.password ? t('inputEmail.error') : ''}
+              error={
+                touched.password && errors.password
+                  ? t('inputPassword.error')
+                  : ''
+              }
             />
-            <RoundedButton disabled={!isValid} className={styles.button}>
+            <RoundedButton
+              disabled={!isValid}
+              isLoading={isLoading}
+              className={styles.button}
+            >
               {t('button')}
             </RoundedButton>
           </form>

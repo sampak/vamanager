@@ -24,9 +24,9 @@ export class AuthService {
         return jwt.genToken(PrismaUserToUser(prismaUser));
       }
 
-      throw new NotFoundException('NOT_FOUND');
+      throw new BadRequestException('NOT_FOUND');
     } catch (e) {
-      throw new NotFoundException('NOT_FOUND');
+      throw new BadRequestException('NOT_FOUND');
     }
   }
 

@@ -1,0 +1,89 @@
+@import 'src/styles/colors.scss';
+
+.container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal {
+  position: absolute;
+  width: 754px;
+  min-height: 475px;
+  background: $mainBackgroundColor;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  box-shadow: $shadowColor 0px 8px 32px;
+}
+
+.crop {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 48px;
+}
+
+.cropArena {
+  position: relative;
+  width: 100%;
+  height: 370px;
+  z-index: 100;
+}
+
+.dragDrop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 48px;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+.drag {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 350px;
+  border: black 1px dashed;
+}
+
+.dragSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.button {
+  width: 128px;
+  margin-right: 24px;
+}
+
+.black {
+  color: $badgeColor;
+
+  &:hover {
+    color: $fontColor;
+  }
+}

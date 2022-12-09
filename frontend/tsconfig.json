@@ -18,7 +18,9 @@
     "noEmit": true,
     "noUnusedLocals": false,
     "jsx": "react-jsx",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false
   },
   "paths": {
     "@shared/*": ["../../shared/*"]

@@ -9,7 +9,6 @@ const AuthRoutes = () => {
       <Routes>
         <Route path="signup" element={<SignUp />} />
         <Route path="signin" element={<SignIn />} />
-        <Route path="choose-workspace" element={<>test</>} />
         <Route path="*" element={<SignIn />} />
       </Routes>
     </AuthLayout>
