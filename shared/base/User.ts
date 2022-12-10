@@ -1,3 +1,4 @@
+import { Membership } from "./Membership";
 import { UserStatus } from "./UserStatus";
 
 export interface User {
@@ -8,4 +9,5 @@ export interface User {
   status: UserStatus;
   allowShowLastName: boolean;
   showOnbording?: boolean;
+  memberships?: Membership[];
 }

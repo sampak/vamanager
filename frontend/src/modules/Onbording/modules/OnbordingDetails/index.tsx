@@ -23,6 +23,7 @@ const joinMethods = [
 
 const OnbordingDetails: FC<Props> = ({
   initialValues,
+  setValues,
   steps,
   setImage,
   image,
@@ -37,6 +38,8 @@ const OnbordingDetails: FC<Props> = ({
 
   const handleSubmit = (e, values) => {
     e.preventDefault();
+    setValues(values);
+    navigate('/onbording/configuration');
   };
 
   return (
@@ -97,7 +100,7 @@ const OnbordingDetails: FC<Props> = ({
               </div>
               <div className={styles.inputWrapper}>
                 <TextArea
-                  name="icao"
+                  name="description"
                   placeholder="Enter description about your airline"
                   value={values.description}
                   onBlur={handleBlur}
@@ -118,7 +121,7 @@ const OnbordingDetails: FC<Props> = ({
 
               <div className={styles.buttonWrapper}>
                 <RoundedButton
-                  onClick={() => navigate('/onbording/configuration')}
+                  // onClick={() => }
                   disabled={!isValid}
                   className={styles.button}
                 >

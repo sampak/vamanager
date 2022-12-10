@@ -55,7 +55,7 @@ export const TRANSLATIONS_EN = {
 
   onbording: {
     configuration: {
-      title: 'Airline Configuration',
+      title: '{{airlineName}} Configuration',
       subTitle: 'select options that will help you better manage your airline!',
       PILOT_CAN_SCHEDULED_NEW_FLIGHT: 'Pilot can scheduled new flight',
       PENALTY_FOR_PILOT_FOR_HARD_LANDING:
@@ -64,6 +64,11 @@ export const TRANSLATIONS_EN = {
         'Pilot will get salary penalty for no lights below FL100',
       PILOT_CAN_CHANGE_FLIGHT_NUMBER:
         'Pilot can change flight number for scheduled flight',
+    },
+
+    base: {
+      title: '{{airlineName}} base',
+      subTitle: 'Choose your first airline base and start your sky adventure!',
     },
   },
 };

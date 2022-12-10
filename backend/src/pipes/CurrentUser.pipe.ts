@@ -8,9 +8,10 @@ import {
 import * as jwt from 'jsonwebtoken';
 import { Users, Prisma } from '@prisma/client';
 import { config } from 'src/config';
+import { PrismaService } from 'src/prisma.service';
 @Injectable()
 export class CurrentUserPipe implements PipeTransform {
-  constructor() {}
+  constructor(private readonly prismaService: PrismaService) {}
 
   async transform(token: string) {
     if (!token) {
@@ -19,10 +20,20 @@ export class CurrentUserPipe implements PipeTransform {
 
     try {
       const access_token = token.replace('Bearer ', '');
-      const user = await jwt.verify(access_token, config.jwt.secret);
-      return user as Users;
+      const jwtUser = await jwt.verify(access_token, config.jwt.secret);
+
+      try {
+        const user = await this.prismaService.users.findUniqueOrThrow({
+          where: {
+            id: jwtUser.id,
+          },
+        });
+
+        return user as Users;
+      } catch (e) {
+        throw new HttpException('', HttpStatus.UNAUTHORIZED);
+      }
     } catch (e) {
-      console.error(e);
       throw new HttpException('', HttpStatus.UNAUTHORIZED);
     }
   }

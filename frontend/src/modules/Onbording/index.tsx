@@ -7,15 +7,25 @@ import OnbordingDetails from './modules/OnbordingDetails';
 import { OnbordingValues } from './typings';
 import styles from './styles.module.scss';
 import OnbordingConfiguration from './modules/OnbordingConfiguration';
+import defaultOptions from '@shared/config/AirlineConfig.json';
+import OnbordingBase from './modules/OnbordingBase';
 
 const OnbordingRoutes = () => {
+  const [values, setValues] = useState<OnbordingValues | undefined>(undefined);
   const [image, setImage] = useState<string | undefined>(undefined);
 
+  const optionsKeys = Object.keys(defaultOptions);
+  const [options, setOptions] = useState<boolean[]>(
+    Object.values(defaultOptions)
+  );
+
+  const [selectedAirport, setSelectedAirport] = useState('');
+
   const initialValues: OnbordingValues = {
-    name: 'SamFly',
-    icao: 'SAF',
-    description: 'yes',
-    joiningMethod: JoiningMethod.APPROVAL_NEEDED,
+    name: values?.name ?? 'SamFly',
+    icao: values?.icao ?? 'SAF',
+    description: values?.description ?? 'yes',
+    joiningMethod: values?.joiningMethod ?? JoiningMethod.APPROVAL_NEEDED,
   };
 
   const steps = [
@@ -37,6 +47,7 @@ const OnbordingRoutes = () => {
             path="/details"
             element={
               <OnbordingDetails
+                setValues={setValues}
                 initialValues={initialValues}
                 image={image}
                 setImage={setImage}
@@ -48,14 +59,25 @@ const OnbordingRoutes = () => {
             path="/configuration"
             element={
               <OnbordingConfiguration
-                initialValues={initialValues}
-                image={image}
-                setImage={setImage}
+                keys={optionsKeys}
+                setOptions={setOptions}
+                options={options}
+                details={values}
                 steps={steps}
               />
             }
           />
-          {/* <Route path="/base" element={<OnbordingDetails steps={steps} />} /> */}
+          <Route
+            path="/base"
+            element={
+              <OnbordingBase
+                setSelectedAirport={setSelectedAirport}
+                selectedAirport={selectedAirport}
+                details={values}
+                steps={steps}
+              />
+            }
+          />
         </Routes>
       </ProtectedRoute>
     </>

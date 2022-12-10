@@ -11,10 +11,13 @@ export class UserService {
     try {
       const prismaUser = await this.prisma.users.findUniqueOrThrow({
         where: { id: jwtUser.id },
+        include: {
+          Memberships: true,
+        },
       });
 
       const user = PrismaUserToUser(prismaUser);
-      user.showOnbording = true;
+      user.showOnbording = !user.memberships.length;
       return user;
     } catch (e) {
       throw new UnauthorizedException('');

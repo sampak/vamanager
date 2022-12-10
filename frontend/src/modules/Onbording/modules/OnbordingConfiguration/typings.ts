@@ -4,8 +4,9 @@ import { OnbordingValues } from 'modules/Onbording/typings';
 export type { FC } from 'react';
 
 export interface Props {
-  initialValues: OnbordingValues;
+  keys: string[];
+  options: boolean[];
+  setOptions: (values: boolean[]) => void;
+  details: OnbordingValues | undefined;
   steps: OnbordingStep[];
-  image: string | undefined;
-  setImage: (value: string) => void;
 }

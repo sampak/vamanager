@@ -1,41 +1,40 @@
-import Avatar from '@mui/material/Avatar';
 import OnbordingHeader from 'components/OnbordingHeader';
 import styles from './styles.module.scss';
 import { FC, Props } from './typings';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import CropModal from 'components/CropModal';
 import { useEffect, useState } from 'react';
-import { JoiningMethod } from '@shared/base/JoiningMethod';
 import { useNavigate } from 'react-router-dom';
-import defaultOptions from '@shared/config/AirlineConfig.json';
 import Checkbox from 'components/Checkbox';
 import { useTranslation } from 'react-i18next';
+import RoundedButton from 'components/RoundedButton';
 
 const OnbordingConfiguration: FC<Props> = ({
-  initialValues,
+  keys,
+  options,
+  setOptions,
+  details,
   steps,
-  setImage,
-  image,
 }) => {
   const navigate = useNavigate();
   const translation = useTranslation();
-  const t = (key: string) => translation.t(`onbording.configuration.${key}`);
-  const options = Object.keys(defaultOptions);
-  const [values, setValues] = useState(Object.values(defaultOptions));
+  const t = (key: string, params?: { airlineName?: string }) =>
+    translation.t(`onbording.configuration.${key}`, params);
 
   const handleCheck = (index) => {
-    let newValues = [...values];
-    newValues[index] = !values[index];
+    let newValues = [...options];
+    newValues[index] = !options[index];
 
-    setValues(newValues);
+    setOptions(newValues);
+  };
+
+  const handleNext = () => {
+    navigate('/onbording/base');
   };
 
   return (
     <div className={styles.content}>
       <div className={styles.header}>
         <OnbordingHeader
-          title={t('title')}
+          title={t('title', { airlineName: details?.name })}
           subTitle={t('subTitle')}
           steps={steps}
           activeStep={1}
@@ -43,13 +42,26 @@ const OnbordingConfiguration: FC<Props> = ({
       </div>
 
       <div className={styles.details}>
-        {options.map((option, index) => (
+        {keys.map((option, index) => (
           <Checkbox
-            checked={values[index]}
+            checked={options[index]}
             onCheck={() => handleCheck(index)}
             label={t(option)}
           />
         ))}
+      </div>
+
+      <div className={styles.buttonWrapper}>
+        <RoundedButton
+          outline
+          onClick={() => navigate('/onbording/details')}
+          className={`${styles.button} ${styles.black}`}
+        >
+          Back
+        </RoundedButton>
+        <RoundedButton onClick={handleNext} className={styles.button}>
+          Next
+        </RoundedButton>
       </div>
     </div>
   );
