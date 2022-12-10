@@ -26,7 +26,7 @@ const ProtectedRoute: FC<Props> = ({ children }) => {
 
     if (user?.id) {
       if (user.showOnbording) {
-        navigate('/onbording/details');
+        navigate('/onbording/method');
       }
 
       setUser(user);

@@ -42,13 +42,13 @@ model Airlines {
   name         String        @unique
   icao         String        @unique
   baseId       String
-  base         Airports      @relation(fields: [baseId], references: [id])
+  base         Airports?      @relation(fields: [baseId], references: [id])
   ownerId      String
-  owner        Users         @relation(fields: [ownerId], references: [id])
+  owner        Users?         @relation(fields: [ownerId], references: [id])
   memberships  Memberships[]
   balance      Int
   joining_type joining_type  @default(APPROVAL_NEEDED)
-  options      Json
+  options      String
   updatedAt    DateTime      @updatedAt
   createdAt    DateTime      @default(now())
 }

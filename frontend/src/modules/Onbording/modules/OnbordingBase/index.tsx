@@ -13,23 +13,53 @@ import MarkerOnMap from 'components/MarkerOnMap';
 import L, { LatLngExpression } from 'leaflet';
 import airportService from 'api/airportService';
 import { useEffect, useMemo } from 'react';
+import airlineService from 'api/airlineService';
+
+const blobToBase64 = async (url) => {
+  return new Promise(async (resolve, _) => {
+    let blob = await fetch(url).then((r) => r.blob());
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result);
+    reader.readAsDataURL(blob);
+  });
+};
 
 const OnbordingBase: FC<Props> = ({
+  image,
   selectedAirport,
   setSelectedAirport,
   details,
   steps,
+  options,
 }) => {
   const navigate = useNavigate();
   const translation = useTranslation();
   const t = (key: string, params?: { airlineName?: string }) =>
     translation.t(`onbording.base.${key}`, params);
 
+  const { mutate: createAirline } = airlineService.useCreateAirline();
+
   const { data: airportsData } = airportService.useGetAll();
 
   const airports = useMemo(() => airportsData?.data ?? [], [airportsData]);
-  const handleNext = () => {
-    navigate('/onbording/base');
+  const handleNext = async () => {
+    console.log(image);
+    createAirline(
+      {
+        image: (await blobToBase64(image)) as string,
+        name: details?.name!,
+        icao: details?.icao!,
+        description: details?.description!,
+        joiningMethod: details?.joiningMethod!,
+        base: selectedAirport,
+        options: options,
+      },
+      {
+        onSuccess: () => {
+          console.log('e');
+        },
+      }
+    );
   };
 
   const airportIcon = ReactDOMServer.renderToString(

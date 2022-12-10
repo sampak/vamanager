@@ -36,6 +36,12 @@ const OnbordingRoutes = () => {
     // { label: 'Schedules' },
   ];
 
+  let formatedOptions = {};
+
+  for (let index in optionsKeys) {
+    formatedOptions[optionsKeys[index]] = options[index];
+  }
+
   return (
     <>
       <div className={styles.logo}>
@@ -43,6 +49,18 @@ const OnbordingRoutes = () => {
       </div>
       <ProtectedRoute>
         <Routes>
+          <Route
+            path="/method"
+            element={
+              <OnbordingDetails
+                setValues={setValues}
+                initialValues={initialValues}
+                image={image}
+                setImage={setImage}
+                steps={steps}
+              />
+            }
+          />
           <Route
             path="/details"
             element={
@@ -71,6 +89,8 @@ const OnbordingRoutes = () => {
             path="/base"
             element={
               <OnbordingBase
+                image={image ?? ''}
+                options={JSON.stringify(formatedOptions)}
                 setSelectedAirport={setSelectedAirport}
                 selectedAirport={selectedAirport}
                 details={values}
