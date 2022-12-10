@@ -1,0 +1,67 @@
+@import 'src/styles/colors.scss';
+
+.content {
+  margin: auto;
+  margin-top: 100px;
+  width: 90%;
+}
+
+.header {
+  width: 100%;
+}
+
+.details {
+  display: flex;
+  flex-flow: row wrap;
+  width: 85%;
+  gap: 48px;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-top: 48px;
+}
+
+.avatarContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 128px !important;
+  height: 128px !important;
+}
+
+.editIcon {
+  position: absolute;
+  font-size: 24px;
+  left: 70%;
+  top: 85%;
+  color: $logoColor;
+}
+
+form {
+  display: flex;
+  flex-flow: row wrap;
+  width: 65%;
+  margin-top: 64px;
+  gap: 32px;
+}
+
+.inputWrapper {
+  width: calc(50% - 32px);
+}
+
+.buttonWrapper {
+  margin-top: 84px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding-bottom: 24px;
+}
+
+.button {
+  width: 148px;
+}

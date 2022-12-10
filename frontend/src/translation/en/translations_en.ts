@@ -52,4 +52,18 @@ export const TRANSLATIONS_EN = {
     cta: 'Already a user?',
     signIn: 'Sign In',
   },
+
+  onbording: {
+    configuration: {
+      title: 'Airline Configuration',
+      subTitle: 'select options that will help you better manage your airline!',
+      PILOT_CAN_SCHEDULED_NEW_FLIGHT: 'Pilot can scheduled new flight',
+      PENALTY_FOR_PILOT_FOR_HARD_LANDING:
+        'Pilot will get salary penalty for hard landing',
+      PENALTY_FOR_PILOT_FOR_NO_LANDING_LIGHTS:
+        'Pilot will get salary penalty for no lights below FL100',
+      PILOT_CAN_CHANGE_FLIGHT_NUMBER:
+        'Pilot can change flight number for scheduled flight',
+    },
+  },
 };

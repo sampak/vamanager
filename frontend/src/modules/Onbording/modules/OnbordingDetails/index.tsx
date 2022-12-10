@@ -111,7 +111,7 @@ const OnbordingDetails: FC<Props> = ({
                     setFieldValue('joiningMethod', option.value)
                   }
                   options={joinMethods}
-                  label="Select Joining method"
+                  label="Choose Joining method"
                   value={values.joiningMethod}
                 />
               </div>

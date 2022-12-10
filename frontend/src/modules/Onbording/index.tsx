@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 import OnbordingDetails from './modules/OnbordingDetails';
 import { OnbordingValues } from './typings';
 import styles from './styles.module.scss';
+import OnbordingConfiguration from './modules/OnbordingConfiguration';
 
 const OnbordingRoutes = () => {
   const [image, setImage] = useState<string | undefined>(undefined);
@@ -36,6 +37,17 @@ const OnbordingRoutes = () => {
             path="/details"
             element={
               <OnbordingDetails
+                initialValues={initialValues}
+                image={image}
+                setImage={setImage}
+                steps={steps}
+              />
+            }
+          />
+          <Route
+            path="/configuration"
+            element={
+              <OnbordingConfiguration
                 initialValues={initialValues}
                 image={image}
                 setImage={setImage}
