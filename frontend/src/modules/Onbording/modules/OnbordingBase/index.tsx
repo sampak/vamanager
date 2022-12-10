@@ -83,7 +83,7 @@ const OnbordingBase: FC<Props> = ({
           title={t('title', { airlineName: details?.name })}
           subTitle={t('subTitle')}
           steps={steps}
-          activeStep={1}
+          activeStep={2}
         />
       </div>
 
