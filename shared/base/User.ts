@@ -1,3 +1,4 @@
+import { UserUIConfiguration } from "../ui-configuration/user";
 import { Membership } from "./Membership";
 import { UserStatus } from "./UserStatus";
 
@@ -8,6 +9,6 @@ export interface User {
   email: string;
   status: UserStatus;
   allowShowLastName: boolean;
-  showOnbording?: boolean;
   memberships?: Membership[];
+  uiConfiguration?: UserUIConfiguration;
 }

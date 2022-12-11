@@ -10,9 +10,9 @@ import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import { faPlaneDeparture } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MarkerOnMap from 'components/MarkerOnMap';
-import L, { LatLngExpression } from 'leaflet';
+import L from 'leaflet';
 import airportService from 'api/airportService';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import airlineService from 'api/airlineService';
 
 const blobToBase64 = async (url) => {
@@ -37,7 +37,8 @@ const OnbordingBase: FC<Props> = ({
   const t = (key: string, params?: { airlineName?: string }) =>
     translation.t(`onbording.base.${key}`, params);
 
-  const { mutate: createAirline } = airlineService.useCreateAirline();
+  const { mutate: createAirline, isLoading } =
+    airlineService.useCreateAirline();
 
   const { data: airportsData } = airportService.useGetAll();
 
@@ -60,7 +61,9 @@ const OnbordingBase: FC<Props> = ({
         options: options,
       },
       {
-        onSuccess: () => {},
+        onSuccess: () => {
+          navigate(`workspace/${details?.icao}?firstExperience=true`);
+        },
       }
     );
   };
@@ -124,7 +127,7 @@ const OnbordingBase: FC<Props> = ({
           Back
         </RoundedButton>
         <RoundedButton
-          disabled={!selectedAirport.length}
+          disabled={!selectedAirport.length || isLoading}
           onClick={handleNext}
           className={styles.button}
         >

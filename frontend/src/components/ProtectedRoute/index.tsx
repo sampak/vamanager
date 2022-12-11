@@ -25,7 +25,7 @@ const ProtectedRoute: FC<Props> = ({ children }) => {
     const user = data?.data as User;
 
     if (user?.id) {
-      if (user.showOnbording) {
+      if (user.uiConfiguration?.showOnbording) {
         navigate('/onbording/method');
       }
 
