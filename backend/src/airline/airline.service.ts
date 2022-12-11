@@ -10,12 +10,17 @@ import { PrismaService } from 'src/prisma.service';
 import { join } from 'path';
 import { converBase64ToImage } from 'convert-base64-to-image';
 import prismaAirlineToAirline from 'src/adapters/prismaAirlineToAirline';
+import { config } from 'src/config';
 
 @Injectable()
 export class AirlineService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(currentUser: Users, payload: CreateAirlineDTO) {
+  async create(
+    S3Client: AWS.S3,
+    currentUser: Users,
+    payload: CreateAirlineDTO
+  ) {
     const isExist = await this.prismaService.airlines.findFirst({
       where: {
         OR: {
@@ -54,18 +59,42 @@ export class AirlineService {
       },
     });
 
-    if (!!payload.image?.length) {
-      const path = converBase64ToImage(
-        payload.image,
-        `${join(__dirname, '../../../public')}/airlines/${
-          payload.icao
-        }/logo.png`
+    if (!!payload?.image?.length) {
+      const base64Data = Buffer.from(
+        payload.image.replace(/^data:image\/\w+;base64,/, ''),
+        'base64'
       );
+      const type = payload.image.split(';')[0].split('/')[1];
+
+      const params = {
+        Bucket: config.AWS_BUCKET_NAME,
+        Key: `${payload.icao}/logo.${type}`,
+        Body: base64Data,
+        ACL: 'public-read',
+        ContentEncoding: 'base64',
+        ContentType: `image/${type}`,
+      };
+
+      try {
+        const awsResponse = await S3Client.upload(params).promise();
+        const updatedAirline = await this.prismaService.airlines.update({
+          data: {
+            image: awsResponse.Location,
+          },
+          where: { id: airline?.id },
+        });
+        console.log(
+          `${currentUser.email} (${currentUser.id}) created airline: ${payload.name} (${payload.icao})`
+        );
+        return prismaAirlineToAirline(updatedAirline);
+      } catch (e) {
+        console.log('Failed to create airline');
+        console.log(e);
+      }
     }
-
-    const air = prismaAirlineToAirline(airline);
-    air.image = `http://localhost:4000/public/airlines/${payload.icao}/logo.png`;
-
-    return air;
+    console.log(
+      `${currentUser.email} (${currentUser.id}) created airline: ${payload.name} (${payload.icao})`
+    );
+    return prismaAirlineToAirline(airline);
   }
 }

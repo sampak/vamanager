@@ -4,6 +4,9 @@ import * as express from 'express';
 import { AppModule } from './app.module';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import * as AWS from 'aws-sdk';
+
+AWS.config.update({ region: 'us-east-1' });
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -15,7 +18,6 @@ async function bootstrap() {
   });
   app.use(express.json({ limit: '50mb' }));
   const publicPath = join(__dirname, '../../public');
-  console.log(publicPath);
   app.useStaticAssets(publicPath, {
     prefix: '/public',
   });

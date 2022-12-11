@@ -43,10 +43,15 @@ const OnbordingBase: FC<Props> = ({
 
   const airports = useMemo(() => airportsData?.data ?? [], [airportsData]);
   const handleNext = async () => {
-    console.log(image);
+    let base64Image: string | undefined = undefined;
+
+    if (image) {
+      base64Image = (await blobToBase64(image)) as string;
+    }
+
     createAirline(
       {
-        image: (await blobToBase64(image)) as string,
+        image: base64Image,
         name: details?.name!,
         icao: details?.icao!,
         description: details?.description!,
@@ -55,9 +60,7 @@ const OnbordingBase: FC<Props> = ({
         options: options,
       },
       {
-        onSuccess: () => {
-          console.log('e');
-        },
+        onSuccess: () => {},
       }
     );
   };

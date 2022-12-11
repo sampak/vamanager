@@ -39,6 +39,7 @@ model Airports {
 
 model Airlines {
   id           String        @id @default(uuid())
+  image        String?
   name         String        @unique
   icao         String        @unique
   baseId       String
