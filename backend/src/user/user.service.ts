@@ -12,7 +12,7 @@ export class UserService {
       const prismaUser = await this.prisma.users.findUniqueOrThrow({
         where: { id: jwtUser.id },
         include: {
-          Memberships: true,
+          memberships: true,
         },
       });
 
