@@ -17,7 +17,7 @@ const RoundedButton: FC<Props> = ({
 
   return (
     <button
-      onClick={onClick}
+      onClick={() => disabled ?? onClick?.()}
       className={classNames(
         styles.button,
         outlineStyle,

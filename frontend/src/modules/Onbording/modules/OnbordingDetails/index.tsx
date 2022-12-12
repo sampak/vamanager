@@ -39,8 +39,11 @@ const OnbordingDetails: FC<Props> = ({
     setCropModal(false);
   };
 
-  const handleSubmit = (e, values) => {
+  const handleSubmit = (e, values, isValid) => {
     e.preventDefault();
+    if (!isValid) {
+      return;
+    }
     setValues(values);
     navigate('/onbording/configuration');
   };
@@ -80,7 +83,7 @@ const OnbordingDetails: FC<Props> = ({
             errors,
             setFieldValue,
           }) => (
-            <form onSubmit={(e) => handleSubmit(e, values)}>
+            <form onSubmit={(e) => handleSubmit(e, values, isValid)}>
               <div className={styles.inputWrapper}>
                 <Input
                   name="name"
