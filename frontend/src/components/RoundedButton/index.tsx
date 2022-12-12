@@ -14,10 +14,12 @@ const RoundedButton: FC<Props> = ({
 }) => {
   const outlineStyle = outline ? styles.outline : '';
   const disabledStyle = disabled ? styles.disabled : '';
-
   return (
     <button
-      onClick={() => disabled ?? onClick?.()}
+      onClick={() => {
+        if (disabled) return;
+        onClick?.();
+      }}
       className={classNames(
         styles.button,
         outlineStyle,
