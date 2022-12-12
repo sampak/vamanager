@@ -23,9 +23,9 @@ const OnbordingRoutes = () => {
   const [selectedAirport, setSelectedAirport] = useState('');
 
   const initialValues: OnbordingValues = {
-    name: values?.name ?? 'SamFly',
-    icao: values?.icao ?? 'SAF',
-    description: values?.description ?? 'yes',
+    name: values?.name ?? '',
+    icao: values?.icao ?? '',
+    description: values?.description ?? '',
     joiningMethod: values?.joiningMethod ?? JoiningMethod.APPROVAL_NEEDED,
   };
 
