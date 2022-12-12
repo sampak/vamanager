@@ -9,6 +9,6 @@ export interface User {
   email: string;
   status: UserStatus;
   allowShowLastName: boolean;
-  memberships?: Membership[];
+  membership?: Membership;
   uiConfiguration?: UserUIConfiguration;
 }

@@ -6,9 +6,8 @@ import {
 import { Users } from '@prisma/client';
 import { CreateAirlineDTO } from '@shared/dto/CreateAirlineDTO';
 import { MembershipStatus } from '@shared/base/MembershipStatus';
+import { MembershipRole } from '@shared/base/MembershipRole';
 import { PrismaService } from 'src/prisma.service';
-import { join } from 'path';
-import { converBase64ToImage } from 'convert-base64-to-image';
 import prismaAirlineToAirline from 'src/adapters/prismaAirlineToAirline';
 import { config } from 'src/config';
 
@@ -56,6 +55,7 @@ export class AirlineService {
         airlineId: airline.id,
         userId: currentUser.id,
         status: MembershipStatus.ACTIVE,
+        role: MembershipRole.ADMIN,
       },
     });
 

@@ -6,7 +6,8 @@ import getUserConfiguration from 'src/ui-configuration/user';
 import prismaMembershipToMembership from './prismaMembershipToMembership';
 
 const PrismaUserToUser = (
-  user: Users & { memberships?: Memberships[] }
+  user: Users & { memberships?: Memberships },
+  memberships?: Memberships[]
 ): User => {
   return {
     id: user.id,
@@ -15,10 +16,10 @@ const PrismaUserToUser = (
     email: user.email,
     status: user.status as UserStatus,
     allowShowLastName: user.allowShowLastName,
-    memberships: user.memberships.map((membership) =>
-      prismaMembershipToMembership(membership)
-    ),
-    uiConfiguration: getUserConfiguration(user),
+    membership: user.memberships[0]
+      ? prismaMembershipToMembership(user.memberships[0])
+      : null,
+    uiConfiguration: getUserConfiguration(user, memberships),
   };
 };
 

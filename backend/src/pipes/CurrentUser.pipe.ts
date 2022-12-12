@@ -6,7 +6,7 @@ import {
   PipeTransform,
 } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
-import { Users, Prisma } from '@prisma/client';
+import { Users, Prisma, membership_status } from '@prisma/client';
 import { config } from 'src/config';
 import { PrismaService } from 'src/prisma.service';
 @Injectable()
@@ -33,20 +33,21 @@ export class CurrentUserPipe implements PipeTransform {
 
           include: {
             memberships: {
+              where: {
+                status: membership_status.ACTIVE,
+                airline: {
+                  icao: workspace ?? '',
+                },
+              },
+
               include: {
                 airline: true,
               },
             },
           },
         });
-
-        if (!!workspace) {
-          const membership = user.memberships.find(
-            (membership) => membership.airline.icao === workspace
-          );
-          if (!membership) {
-            throw new HttpException('', HttpStatus.FORBIDDEN);
-          }
+        if (!!workspace && !user.memberships.length) {
+          throw new HttpException('', HttpStatus.FORBIDDEN);
         }
         return user as Users;
       } catch (e) {
