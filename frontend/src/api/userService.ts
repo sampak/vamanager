@@ -2,15 +2,25 @@ import { useQuery } from 'react-query';
 import { axiosInstance } from './axios';
 
 const queryKeys = {
-  getMe: (token: string) => ['userService.getMe', token],
+  getMe: (token: string, workspace: string | undefined) => [
+    'userService.getMe',
+    token,
+    workspace,
+  ],
 };
 
-const getMe = () => {
-  return axiosInstance.get('/user/me');
+const getMe = (workspace: string | undefined) => {
+  let url = '/user/me';
+
+  if (workspace) {
+    url += `/${workspace}`;
+  }
+
+  return axiosInstance.get(url);
 };
 
-const useGetMe = (token) => {
-  return useQuery(queryKeys.getMe(token), () => getMe(), {
+const useGetMe = (token: string, workspace?: string) => {
+  return useQuery(queryKeys.getMe(token, workspace), () => getMe(workspace), {
     enabled: false,
     cacheTime: 0,
     staleTime: 0,

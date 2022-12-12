@@ -50,7 +50,7 @@ export class AirlineService {
       throw new InternalServerErrorException();
     }
 
-    const membership = await this.prismaService.memberships.create({
+    await this.prismaService.memberships.create({
       data: {
         airlineId: airline.id,
         userId: currentUser.id,

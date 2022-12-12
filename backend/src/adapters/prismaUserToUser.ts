@@ -16,8 +16,8 @@ const PrismaUserToUser = (
     email: user.email,
     status: user.status as UserStatus,
     allowShowLastName: user.allowShowLastName,
-    membership: user.memberships[0]
-      ? prismaMembershipToMembership(user.memberships[0])
+    membership: user?.memberships?.[0]
+      ? prismaMembershipToMembership(user?.memberships?.[0])
       : null,
     uiConfiguration: getUserConfiguration(user, memberships),
   };

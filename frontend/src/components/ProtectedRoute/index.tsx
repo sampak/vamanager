@@ -1,8 +1,8 @@
 import { FC, Props } from './typings';
 import styles from './styles.module.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getToken } from 'api/user';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import userService from 'api/userService';
 import AuthContext from 'contexts/auth';
 import { User } from '@shared/base/User';
@@ -10,7 +10,11 @@ import { User } from '@shared/base/User';
 const ProtectedRoute: FC<Props> = ({ children }) => {
   const access_token = getToken();
   const navigate = useNavigate();
-  const { data, refetch } = userService.useGetMe(access_token);
+  const { workspaceId } = useParams();
+  const { data, refetch, isError, error } = userService.useGetMe(
+    access_token,
+    workspaceId
+  );
   const { user, setUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
 
@@ -20,6 +24,12 @@ const ProtectedRoute: FC<Props> = ({ children }) => {
     }
     refetch();
   }, []);
+
+  useEffect(() => {
+    if (!!workspaceId?.length) {
+      refetch();
+    }
+  }, [workspaceId]);
 
   useEffect(() => {
     const user = data?.data as User;
