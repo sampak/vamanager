@@ -13,10 +13,13 @@ import { PrismaService } from 'src/prisma.service';
 export class CurrentUserPipe implements PipeTransform {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async transform(token: string) {
-    if (!token) {
+  async transform(payload: { workspace: string; token: string }) {
+    if (!payload.token) {
       return null;
     }
+
+    const workspace = payload.workspace;
+    const token = payload.token;
 
     try {
       const access_token = token.replace('Bearer ', '');
@@ -27,8 +30,24 @@ export class CurrentUserPipe implements PipeTransform {
           where: {
             id: jwtUser.id,
           },
+
+          include: {
+            memberships: {
+              include: {
+                airline: true,
+              },
+            },
+          },
         });
 
+        if (!!workspace) {
+          const membership = user.memberships.find(
+            (membership) => membership.airline.icao === workspace
+          );
+          if (!membership) {
+            throw new HttpException('', HttpStatus.FORBIDDEN);
+          }
+        }
         return user as Users;
       } catch (e) {
         throw new HttpException('', HttpStatus.UNAUTHORIZED);

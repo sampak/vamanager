@@ -3,6 +3,7 @@ import { User } from '@shared/base/User';
 import { Membership } from '@shared/base/Membership';
 import { UserStatus } from '@shared/base/UserStatus';
 import getUserConfiguration from 'src/ui-configuration/user';
+import prismaMembershipToMembership from './prismaMembershipToMembership';
 
 const PrismaUserToUser = (
   user: Users & { memberships?: Memberships[] }
@@ -14,7 +15,9 @@ const PrismaUserToUser = (
     email: user.email,
     status: user.status as UserStatus,
     allowShowLastName: user.allowShowLastName,
-    memberships: (user?.memberships as Membership[]) ?? [],
+    memberships: user.memberships.map((membership) =>
+      prismaMembershipToMembership(membership)
+    ),
     uiConfiguration: getUserConfiguration(user),
   };
 };

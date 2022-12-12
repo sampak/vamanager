@@ -7,19 +7,9 @@ import { PrismaService } from 'src/prisma.service';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async getMe(jwtUser: Users) {
-    try {
-      const prismaUser = await this.prisma.users.findUniqueOrThrow({
-        where: { id: jwtUser.id },
-        include: {
-          memberships: true,
-        },
-      });
-
-      const user = PrismaUserToUser(prismaUser);
-      return user;
-    } catch (e) {
-      throw new UnauthorizedException('');
-    }
+  async getMe(prismaUser: Users) {
+    console.log(prismaUser);
+    const user = PrismaUserToUser(prismaUser);
+    return user;
   }
 }

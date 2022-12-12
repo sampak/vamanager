@@ -6,7 +6,7 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('/me')
+  @Get('/me/:workspace?')
   async getMe(@CurrentUser() user) {
     return this.userService.getMe(user);
   }
