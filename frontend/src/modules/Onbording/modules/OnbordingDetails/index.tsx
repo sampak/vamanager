@@ -14,12 +14,7 @@ import RoundedButton from 'components/RoundedButton';
 import { useNavigate } from 'react-router-dom';
 import TextArea from 'components/TextArea';
 import OnbordingDetailsSchema from './validation.schema';
-
-const joinMethods = [
-  { value: JoiningMethod.INVITATION_ONLY, text: 'Invitation Only' },
-  { value: JoiningMethod.APPROVAL_NEEDED, text: 'Need approval from admin' },
-  { value: JoiningMethod.PUBLIC_ACCESS, text: 'Public access' },
-];
+import { useTranslation } from 'react-i18next';
 
 const OnbordingDetails: FC<Props> = ({
   initialValues,
@@ -28,8 +23,16 @@ const OnbordingDetails: FC<Props> = ({
   setImage,
   image,
 }) => {
+  const translation = useTranslation();
+  const t = (key: string) => translation.t(`onbording.details.${key}`);
   const navigate = useNavigate();
   const [cropModal, setCropModal] = useState(false);
+
+  const joinMethods = [
+    { value: JoiningMethod.INVITATION_ONLY, text: t('INVITATION_ONLY') },
+    { value: JoiningMethod.APPROVAL_NEEDED, text: t('APPROVAL_NEEDED') },
+    { value: JoiningMethod.PUBLIC_ACCESS, text: t('PUBLIC_ACCESS') },
+  ];
 
   const handleCropEnd = (croppedImage: string) => {
     setImage(croppedImage);
@@ -46,8 +49,8 @@ const OnbordingDetails: FC<Props> = ({
     <div className={styles.content}>
       <div className={styles.header}>
         <OnbordingHeader
-          title="Airline Details"
-          subTitle="Let us help you set up your first airline!"
+          title={t('title')}
+          subTitle={t('subTitle')}
           steps={steps}
           activeStep={0}
         />
@@ -85,7 +88,7 @@ const OnbordingDetails: FC<Props> = ({
                   onChange={handleChange}
                   value={values.name}
                   onBlur={handleBlur}
-                  label="Enter airline name"
+                  label={t('airlineName')}
                 />
               </div>
               <div className={styles.inputWrapper}>
@@ -95,17 +98,17 @@ const OnbordingDetails: FC<Props> = ({
                   value={values.icao}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  label="Enter airline icao"
+                  label={t('airlineIcao')}
                 />
               </div>
               <div className={styles.inputWrapper}>
                 <TextArea
                   name="description"
-                  placeholder="Enter description about your airline"
+                  placeholder={t('airlineDescription')}
                   value={values.description}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  label="Enter description (Optional)"
+                  label={t('airlineDescriptionLabel')}
                 />
               </div>
               <div className={styles.inputWrapper}>
@@ -114,17 +117,20 @@ const OnbordingDetails: FC<Props> = ({
                     setFieldValue('joiningMethod', option.value)
                   }
                   options={joinMethods}
-                  label="Choose Joining method"
+                  label={t('method')}
                   value={values.joiningMethod}
                 />
               </div>
 
               <div className={styles.buttonWrapper}>
                 <RoundedButton
-                  // onClick={() => }
-                  disabled={!isValid}
-                  className={styles.button}
+                  onClick={() => navigate('/onbording/method')}
+                  outline
+                  className={`${styles.button} ${styles.black}`}
                 >
+                  Back
+                </RoundedButton>
+                <RoundedButton disabled={!isValid} className={styles.button}>
                   Next
                 </RoundedButton>
               </div>

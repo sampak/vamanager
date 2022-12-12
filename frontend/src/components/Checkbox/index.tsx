@@ -3,7 +3,6 @@ import styles from './styles.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FC, Props } from './typings';
-import BodyText from 'components/BodyText';
 const Checkbox: FC<Props> = ({ label, checked, onCheck }) => {
   const checkStyle = checked ? styles.checked : '';
 

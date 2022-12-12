@@ -1,0 +1,33 @@
+@import 'src/styles/colors.scss';
+
+.container {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  &:hover {
+    .card {
+      background: $logoColor;
+      color: $mainBackgroundColor;
+    }
+  }
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 312px;
+  height: 312px;
+  background: $mainBackgroundColor;
+  font-size: 128px;
+  box-shadow: $shadowColor 0px 8px 32px;
+  border-radius: 8px;
+  transition: background 0.4s, color 0.4s;
+  color: $logoColor;
+}
+
+.title {
+  font-family: RobotoMedium;
+}

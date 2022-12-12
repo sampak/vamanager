@@ -31,7 +31,7 @@ const SignIn: FC = () => {
     signIn(values, {
       onSuccess: (response) => {
         setToken(response.data);
-        navigate('/workspace/1');
+        navigate('/choose-workspace');
       },
       onError: (e) => {},
     });

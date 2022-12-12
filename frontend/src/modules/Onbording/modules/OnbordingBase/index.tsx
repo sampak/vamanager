@@ -6,13 +6,13 @@ import ReactDOMServer from 'react-dom/server';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import RoundedButton from 'components/RoundedButton';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import { faPlaneDeparture } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MarkerOnMap from 'components/MarkerOnMap';
 import L from 'leaflet';
 import airportService from 'api/airportService';
-import { useMemo } from 'react';
+import { RefObject, useMemo, useRef } from 'react';
 import airlineService from 'api/airlineService';
 
 const blobToBase64 = async (url) => {
@@ -34,6 +34,7 @@ const OnbordingBase: FC<Props> = ({
 }) => {
   const navigate = useNavigate();
   const translation = useTranslation();
+  const mapRef = useRef(null);
   const t = (key: string, params?: { airlineName?: string }) =>
     translation.t(`onbording.base.${key}`, params);
 
@@ -94,7 +95,12 @@ const OnbordingBase: FC<Props> = ({
       </div>
 
       <div className={styles.mapContainer}>
-        <MapContainer center={[51, 16]} zoom={5} className={styles.map}>
+        <MapContainer
+          ref={mapRef}
+          center={[51, 16]}
+          zoom={5}
+          className={styles.map}
+        >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

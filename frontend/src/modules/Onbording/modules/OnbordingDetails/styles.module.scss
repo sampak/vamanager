@@ -57,8 +57,17 @@ form {
   justify-content: flex-end;
   width: 100%;
   padding-bottom: 24px;
+  gap: 24px;
 }
 
 .button {
   width: 148px;
+}
+
+.black {
+  color: $secondaryFontColor;
+
+  &:hover {
+    color: $fontColor;
+  }
 }

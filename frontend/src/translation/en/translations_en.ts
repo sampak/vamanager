@@ -54,6 +54,25 @@ export const TRANSLATIONS_EN = {
   },
 
   onbording: {
+    method: {
+      title: 'Make A Decision',
+      subTitle:
+        'Choose if you want to join to the airline as a pilot or create new one and try to beat others!',
+      exist: 'Join To Existing Airline',
+      new: 'Create Your Own Airline',
+    },
+    details: {
+      title: 'Airline Details',
+      subTitle: 'Let us help you set up your first airline!',
+      airlineName: 'Enter airline name',
+      airlineIcao: 'Enter airline icao',
+      airlineDescriptionLabel: 'Enter description (Optional)',
+      airlineDescription: 'Enter description about your airline',
+      method: 'Choose Joining method',
+      INVITATION_ONLY: 'Invitation Only',
+      APPROVAL_NEEDED: 'Need Approval From Admin',
+      PUBLIC_ACCESS: 'Public Access',
+    },
     configuration: {
       title: '{{airlineName}} Configuration',
       subTitle: 'select options that will help you better manage your airline!',
@@ -67,7 +86,7 @@ export const TRANSLATIONS_EN = {
     },
 
     base: {
-      title: '{{airlineName}} base',
+      title: '{{airlineName}} Base',
       subTitle: 'Choose your first airline base and start your sky adventure!',
     },
   },

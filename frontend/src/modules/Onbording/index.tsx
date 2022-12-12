@@ -9,6 +9,7 @@ import styles from './styles.module.scss';
 import OnbordingConfiguration from './modules/OnbordingConfiguration';
 import defaultOptions from '@shared/config/AirlineConfig.json';
 import OnbordingBase from './modules/OnbordingBase';
+import OnbordingMethod from './modules/OnbordingMethod';
 
 const OnbordingRoutes = () => {
   const [values, setValues] = useState<OnbordingValues | undefined>(undefined);
@@ -49,18 +50,7 @@ const OnbordingRoutes = () => {
       </div>
       <ProtectedRoute>
         <Routes>
-          <Route
-            path="/method"
-            element={
-              <OnbordingDetails
-                setValues={setValues}
-                initialValues={initialValues}
-                image={image}
-                setImage={setImage}
-                steps={steps}
-              />
-            }
-          />
+          <Route path="/method" element={<OnbordingMethod />} />
           <Route
             path="/details"
             element={
