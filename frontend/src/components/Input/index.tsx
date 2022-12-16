@@ -2,6 +2,7 @@ import { FC, Props } from './typings';
 import styles from './styles.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BodyText from 'components/BodyText';
+import classNames from 'classnames';
 
 const Input: FC<Props> = ({
   icon,
@@ -10,6 +11,7 @@ const Input: FC<Props> = ({
   onChange,
   value,
   error,
+  className,
   ...props
 }) => {
   return (
@@ -23,7 +25,7 @@ const Input: FC<Props> = ({
         )}
         <input
           placeholder={placeholder}
-          className={styles.input}
+          className={classNames(styles.input, className)}
           value={value}
           onChange={onChange}
           {...props}

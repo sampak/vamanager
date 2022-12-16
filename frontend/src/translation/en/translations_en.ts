@@ -58,16 +58,16 @@ export const TRANSLATIONS_EN = {
       title: 'Make A Decision',
       subTitle:
         'Choose if you want to join to the airline as a pilot or create new one and try to beat others!',
-      exist: 'Join To Existing Airline',
-      new: 'Create Your Own Airline',
+      exist: 'Join To Existing Company',
+      new: 'Create Your Own Copany',
     },
     details: {
-      title: 'Airline Details',
-      subTitle: 'Let us help you set up your first airline!',
-      airlineName: 'Enter airline name',
-      airlineIcao: 'Enter airline icao',
+      title: 'Company Details',
+      subTitle: 'Let us help you set up your first company!',
+      airlineName: 'Enter company name',
+      airlineIcao: 'Enter company icao',
       airlineDescriptionLabel: 'Enter description (Optional)',
-      airlineDescription: 'Enter description about your airline',
+      airlineDescription: 'Enter description about your company',
       method: 'Choose Joining method',
       INVITATION_ONLY: 'Invitation Only',
       APPROVAL_NEEDED: 'Need Approval From Admin',
@@ -75,7 +75,7 @@ export const TRANSLATIONS_EN = {
     },
     configuration: {
       title: '{{airlineName}} Configuration',
-      subTitle: 'select options that will help you better manage your airline!',
+      subTitle: 'select options that will help you better manage your company!',
       PILOT_CAN_SCHEDULED_NEW_FLIGHT: 'Pilot can scheduled new flight',
       PENALTY_FOR_PILOT_FOR_HARD_LANDING:
         'Pilot will get salary penalty for hard landing',
@@ -87,7 +87,24 @@ export const TRANSLATIONS_EN = {
 
     base: {
       title: '{{airlineName}} Base',
-      subTitle: 'Choose your first airline base and start your sky adventure!',
+      subTitle: 'Choose your first company base and start your sky adventure!',
+    },
+  },
+
+  airlineCard: {
+    badges: {
+      APPROVAL_NEEDED: 'Need Approval For Access',
+      PUBLIC_ACCESS: 'Approval Not Needed',
+    },
+    pilot: 'Pilot',
+    pilots: 'Pilots',
+    aircraft: 'Aircraft',
+    aircrafts: 'Aircrafts',
+    flight: 'Flight in this month',
+    flights: 'Flights in this month',
+    buttons: {
+      APPROVAL_NEEDED: 'Request Access',
+      PUBLIC_ACCESS: 'Join',
     },
   },
 };

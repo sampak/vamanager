@@ -10,6 +10,7 @@ import OnbordingConfiguration from './modules/OnbordingConfiguration';
 import defaultOptions from '@shared/config/AirlineConfig.json';
 import OnbordingBase from './modules/OnbordingBase';
 import OnbordingMethod from './modules/OnbordingMethod';
+import OnbordingJoin from './modules/OnbordingJoin';
 
 const OnbordingRoutes = () => {
   const [values, setValues] = useState<OnbordingValues | undefined>(undefined);
@@ -30,9 +31,9 @@ const OnbordingRoutes = () => {
   };
 
   const steps = [
-    { label: 'Airline Details' },
-    { label: 'Airline Configuration' },
-    { label: 'Airline Base' },
+    { label: 'Company Details' },
+    { label: 'Company Configuration' },
+    { label: 'Company Base' },
     // { label: 'First Aircraft' },
     // { label: 'Schedules' },
   ];
@@ -88,6 +89,7 @@ const OnbordingRoutes = () => {
               />
             }
           />
+          <Route path="/join" element={<OnbordingJoin />} />
         </Routes>
       </ProtectedRoute>
     </>

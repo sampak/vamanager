@@ -1,0 +1,56 @@
+@import 'src/styles/colors.scss';
+
+$marginAnimation: 64px;
+$marginAnimationEnd: 84px;
+
+.content {
+  margin: auto;
+  margin-top: 100px;
+  width: 90%;
+}
+
+.header {
+  width: 100%;
+}
+
+.backButton {
+  display: flex;
+  gap: 8px;
+  margin: auto;
+  margin-top: 24px;
+  margin-left: 12.5%;
+  font-family: RobotoMedium;
+  align-items: center;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.backIcon {
+  padding-left: 64px;
+}
+
+.container {
+  width: 85%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+  margin-top: $marginAnimation;
+  gap: 84px;
+  opacity: 0;
+  animation-name: show;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: forwards;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+    margin-top: $marginAnimation;
+  }
+  to {
+    opacity: 1;
+    margin-top: $marginAnimationEnd;
+  }
+}

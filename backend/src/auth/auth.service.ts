@@ -21,7 +21,7 @@ export class AuthService {
       });
 
       if (bcrypt.compareSync(payload.password, prismaUser.password)) {
-        return jwt.genToken(PrismaUserToUser(prismaUser));
+        return jwt.genToken(PrismaUserToUser(prismaUser, true));
       }
 
       throw new BadRequestException('NOT_FOUND');
@@ -42,7 +42,8 @@ export class AuthService {
     const salt = await bcrypt.genSaltSync(config.saltRounds);
     payload.password = bcrypt.hashSync(payload.password, salt);
     const newUser = PrismaUserToUser(
-      await this.prisma.users.create({ data: payload })
+      await this.prisma.users.create({ data: payload }),
+      true
     );
 
     return jwt.genToken(newUser);

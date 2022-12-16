@@ -12,6 +12,7 @@ const prismaMembershipToMembership = (
     airlineId: membership.airlineId,
     userId: membership.userId,
     status: membership.status as MembershipStatus,
+    rating: membership.rating,
     role: membership.role as MembershipRole,
   };
 };

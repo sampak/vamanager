@@ -5,7 +5,7 @@ import { FC, Props } from './typings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import CropModal from 'components/CropModal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Formik } from 'formik';
 import Input from 'components/Input';
 import Dropdown from 'components/Dropdown';
@@ -96,8 +96,10 @@ const OnbordingDetails: FC<Props> = ({
               </div>
               <div className={styles.inputWrapper}>
                 <Input
+                  maxLength={3}
                   name="icao"
                   type="text"
+                  className={styles.icaoInput}
                   value={values.icao}
                   onBlur={handleBlur}
                   onChange={handleChange}

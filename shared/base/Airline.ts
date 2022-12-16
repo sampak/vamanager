@@ -13,6 +13,7 @@ export default interface Airline {
   ownerId: string;
   owner?: User;
   memberships?: Membership[];
-  joiningType?: JoiningMethod;
+  rating: Number;
+  joining_type?: JoiningMethod;
   options?: JSON;
 }

@@ -27,7 +27,7 @@ function App() {
           >
             <Routes>
               <Route
-                path="/workspace/*"
+                path="/workspace/:workspaceId/*"
                 element={
                   <ProtectedRoute>
                     <>tet</>

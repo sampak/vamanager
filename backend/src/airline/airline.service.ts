@@ -3,17 +3,72 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { Users } from '@prisma/client';
+import {
+  joining_type,
+  Memberships,
+  membership_role,
+  membership_status,
+  Users,
+} from '@prisma/client';
 import { CreateAirlineDTO } from '@shared/dto/CreateAirlineDTO';
 import { MembershipStatus } from '@shared/base/MembershipStatus';
 import { MembershipRole } from '@shared/base/MembershipRole';
 import { PrismaService } from 'src/prisma.service';
 import prismaAirlineToAirline from 'src/adapters/prismaAirlineToAirline';
 import { config } from 'src/config';
-
+import { User } from '@shared/base/User';
 @Injectable()
 export class AirlineService {
   constructor(private readonly prismaService: PrismaService) {}
+
+  async join(currentUser: User, airlineId: string) {
+    const airline = await this.prismaService.airlines.findUnique({
+      where: { id: airlineId },
+    });
+
+    if (!airline) {
+      throw new BadRequestException();
+    }
+
+    let status: membership_status = membership_status.WAITING_APPROVAL;
+
+    if (airline.joining_type === joining_type.PUBLIC_ACCESS) {
+      status = membership_status.ACTIVE;
+    }
+
+    const payload = {
+      airlineId: airlineId,
+      role: membership_role.PILOT,
+      status: status,
+      userId: currentUser.id,
+    };
+
+    try {
+      const membership = await this.prismaService.memberships.create({
+        data: payload,
+      });
+
+      return { key: membership.id, type: 'CREATE' };
+    } catch (e) {
+      console.log('Joining to workspace failed', e);
+    }
+  }
+
+  async getAll() {
+    const airlines = await this.prismaService.airlines.findMany({
+      where: {
+        joining_type: {
+          in: [joining_type.APPROVAL_NEEDED, joining_type.PUBLIC_ACCESS],
+        },
+      },
+      include: {
+        memberships: true,
+        owner: true,
+      },
+    });
+
+    return airlines.map((airline) => prismaAirlineToAirline(airline));
+  }
 
   async create(
     S3Client: AWS.S3,
@@ -36,7 +91,7 @@ export class AirlineService {
     const airline = await this.prismaService.airlines.create({
       data: {
         name: payload.name,
-        icao: payload.icao,
+        icao: payload.icao.toUpperCase(),
         baseId: payload.base,
         joining_type: payload.joiningMethod,
         ownerId: currentUser.id,

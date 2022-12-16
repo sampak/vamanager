@@ -9,6 +9,7 @@ export interface Membership {
   airline?: Airline;
   userId: string;
   user?: User;
+  rating: number;
   status: MembershipStatus;
   role: MembershipRole;
 }

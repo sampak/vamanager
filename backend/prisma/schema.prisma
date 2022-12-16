@@ -48,6 +48,7 @@ model Airlines {
   owner        Users?         @relation(fields: [ownerId], references: [id])
   memberships  Memberships[]
   balance      Int
+  rating       Int           @default(500)
   joining_type joining_type  @default(APPROVAL_NEEDED)
   options      String
   updatedAt    DateTime      @updatedAt
@@ -62,6 +63,7 @@ model Memberships {
   user      Users             @relation(fields: [userId], references: [id])
   status    membership_status @default(WAITING_APPROVAL)
   role      membership_role   @default(PILOT)
+  rating    Int               @default(500)
   updatedAt DateTime          @updatedAt
   createdAt DateTime          @default(now())
 }

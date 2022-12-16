@@ -6,12 +6,13 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import userService from 'api/userService';
 import AuthContext from 'contexts/auth';
 import { User } from '@shared/base/User';
+import LoadingScreen from 'components/LoadingScreen';
 
 const ProtectedRoute: FC<Props> = ({ children }) => {
   const access_token = getToken();
   const navigate = useNavigate();
   const { workspaceId } = useParams();
-  const { data, refetch, isError, error } = userService.useGetMe(
+  const { data, refetch, isError, error, isFetching } = userService.useGetMe(
     access_token,
     workspaceId
   );
@@ -22,16 +23,19 @@ const ProtectedRoute: FC<Props> = ({ children }) => {
     if (!access_token) {
       navigate('/auth/signin');
     }
+    setLoading(true);
     refetch();
   }, []);
 
   useEffect(() => {
     if (!!workspaceId?.length) {
+      setLoading(true);
       refetch();
     }
   }, [workspaceId]);
 
   useEffect(() => {
+    if (isFetching) return;
     const user = data?.data as User;
 
     if (user?.id) {
@@ -44,9 +48,18 @@ const ProtectedRoute: FC<Props> = ({ children }) => {
     }
   }, [data]);
 
-  const content = loading ? <></> : children;
+  const showLoadingScreen = loading || isFetching;
+  const showErrorScreen = isError;
 
-  return content;
+  if (showErrorScreen) {
+    return <>Error</>;
+  }
+
+  if (showLoadingScreen) {
+    return <LoadingScreen />;
+  }
+
+  return children;
 };
 
 export default ProtectedRoute;
