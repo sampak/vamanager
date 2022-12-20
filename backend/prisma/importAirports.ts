@@ -14,7 +14,7 @@ const importAirports = async () => {
   try {
     prisma.$transaction(
       async (transactionPrisma) => {
-        await transactionPrisma.airports.deleteMany({});
+        transactionPrisma.airports.deleteMany({});
 
         return await Promise.all(
           lines

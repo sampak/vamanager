@@ -17,6 +17,7 @@ import { PrismaService } from 'src/prisma.service';
 import prismaAirlineToAirline from 'src/adapters/prismaAirlineToAirline';
 import { config } from 'src/config';
 import { User } from '@shared/base/User';
+import prismaAircraftToAircraft from 'src/adapters/prismaAircraftToAircraft';
 @Injectable()
 export class AirlineService {
   constructor(private readonly prismaService: PrismaService) {}
@@ -52,6 +53,26 @@ export class AirlineService {
     } catch (e) {
       console.log('Joining to workspace failed', e);
     }
+  }
+
+  async getAircrafts(airlineId: string) {
+    const airline = await this.prismaService.airlines.findFirst({
+      where: {
+        icao: airlineId,
+      },
+    });
+
+    if (!airline) throw new BadRequestException('BAD_REQUEST');
+
+    const prismaAircrafts = await this.prismaService.aircrafts.findMany({
+      where: {
+        airlineId: airline.id,
+      },
+    });
+
+    return prismaAircrafts.map((aircraft) =>
+      prismaAircraftToAircraft(aircraft)
+    );
   }
 
   async getAll() {

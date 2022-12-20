@@ -4,6 +4,7 @@ import { CreateAirlineDTO } from '@shared/dto/CreateAirlineDTO';
 import { CurrentUser } from 'src/decorators/CurrentUser.decorator';
 import { S3Client } from 'src/decorators/S3Client.decoratior';
 import * as AWS from 'aws-sdk';
+import { Users } from '@prisma/client';
 @Controller('airline')
 export class AirlineController {
   constructor(private readonly airlineService: AirlineService) {}
@@ -14,6 +15,14 @@ export class AirlineController {
     @Param('airlineId') airlineId: string
   ) {
     return await this.airlineService.join(currentUser, airlineId);
+  }
+
+  @Get(':airlineId/aircrafts')
+  async getAircrafts(
+    @CurrentUser() currentUser: Users,
+    @Param('airlineId') airlineId: string
+  ) {
+    return await this.airlineService.getAircrafts(airlineId);
   }
 
   @Get('/')
