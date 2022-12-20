@@ -1,0 +1,12 @@
+@import 'src/styles/colors.scss';
+
+.layout {
+  height: 97.5vh;
+  display: flex;
+}
+
+.content {
+  margin-left: calc(65px + 24px);
+  margin-right: 24px;
+  padding-top: 24px;
+}

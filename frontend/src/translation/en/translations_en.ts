@@ -108,4 +108,16 @@ export const TRANSLATIONS_EN = {
       signIn: 'Sign In',
     },
   },
+  sidebar: {
+    home: 'Home',
+    schedules: 'Schedules',
+    aircrafts: 'Aircrafts',
+    logOut: 'Log Out',
+
+    roles: {
+      ADMIN: 'Admin',
+      DISPATCHER: 'Dispatcher',
+      PILOT: 'Pilot',
+    },
+  },
 };

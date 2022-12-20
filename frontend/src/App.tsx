@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { User } from '@shared/base/User';
 import OnbordingRoutes from 'modules/Onbording';
 import ChooseWorkspace from 'modules/ChooseWorkspace';
+import WorkspaceRoutes from 'modules/Workspace';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -37,7 +38,7 @@ function App() {
                 path="/workspace/:workspaceId/*"
                 element={
                   <ProtectedRoute>
-                    <>tet</>
+                    <WorkspaceRoutes />
                   </ProtectedRoute>
                 }
               />
