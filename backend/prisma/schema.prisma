@@ -25,16 +25,16 @@ model Users {
 }
 
 model Airports {
-  id        String     @id @default(uuid())
-  icao      String
-  name      String
-  country   String
-  lat       Float
-  lng       Float
-  runwayLength Int @default(0)
-  airlines  Airlines[]
-  updatedAt DateTime   @updatedAt
-  createdAt DateTime   @default(now())
+  id           String     @id @default(uuid())
+  icao         String
+  name         String
+  country      String
+  lat          Float
+  lng          Float
+  runwayLength Int        @default(0)
+  airlines     Airlines[]
+  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime   @default(now())
 }
 
 model Airlines {
@@ -43,10 +43,11 @@ model Airlines {
   name         String        @unique
   icao         String        @unique
   baseId       String
-  base         Airports?      @relation(fields: [baseId], references: [id])
+  base         Airports?     @relation(fields: [baseId], references: [id])
   ownerId      String
-  owner        Users?         @relation(fields: [ownerId], references: [id])
+  owner        Users?        @relation(fields: [ownerId], references: [id])
   memberships  Memberships[]
+  aircrafts    Aircrafts[]
   balance      Int
   rating       Int           @default(500)
   joining_type joining_type  @default(APPROVAL_NEEDED)
@@ -66,6 +67,28 @@ model Memberships {
   rating    Int               @default(500)
   updatedAt DateTime          @updatedAt
   createdAt DateTime          @default(now())
+}
+
+model Aircrafts {
+  id           String   @id @default(uuid())
+  image        String
+  airlineId    String
+  airline      Airlines @relation(fields: [airlineId], references: [id])
+  type         String
+  registration String
+  minutes      Int
+  miles        Int
+  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now())
+}
+
+model AircraftsDealer {
+  id        String   @id @default(uuid())
+  type      String
+  image     String
+  cost      Int
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }
 
 enum membership_role {
