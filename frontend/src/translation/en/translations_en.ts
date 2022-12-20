@@ -63,7 +63,7 @@ export const TRANSLATIONS_EN = {
     },
     details: {
       title: 'Company Details',
-      subTitle: 'Let us help you set up your first company!',
+      subTitle: 'Let us help you set up your company!',
       airlineName: 'Enter company name',
       airlineIcao: 'Enter company icao',
       airlineDescriptionLabel: 'Enter description (Optional)',
@@ -105,6 +105,7 @@ export const TRANSLATIONS_EN = {
     buttons: {
       APPROVAL_NEEDED: 'Request Access',
       PUBLIC_ACCESS: 'Join',
+      signIn: 'Sign In',
     },
   },
 };

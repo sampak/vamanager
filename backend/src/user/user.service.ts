@@ -9,6 +9,28 @@ import getUserConfiguration from 'src/ui-configuration/user';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
+  async getMemberships(prismaUser: Users) {
+    const prismaMemberships = await this.prisma.memberships.findMany({
+      where: {
+        userId: prismaUser.id,
+        status: {
+          in: [
+            membership_status.ACTIVE,
+            membership_status.WAITING_APPROVAL,
+            membership_status.WAITING_TO_JOIN,
+          ],
+        },
+      },
+      include: {
+        airline: true,
+      },
+    });
+
+    return prismaMemberships.map((membership) =>
+      prismaMembershipToMembership(membership)
+    );
+  }
+
   async getMe(prismaUser: Users & { memberships?: Memberships }) {
     const memberships = await this.prisma.memberships.findMany({
       where: {

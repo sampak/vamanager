@@ -1,0 +1,33 @@
+@import 'src/styles/colors.scss';
+
+.logo {
+  position: absolute;
+  left: 48px;
+  top: 28px;
+}
+
+.header {
+  margin-top: 100px;
+}
+
+.container {
+}
+
+.content {
+  width: 75%;
+  margin: auto;
+  padding-left: 120px;
+  margin-top: 84px;
+  gap: 24px;
+}
+
+.addButtonWrapper {
+  width: 75%;
+  display: flex;
+  justify-content: flex-end;
+  color: $logoColor;
+}
+
+.button {
+  cursor: pointer;
+}

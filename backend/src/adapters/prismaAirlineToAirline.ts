@@ -16,10 +16,12 @@ const prismaAirlineToAirline = (
     icao: airline.icao,
     rating: airline.rating / 100,
     joining_type: airline.joining_type as JoiningMethod,
-    memberships: airline?.memberships.map((membership) =>
-      prismaMembershipToMembership(membership)
-    ),
-    owner: PrismaUserToUser(airline.owner),
+    memberships: airline?.memberships
+      ? airline?.memberships.map((membership) =>
+          prismaMembershipToMembership(membership)
+        )
+      : null,
+    owner: airline.owner ? PrismaUserToUser(airline.owner) : null,
   };
 };
 

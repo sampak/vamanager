@@ -15,22 +15,50 @@ import Badge from 'components/Badge';
 import { JoiningMethod } from '@shared/base/JoiningMethod';
 import BodyText from 'components/BodyText';
 import { useTranslation } from 'react-i18next';
+import { MembershipStatus } from '@shared/base/MembershipStatus';
+import classNames from 'classnames';
 
-const AirlineCard: FC<Props> = ({ airline, onClick }) => {
+const AirlineCard: FC<Props> = ({
+  membership,
+  choose = false,
+  airline,
+  onClick,
+}) => {
   const translation = useTranslation();
   const t = (key: string) => translation.t(`airlineCard.${key}`);
-  const buttonText = t(`buttons.${airline.joining_type}`);
+
+  const getButtonText = () => {
+    if (choose) {
+      return t('buttons.signIn');
+    }
+
+    return t(`buttons.${airline.joining_type}`);
+  };
 
   const elo = (1000 * (airline?.rating as number)) / 100;
   const stars = (elo * 5) / 100;
 
+  const isDisabled = choose && membership?.status !== MembershipStatus.ACTIVE;
+  const isChosenStylesButton = choose && styles.chooseButton;
+
   return (
     <div className={styles.card}>
       <div className={styles.badgeContainer}>
-        <Badge
-          className={styles.badge}
-          text={t(`badges.${airline.joining_type}`)}
-        />
+        {choose ? (
+          <>
+            {membership?.status === MembershipStatus.WAITING_APPROVAL && (
+              <Badge
+                className={styles.badge}
+                text={t(`badges.${airline.joining_type}`)}
+              />
+            )}
+          </>
+        ) : (
+          <Badge
+            className={styles.badge}
+            text={t(`badges.${airline.joining_type}`)}
+          />
+        )}
       </div>
       <div className={styles.airline}>
         <Avatar src={airline.image} className={styles.avatar}></Avatar>
@@ -45,47 +73,54 @@ const AirlineCard: FC<Props> = ({ airline, onClick }) => {
           </BodyText>
         </div>
       </div>
-
-      <div className={styles.details}>
-        <div className={styles.detail}>
-          <FontAwesomeIcon className={styles.icon} icon={faUser} />
-          <div className={styles.text}>
-            <span>{airline.memberships?.length}</span>
-            {airline.memberships?.length === 1 ? t('pilot') : t('pilots')}
+      {choose ? (
+        <></>
+      ) : (
+        <>
+          <div className={styles.details}>
+            <div className={styles.detail}>
+              <FontAwesomeIcon className={styles.icon} icon={faUser} />
+              <div className={styles.text}>
+                <span>{airline.memberships?.length}</span>
+                {airline.memberships?.length === 1 ? t('pilot') : t('pilots')}
+              </div>
+            </div>
+            <div className={styles.detail}>
+              <FontAwesomeIcon className={styles.icon} icon={faPlaneUp} />
+              <div className={styles.text}>
+                <span>0</span>
+                {t('aircraft')}
+              </div>
+            </div>
+            <div className={styles.detail}>
+              <FontAwesomeIcon className={styles.icon} icon={faCalendar} />
+              <div className={styles.text}>
+                <span>0</span>
+                {t('flight')}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+      {!choose && (
+        <div className={styles.creatorContainer}>
+          <div className={styles.creatorWrapper}>
+            <Avatar className={styles.creatorAvatar}>
+              {airline.owner?.firstName?.charAt(0)}
+              {airline.owner?.lastName?.charAt(0)}
+            </Avatar>
+            {airline.owner?.firstName} {airline.owner?.lastName}
           </div>
         </div>
-        <div className={styles.detail}>
-          <FontAwesomeIcon className={styles.icon} icon={faPlaneUp} />
-          <div className={styles.text}>
-            <span>0</span>
-            {t('aircraft')}
-          </div>
-        </div>
-        <div className={styles.detail}>
-          <FontAwesomeIcon className={styles.icon} icon={faCalendar} />
-          <div className={styles.text}>
-            <span>0</span>
-            {t('flight')}
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.creatorContainer}>
-        <div className={styles.creatorWrapper}>
-          <Avatar className={styles.creatorAvatar}>
-            {airline.owner?.firstName?.charAt(0)}
-            {airline.owner?.lastName?.charAt(0)}
-          </Avatar>
-          {airline.owner?.firstName} {airline.owner?.lastName}
-        </div>
-      </div>
+      )}
 
       <div className={styles.buttonWrapper}>
         <RoundedButton
+          disabled={isDisabled}
           onClick={() => onClick(airline)}
-          className={styles.button}
+          className={classNames(styles.button, isChosenStylesButton)}
         >
-          {buttonText}
+          {getButtonText()}
         </RoundedButton>
       </div>
     </div>

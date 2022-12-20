@@ -7,6 +7,7 @@ const queryKeys = {
     token,
     workspace,
   ],
+  getMemberships: 'userService.getMemberships',
 };
 
 const getMe = (workspace: string | undefined) => {
@@ -27,6 +28,15 @@ const useGetMe = (token: string, workspace?: string) => {
   });
 };
 
+const getMemberships = () => {
+  return axiosInstance.get('/user/memberships');
+};
+
+const useGetMemberships = () => {
+  return useQuery(queryKeys.getMemberships, () => getMemberships());
+};
+
 export default {
   useGetMe,
+  useGetMemberships,
 };

@@ -11,7 +11,14 @@ import AuthContext from 'contexts/auth';
 import { useState } from 'react';
 import { User } from '@shared/base/User';
 import OnbordingRoutes from 'modules/Onbording';
-const queryClient = new QueryClient();
+import ChooseWorkspace from 'modules/ChooseWorkspace';
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 function App() {
   const [user, setUser] = useState<User | null>(null);
 
@@ -38,7 +45,7 @@ function App() {
                 path="/choose-workspace"
                 element={
                   <ProtectedRoute>
-                    <>tet 2</>
+                    <ChooseWorkspace />
                   </ProtectedRoute>
                 }
               />
