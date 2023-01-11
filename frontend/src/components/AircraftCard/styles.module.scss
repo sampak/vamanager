@@ -1,0 +1,73 @@
+@import 'src/styles/colors.scss';
+
+.card {
+  position: relative;
+  width: 254px;
+  min-height: 265px;
+  background: $mainBackgroundColor;
+  box-shadow: $shadowColor 0px 8px 32px;
+  border-radius: 8px;
+}
+
+.imageContainer {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  min-height: 148px;
+  max-height: 148px;
+  user-select: none;
+  img {
+    width: 100%;
+  }
+}
+
+.overflowMenu {
+  cursor: pointer;
+  position: absolute;
+  font-size: 21px;
+  top: 5px;
+  color: black;
+  right: 0%;
+  transform: translateX(-100%);
+}
+
+.description {
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 12px;
+}
+
+.inputWrapper {
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 24px;
+}
+
+.name {
+  font-size: 21px !important;
+  font-family: RobotoMedium !important;
+}
+
+.context {
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 24px;
+  align-items: center;
+  font-size: 12px;
+}
+
+.info {
+  margin-bottom: 2.5px;
+}
+
+.barWrapper {
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-bottom: 24px;
+}
+
+.barTitle {
+  font-size: 14px !important;
+  padding-bottom: 2.5px;
+}

@@ -1,0 +1,45 @@
+@import 'src/styles/colors.scss';
+
+.card {
+  position: relative;
+  width: 254px;
+  min-height: 265px;
+  background: $mainBackgroundColor;
+  box-shadow: $shadowColor 0px 8px 32px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.imageContainer {
+  min-height: 148px;
+  max-height: 148px;
+  img {
+    width: 100%;
+  }
+}
+
+.description {
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 12px;
+}
+
+.inputWrapper {
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 24px;
+}
+
+.name {
+  font-size: 21px !important;
+  font-family: RobotoMedium !important;
+}
+
+.context {
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}

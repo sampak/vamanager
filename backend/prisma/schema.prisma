@@ -74,21 +74,24 @@ model Aircrafts {
   image        String
   airlineId    String
   airline      Airlines @relation(fields: [airlineId], references: [id])
+  manufacture  String   @default("")
   type         String
   registration String   @unique
   minutes      Int      @default(0)
   miles        Int      @default(0)
+  condition    Int      @default(100)
   updatedAt    DateTime @updatedAt
   createdAt    DateTime @default(now())
 }
 
 model AircraftsDealer {
-  id        String   @id @default(uuid())
-  type      String
-  image     String
-  cost      Int
-  updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
+  id          String   @id @default(uuid())
+  manufacture String   @default("")
+  type        String
+  image       String
+  cost        Int
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
 }
 
 enum membership_role {

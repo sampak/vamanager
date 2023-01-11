@@ -4,6 +4,7 @@ $iconColor: black;
 $activeIconColor: $logoColor;
 
 .menu {
+  z-index: 100;
   position: fixed;
   padding-top: 24px;
   width: 65px;

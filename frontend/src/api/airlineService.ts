@@ -1,9 +1,14 @@
+import Aircraft from '@shared/base/Aircraft';
 import { CreateAirlineDTO } from '@shared/dto/CreateAirlineDTO';
 import { useMutation, useQuery } from 'react-query';
 import { axiosInstance } from './axios';
 
 const queryKeys = {
-  getAll: 'userService.getMe',
+  getAll: 'airlineService.getAll',
+  getAircrafts: (workspaceID: string) => [
+    'airlineService.getAircrafts',
+    workspaceID,
+  ],
 };
 
 const createAirline = (payload: CreateAirlineDTO) => {
@@ -30,8 +35,19 @@ const useJoinToAirline = () => {
   return useMutation(joinToAirline);
 };
 
+const getAircrafts = (workspaceID: string): Promise<{ data: Aircraft[] }> => {
+  return axiosInstance.get(`/airline/${workspaceID}/aircrafts`);
+};
+
+const useGetAircrafts = (workspaceID: string) => {
+  return useQuery(queryKeys.getAircrafts(workspaceID), () =>
+    getAircrafts(workspaceID)
+  );
+};
+
 export default {
   useCreateAirline,
   useGetAllAirlines,
   useJoinToAirline,
+  useGetAircrafts,
 };

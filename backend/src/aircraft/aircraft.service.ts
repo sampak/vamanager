@@ -13,12 +13,13 @@ import prismaAircraftToAircraft from 'src/adapters/prismaAircraftToAircraft';
 export class AircraftService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async buy(
-    currentUser: Users,
-    airlineId: string,
-    aircraftId: string,
-    payload: BuyAircraftDTO
-  ) {
+  async getDealerAircrafts() {
+    const aircrafts = await this.prismaService.aircraftsDealer.findMany();
+
+    return aircrafts;
+  }
+
+  async buy(airlineId: string, aircraftId: string, payload: BuyAircraftDTO) {
     const airline = await this.prismaService.airlines.findFirst({
       where: {
         icao: airlineId,
@@ -67,6 +68,7 @@ export class AircraftService {
             data: {
               image: aircraft.image,
               airlineId: airline.id,
+              manufacture: aircraft.manufacture,
               type: aircraft.type,
               registration: payload.registration,
             },

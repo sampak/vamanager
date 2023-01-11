@@ -7,6 +7,7 @@ const prismaAircraftToAircraft = (aircraft: Aircrafts): Aircraft => {
     airlineId: aircraft.airlineId,
     image: aircraft.image,
     registration: aircraft.registration,
+    manufacture: aircraft.manufacture,
     type: aircraft.type,
     miles: aircraft.miles,
     minutes: aircraft.minutes,

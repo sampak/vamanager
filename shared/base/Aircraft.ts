@@ -5,6 +5,7 @@ export default interface Aircraft {
   image: string;
   airlineId: string;
   airline?: Airline;
+  manufacture: string;
   type: string;
   registration: string;
   minutes: number;

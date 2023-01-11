@@ -120,4 +120,12 @@ export const TRANSLATIONS_EN = {
       PILOT: 'Pilot',
     },
   },
+  aircraftDealer: {
+    errors: {
+      BAD_REQUEST_AIRLINE: 'Please check your airline',
+      REGISTRATION_OWNED: 'Provided registration is owned by another aircraft',
+      TRANSACTION: 'An error occurred, try again later.',
+      BALANCE: 'Insufficient funds to buy this plane',
+    },
+  },
 };

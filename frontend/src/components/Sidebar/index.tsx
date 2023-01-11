@@ -10,11 +10,12 @@ import {
   faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 import Logo from 'components/Logo';
-import { matchPath, useParams } from 'react-router-dom';
+import { matchPath, useNavigate, useParams } from 'react-router-dom';
 import AuthContext from 'contexts/auth';
 import { getLettersFromName } from 'utils/getLettersFromName';
 import { useTranslation } from 'react-i18next';
 import useLogout from 'hooks/useLogout';
+import { navigateInsideWorkspace } from 'utils/navigateInsideWorkspace';
 
 enum MenuOptions {
   Home = 'Home',
@@ -23,6 +24,7 @@ enum MenuOptions {
 }
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const translation = useTranslation();
   const t = (key: string) => translation.t(`sidebar.${key}`);
   const { workspaceId } = useParams();
@@ -57,7 +59,10 @@ const Sidebar = () => {
       onMouseLeave={() => setShow(false)}
       className={classNames(styles.menu, showedClassName)}
     >
-      <div className={styles.logoContent}>
+      <div
+        onClick={() => navigateInsideWorkspace(navigate, workspaceId!, '')}
+        className={styles.logoContent}
+      >
         <Logo size={24} />
       </div>
 
@@ -76,7 +81,10 @@ const Sidebar = () => {
       <div className={styles.border}></div>
 
       <div className={styles.options}>
-        <div className={styles.option}>
+        <div
+          onClick={() => navigateInsideWorkspace(navigate, workspaceId!, '')}
+          className={styles.option}
+        >
           <div className={styles.iconBox}>
             <FontAwesomeIcon
               icon={faHouse}
@@ -97,19 +105,24 @@ const Sidebar = () => {
           </div>
           <div className={styles.optionName}>{t('schedules')}</div>
         </div>
-        <div className={classNames(styles.option)}>
+        <div
+          onClick={() =>
+            navigateInsideWorkspace(navigate, workspaceId!, '/aircrafts')
+          }
+          className={classNames(styles.option)}
+        >
           <div className={styles.iconBox}>
             <FontAwesomeIcon
               icon={faPlaneUp}
-              className={classNames(styles.optionIcon, tutorialCreateAircraft)}
+              className={classNames(
+                styles.optionIcon,
+                tutorialCreateAircraft,
+                isAircrafts && styles.activeIcon
+              )}
             />
           </div>
           <div
-            className={classNames(
-              styles.optionName,
-              tutorialCreateAircraft,
-              isAircrafts && styles.activeIcon
-            )}
+            className={classNames(styles.optionName, tutorialCreateAircraft)}
           >
             {t('aircrafts')}
           </div>

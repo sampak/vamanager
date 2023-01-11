@@ -1,0 +1,28 @@
+@import 'src/styles/colors.scss';
+
+.dropdown {
+  position: absolute;
+  z-index: 100;
+  top: 32px;
+  left: calc(100% - 32px);
+  width: 148px;
+  min-height: 32px;
+  background: $mainBackgroundColor;
+  border-radius: 8px;
+  overflow: hidden;
+  user-select: none;
+  box-shadow: $shadowColor 0px 8px 32px;
+}
+
+.option {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  height: 48px;
+  font-family: RobotoRegular;
+  overflow: hidden;
+  &:hover {
+    background: rgba(200, 200, 200, 0.3);
+  }
+}
