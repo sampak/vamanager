@@ -4,11 +4,16 @@ import Title from 'components/Title';
 import AircraftStatusBar from 'components/AircraftStatusBar';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useFeature } from '@growthbook/growthbook-react';
 import DropdownMenu from 'components/DropdownMenu';
+import { FeatureFlags } from '@shared/base/FeatureFlags';
 import { useState } from 'react';
 
 const AircraftCard: FC<Props> = ({ aircraft }) => {
   const [menu, setMenu] = useState(false);
+  const isAircraftConditionEnabled = useFeature(
+    FeatureFlags.AIRCRAFT_CONDITION
+  ).on;
   const sellAircraft = () => {
     console.log('clicked');
   };
@@ -37,12 +42,14 @@ const AircraftCard: FC<Props> = ({ aircraft }) => {
         <div className={styles.info}>0 miles</div>
         <div className={styles.info}>last flight: EPWA -&gt; EPWR</div>
       </div>
-      <div className={styles.barWrapper}>
-        <Title className={styles.barTitle} black>
-          Conditon:
-        </Title>
-        <AircraftStatusBar percent={100} />
-      </div>
+      {isAircraftConditionEnabled && (
+        <div className={styles.barWrapper}>
+          <Title className={styles.barTitle} black>
+            Conditon:
+          </Title>
+          <AircraftStatusBar percent={100} />
+        </div>
+      )}
       <DropdownMenu toggle={setMenu} isOpen={menu} options={options} />
     </div>
   );

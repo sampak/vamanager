@@ -12,7 +12,6 @@ const AircraftList = () => {
   const { data, isFetching } = airlineService.useGetAircrafts(workspaceId!);
 
   const aircrafts = useMemo(() => data?.data ?? [], [data]);
-  console.log(!aircrafts.length);
   return (
     <div className={styles.container}>
       <Title black>Company Aircrafts</Title>
