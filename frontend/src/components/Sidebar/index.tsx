@@ -46,10 +46,14 @@ const Sidebar = () => {
     if (option === MenuOptions.Aircrafts) {
       return isPathActive(`/workspace/${workspaceId}/aircrafts`, location);
     }
+    if (option === MenuOptions.Schedules) {
+      return isPathActive(`/workspace/${workspaceId}/schedules`, location);
+    }
   };
 
   const isHome = isMenuOptionActive(MenuOptions.Home);
   const isAircrafts = isMenuOptionActive(MenuOptions.Aircrafts);
+  const isSchedules = isMenuOptionActive(MenuOptions.Schedules);
 
   const logout = useLogout();
 
@@ -96,11 +100,19 @@ const Sidebar = () => {
           </div>
           <div className={styles.optionName}>{t('home')}</div>
         </div>
-        <div className={styles.option}>
+        <div
+          onClick={() =>
+            navigateInsideWorkspace(navigate, workspaceId!, '/schedules')
+          }
+          className={styles.option}
+        >
           <div className={styles.iconBox}>
             <FontAwesomeIcon
               icon={faCalendarAlt}
-              className={styles.optionIcon}
+              className={classNames(
+                styles.optionIcon,
+                isSchedules && styles.activeIcon
+              )}
             />
           </div>
           <div className={styles.optionName}>{t('schedules')}</div>

@@ -12,10 +12,11 @@ const Input: FC<Props> = ({
   value,
   error,
   className,
+  fref,
   ...props
 }) => {
   return (
-    <div className={styles.content}>
+    <div ref={fref} className={styles.content}>
       {!!label?.length && <div className={styles.label}>{label}</div>}
       <div className={styles.inputWrapper}>
         {icon && (
@@ -25,7 +26,11 @@ const Input: FC<Props> = ({
         )}
         <input
           placeholder={placeholder}
-          className={classNames(styles.input, className)}
+          className={classNames(
+            styles.input,
+            !icon && styles.withoutIcon,
+            className
+          )}
           value={value}
           onChange={onChange}
           {...props}

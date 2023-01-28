@@ -1,11 +1,17 @@
 import { FC, Props } from './typings';
 import styles from './styles.module.scss';
+import classNames from 'classnames';
 
-const DropdownMenu: FC<Props> = ({ options, isOpen, toggle }) => {
+const DropdownMenu: FC<Props> = ({
+  options,
+  isOpen,
+  toggle,
+  className = '',
+}) => {
   return (
     <>
       {isOpen && (
-        <div className={styles.dropdown}>
+        <div className={classNames(styles.dropdown, className)}>
           {options.map((option) => (
             <div
               onClick={() => {

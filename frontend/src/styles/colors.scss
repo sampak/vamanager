@@ -13,3 +13,8 @@ $CTAButton: #006afd;
 $badgeColor: rgba(0, 106, 253, 0.8);
 $shadowColor: rgb(67 32 0 / 6%);
 $errorColor: rgb(218, 15, 15);
+$gradient: linear-gradient(
+  280deg,
+  rgba(0, 106, 253, 1) 17%,
+  rgba(47, 57, 253, 1) 100%
+);

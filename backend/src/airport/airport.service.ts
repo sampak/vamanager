@@ -1,17 +1,39 @@
 import { Injectable } from '@nestjs/common';
+import prismaAirportToAirport from 'src/adapters/prismaAirportToAirport';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class AirportService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async getAll() {
-    return await this.prismaService.airports.findMany({
+  async search(search: string) {
+    const airports = await this.prismaService.airports.findMany({
       where: {
-        runwayLength: {
-          gte: 7000,
-        },
+        OR: [
+          {
+            icao: {
+              contains: search.toUpperCase(),
+            },
+          },
+          {
+            name: {
+              contains: search,
+            },
+          },
+          {
+            keywords: {
+              contains: search,
+            },
+          },
+        ],
       },
     });
+
+    return airports.map((airport) => prismaAirportToAirport(airport));
+  }
+
+  async getAll() {
+    const airports = await this.prismaService.airports.findMany({});
+    return airports.map((airport) => prismaAirportToAirport(airport));
   }
 }

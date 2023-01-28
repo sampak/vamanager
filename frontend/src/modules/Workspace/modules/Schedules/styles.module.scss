@@ -1,0 +1,29 @@
+@import 'src/styles/colors.scss';
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  margin-bottom: 48px;
+}
+
+.title {
+}
+
+.createButton {
+  color: $CTAButton;
+  cursor: pointer;
+}
+
+.loading {
+  left: 0;
+  top: 0;
+}
+
+.schedulesList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 100px;
+}

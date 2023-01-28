@@ -1,13 +1,15 @@
-import { Aircrafts } from '@prisma/client';
+import { Aircrafts, TypeOfAircraft } from '@prisma/client';
 import Aircraft from '@shared/base/Aircraft';
 
-const prismaAircraftToAircraft = (aircraft: Aircrafts): Aircraft => {
+const prismaAircraftToAircraft = (
+  aircraft: Aircrafts & { type: TypeOfAircraft }
+): Aircraft => {
   return {
     id: aircraft.id,
     airlineId: aircraft.airlineId,
     image: aircraft.image,
     registration: aircraft.registration,
-    manufacture: aircraft.manufacture,
+    typeId: aircraft.type.id,
     type: aircraft.type,
     miles: aircraft.miles,
     minutes: aircraft.minutes,

@@ -1,0 +1,68 @@
+@import 'src/styles/colors.scss';
+
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.inputWrapper {
+  display: flex;
+  width: 100%;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  border: solid 1px $bodyFontColor;
+  border-radius: 6px;
+  background: $mainBackgroundColor;
+  color: $bodyFontColor;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.label {
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: $secondaryFontColor;
+}
+
+.input {
+  outline: none;
+  border: none;
+  width: 100%;
+  height: 100%;
+  background: none;
+
+  &::placeholder {
+    color: $bodyFontColor;
+  }
+}
+
+.calendar {
+  position: absolute;
+  margin-top: 12px;
+  z-index: 999;
+}
+
+.dayClassNameActive {
+  background: $logoColor !important;
+  border-radius: 50% !important;
+
+  &:hover {
+    border-radius: 50% !important;
+  }
+}
+
+.isWeekDay {
+  color: $bodyFontColor;
+  background: none;
+}
+
+.day {
+  background: none;
+  color: $mainColor;
+}

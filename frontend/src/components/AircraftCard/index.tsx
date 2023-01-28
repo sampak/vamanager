@@ -33,7 +33,7 @@ const AircraftCard: FC<Props> = ({ aircraft }) => {
       </div>
       <div className={styles.description}>
         <Title className={styles.name} black>
-          {`${aircraft.manufacture} ${aircraft.type}`}
+          {`${aircraft.type.name}`}
         </Title>
       </div>
 
@@ -50,7 +50,12 @@ const AircraftCard: FC<Props> = ({ aircraft }) => {
           <AircraftStatusBar percent={100} />
         </div>
       )}
-      <DropdownMenu toggle={setMenu} isOpen={menu} options={options} />
+      <DropdownMenu
+        className={styles.dropdown}
+        toggle={setMenu}
+        isOpen={menu}
+        options={options}
+      />
     </div>
   );
 };

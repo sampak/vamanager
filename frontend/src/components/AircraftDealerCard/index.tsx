@@ -39,7 +39,7 @@ const AircraftDealerCard: FC<Props> = ({ aircraft, onClick, isFetching }) => {
       </div>
       <div className={styles.description}>
         <Title className={styles.name} black>
-          {`${aircraft.manufacture} ${aircraft.type}`}
+          {`${aircraft.type.name}`}
         </Title>
       </div>
 

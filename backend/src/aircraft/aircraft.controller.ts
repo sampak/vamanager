@@ -22,6 +22,23 @@ export class AircraftController {
     return this.aircraftService.getDealerAircrafts();
   }
 
+  @Get('/types')
+  async typesOfAircrafts(
+    @Param('airlineId') airlineId,
+    @CurrentUser() CurrentUser
+  ) {
+    return this.aircraftService.getAllCompanyTypeOfAircrafts(airlineId);
+  }
+
+  @Get('/type/:search')
+  async typeOfAircrafts(
+    @Param('airlineId') airlineId,
+    @Param('search') search,
+    @CurrentUser() CurrentUser
+  ) {
+    return this.aircraftService.searchCompanyTypeOfAircraft(airlineId, search);
+  }
+
   @SetMetadata('roles', [MembershipRole.ADMIN])
   @UseGuards(roleGuard)
   @Post('/:aircraftId')

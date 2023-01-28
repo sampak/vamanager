@@ -1,7 +1,9 @@
+import TypeOfAircraft from "./TypeOfAircraft";
+
 export default interface AircraftDealer {
   id: string;
-  manufacture: string;
-  type: string;
+  typeId: string;
+  type: TypeOfAircraft;
   image: string;
   cost: number;
 }

@@ -19,22 +19,29 @@ model Users {
   allowShowLastName Boolean?      @default(false)
   status            users_status  @default(ACTIVE)
   airlines          Airlines[]
+  schedules         Schedules[]
   updatedAt         DateTime      @updatedAt
   createdAt         DateTime      @default(now())
   memberships       Memberships[]
 }
 
 model Airports {
-  id           String     @id @default(uuid())
-  icao         String
-  name         String
-  country      String
-  lat          Float
-  lng          Float
-  runwayLength Int        @default(0)
-  airlines     Airlines[]
-  updatedAt    DateTime   @updatedAt
-  createdAt    DateTime   @default(now())
+  id                    String      @id @default(uuid())
+  icao                  String
+  iata                  String
+  elevation_ft          Float
+  name                  String
+  keywords              String
+  country               String
+  lat                   Float
+  lng                   Float
+  size                  String
+  passangers            Int
+  airlines              Airlines[]
+  schedules_origin      Schedules[] @relation("origin")
+  schedules_destination Schedules[] @relation("destination")
+  updatedAt             DateTime    @updatedAt
+  createdAt             DateTime    @default(now())
 }
 
 model Airlines {
@@ -48,6 +55,8 @@ model Airlines {
   owner        Users?        @relation(fields: [ownerId], references: [id])
   memberships  Memberships[]
   aircrafts    Aircrafts[]
+  schedules    Schedules[]
+  costIndex    Int           @default(15)
   balance      Int
   rating       Int           @default(500)
   joining_type joining_type  @default(APPROVAL_NEEDED)
@@ -70,28 +79,84 @@ model Memberships {
 }
 
 model Aircrafts {
-  id           String   @id @default(uuid())
+  id           String         @id @default(uuid())
   image        String
   airlineId    String
-  airline      Airlines @relation(fields: [airlineId], references: [id])
-  manufacture  String   @default("")
-  type         String
-  registration String   @unique
-  minutes      Int      @default(0)
-  miles        Int      @default(0)
-  condition    Int      @default(100)
-  updatedAt    DateTime @updatedAt
-  createdAt    DateTime @default(now())
+  airline      Airlines       @relation(fields: [airlineId], references: [id])
+  typeId       String
+  type         TypeOfAircraft @relation(fields: [typeId], references: [id])
+  registration String         @unique
+  minutes      Int            @default(0)
+  miles        Int            @default(0)
+  condition    Int            @default(100)
+  updatedAt    DateTime       @updatedAt
+  createdAt    DateTime       @default(now())
 }
 
 model AircraftsDealer {
-  id          String   @id @default(uuid())
-  manufacture String   @default("")
-  type        String
-  image       String
-  cost        Int
-  updatedAt   DateTime @updatedAt
-  createdAt   DateTime @default(now())
+  id        String         @id @default(uuid())
+  typeId    String         @default("")
+  type      TypeOfAircraft @relation(fields: [typeId], references: [id])
+  image     String
+  cost      Int
+  updatedAt DateTime       @updatedAt
+  createdAt DateTime       @default(now())
+}
+
+model TypeOfAircraft {
+  id              String            @id @default(uuid())
+  type            String
+  name            String
+  Schedules       Schedules[]
+  aircrafts       Aircrafts[]
+  aircraftsDealer AircraftsDealer[]
+  updatedAt       DateTime          @updatedAt
+  createdAt       DateTime          @default(now())
+}
+
+model Schedules {
+  id                  String            @id @default(uuid())
+  callsign            String
+  flightNumber        String
+  estimatedFuel       Int               @default(0)
+  airDistance         Int               @default(0)
+  recommendedRoute    String?
+  type                type_of_schedules @default(EVERYDAY)
+  airlineId           String
+  estimatedPassangers Int               @default(100)
+  originId            String
+  destinationId       String
+  creatorId           String
+  typeOfAircraftId    String
+  day                 DateTime
+  weekDay             Int               @default(0)
+  flightTime          Int               @default(0)
+  costIndex           String            @default("AUTO")
+  status              schedule_status
+  creator             Users             @relation(fields: [creatorId], references: [id])
+  airline             Airlines          @relation(fields: [airlineId], references: [id])
+  origin              Airports          @relation("origin", fields: [originId], references: [id])
+  destination         Airports          @relation("destination", fields: [destinationId], references: [id])
+  type_of_aircraft    TypeOfAircraft    @relation(fields: [typeOfAircraftId], references: [id])
+  type_of_flight      type_of_flight
+  updatedAt           DateTime          @updatedAt
+  createdAt           DateTime          @default(now())
+}
+
+enum schedule_status {
+  CREATING
+  CREATED
+}
+
+enum type_of_flight {
+  CARGO
+  PASSANGERS
+}
+
+enum type_of_schedules {
+  EVERYDAY
+  ON_CERTAIN_DAYS
+  ONCE
 }
 
 enum membership_role {

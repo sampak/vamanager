@@ -5,12 +5,14 @@ const getUserConfiguration = (
   prismaUser: Users & { memberships?: Memberships },
   memberships: Memberships[]
 ): UserUIConfiguration => {
-  const actualMembership = prismaUser?.memberships?.[0];
+  const membership = prismaUser?.memberships?.[0];
 
   return {
     showOnbording: !memberships?.length ?? true,
-    canManageAircrafts:
-      actualMembership?.role === membership_role.ADMIN ?? false,
+    createSchedules:
+      membership?.role === membership_role.ADMIN ||
+      membership?.role === membership_role.DISPATCHER,
+    canManageAircrafts: membership?.role === membership_role.ADMIN ?? false,
   };
 };
 

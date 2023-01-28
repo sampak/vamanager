@@ -14,9 +14,67 @@ export class AircraftService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async getDealerAircrafts() {
-    const aircrafts = await this.prismaService.aircraftsDealer.findMany();
+    const aircrafts = await this.prismaService.aircraftsDealer.findMany({
+      include: {
+        type: true,
+      },
+    });
 
     return aircrafts;
+  }
+
+  async getAllCompanyTypeOfAircrafts(airlineId: string) {
+    const company = await this.prismaService.airlines.findFirst({
+      where: { icao: airlineId },
+    });
+
+    if (!company) {
+      throw new BadRequestException('COMPANY');
+    }
+
+    const companyAircrafts = await this.prismaService.aircrafts.findMany({
+      where: {
+        airlineId: company.id,
+      },
+      distinct: ['typeId'],
+      include: {
+        type: true,
+      },
+    });
+
+    return companyAircrafts.map((aircraft) => aircraft.type);
+  }
+
+  async searchCompanyTypeOfAircraft(airlineId: string, search: string) {
+    const company = await this.prismaService.airlines.findFirst({
+      where: { icao: airlineId },
+    });
+
+    if (!company) {
+      throw new BadRequestException('COMPANY');
+    }
+
+    const companyAircrafts = await this.prismaService.aircrafts.findMany({
+      where: {
+        airlineId: company.id,
+        type: {
+          OR: [
+            {
+              type: { contains: search.toUpperCase() },
+            },
+            {
+              name: { contains: search.toUpperCase() },
+            },
+          ],
+        },
+      },
+      distinct: ['typeId'],
+      include: {
+        type: true,
+      },
+    });
+
+    return companyAircrafts.map((aircraft) => aircraft.type);
   }
 
   async buy(airlineId: string, aircraftId: string, payload: BuyAircraftDTO) {
@@ -45,6 +103,9 @@ export class AircraftService {
       where: {
         id: aircraftId,
       },
+      include: {
+        type: true,
+      },
     });
 
     if (!aircraft) {
@@ -68,9 +129,11 @@ export class AircraftService {
             data: {
               image: aircraft.image,
               airlineId: airline.id,
-              manufacture: aircraft.manufacture,
-              type: aircraft.type,
+              typeId: aircraft.type.id,
               registration: payload.registration,
+            },
+            include: {
+              type: true,
             },
           });
         }

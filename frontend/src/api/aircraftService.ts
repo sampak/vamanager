@@ -4,9 +4,38 @@ import { axiosInstance } from './axios';
 
 const queryKeys = {
   getDealerAircrafts: (workspaceId: string) => [
-    'userService.aircraftService',
+    'aircraftService.getDealerAircrafts',
     workspaceId,
   ],
+
+  searchCompanyTypeOfAircraft: (workspaceId: string, search: string) => [
+    'aircraftService.searchCompanyTypeOfAircraft',
+    workspaceId,
+    search,
+  ],
+};
+
+const searchCompanyTypeOfAircraft = async (
+  workspaceId: string,
+  search: string
+) => {
+  return await axiosInstance.get(
+    `/airline/${workspaceId}/aircraft/type/${search}`
+  );
+};
+
+const useSearchCompanyTypeOfAircraft = (
+  workspaceId: string,
+  search: string,
+  enabled?: boolean
+) => {
+  return useQuery(
+    queryKeys.searchCompanyTypeOfAircraft(workspaceId, search),
+    () => searchCompanyTypeOfAircraft(workspaceId, search),
+    {
+      enabled: enabled ?? true,
+    }
+  );
 };
 
 const buyAircraft = (payload: {
@@ -39,4 +68,5 @@ const useGetAllDealerAircrafts = (workspaceId: string) => {
 export default {
   useGetAllDealerAircrafts,
   useBuyAircraft,
+  useSearchCompanyTypeOfAircraft,
 };

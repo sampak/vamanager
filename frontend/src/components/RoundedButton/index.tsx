@@ -8,16 +8,19 @@ const RoundedButton: FC<Props> = ({
   onClick,
   children,
   className,
+  type = 'submit',
   outline = false,
   disabled = false,
   isLoading = false,
 }) => {
   const outlineStyle = outline ? styles.outline : '';
-  const disabledStyle = disabled ? styles.disabled : '';
+  const disabledStyle = disabled || isLoading ? styles.disabled : '';
   return (
     <button
+      type={type}
       onClick={() => {
         if (disabled) return;
+        if (isLoading) return;
         onClick?.();
       }}
       className={classNames(

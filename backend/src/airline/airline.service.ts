@@ -68,6 +68,9 @@ export class AirlineService {
       where: {
         airlineId: airline.id,
       },
+      include: {
+        type: true,
+      },
     });
 
     return prismaAircrafts.map((aircraft) =>

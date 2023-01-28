@@ -1,5 +1,7 @@
 export const config = {
   saltRounds: process.env.SALT_ROUNDS,
+  simbriefApiKey: process.env.SIMBRIEF_API_KEY,
+  simbriefOutputPage: 'http://localhost:3000',
   jwt: {
     secret: process.env.JWT_SECRET ?? 'xxxx',
     expiresIn: process.env.JWT_EXPIRES_IN ?? '3d',
