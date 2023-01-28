@@ -1,4 +1,17 @@
 export const TRANSLATIONS_EN = {
+  headers: {
+    signin: 'Sign In',
+    signup: 'Sign Up',
+    choose: 'Choose Company',
+    method: 'Onbording',
+    join: 'Join To Company',
+    details: 'Company Details',
+    configuration: 'Company Configuration',
+    base: 'Company Base',
+    schedules: 'Schedules',
+    aircrafts: 'Aircrafts',
+    dealer: 'Aircraft Dealer',
+  },
   signIn: {
     title: 'Sign in to Manager',
     subTitle: 'faster, easier manage your virtual airline',

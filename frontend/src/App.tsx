@@ -18,7 +18,7 @@ import { User } from '@shared/base/User';
 import OnbordingRoutes from 'modules/Onbording';
 import ChooseWorkspace from 'modules/ChooseWorkspace';
 import WorkspaceRoutes from 'modules/Workspace';
-
+import AppHeader from 'components/AppHeader';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -56,28 +56,33 @@ function App() {
                 setUser,
               }}
             >
-              <Routes>
-                <Route
-                  path="/workspace/:workspaceId/*"
-                  element={
-                    <ProtectedRoute>
-                      <WorkspaceRoutes />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/choose-workspace"
-                  element={
-                    <ProtectedRoute>
-                      <ChooseWorkspace />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="/onbording/*" element={<OnbordingRoutes />} />
-                <Route path="/auth/*" element={<AuthRoutes />} />
-                <Route path="/*" element={<LandingPageRoutes />} />
-              </Routes>
-              <ReactQueryDevtools />
+              <AppHeader>
+                <>
+                  <Routes>
+                    <Route
+                      path="/workspace/:workspaceId/*"
+                      element={
+                        <ProtectedRoute>
+                          <WorkspaceRoutes />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/choose-workspace"
+                      element={
+                        <ProtectedRoute>
+                          <ChooseWorkspace />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route path="/onbording/*" element={<OnbordingRoutes />} />
+                    <Route path="/auth/*" element={<AuthRoutes />} />
+                    <Route path="/*" element={<LandingPageRoutes />} />
+                  </Routes>
+
+                  <ReactQueryDevtools />
+                </>
+              </AppHeader>
             </AuthContext.Provider>
           </QueryClientProvider>
         </AxiosInterceptor>
