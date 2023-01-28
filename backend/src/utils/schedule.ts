@@ -4,8 +4,10 @@ const ticketCost = 150;
 const fuelCost = 2;
 
 export const calculateAirMultiplier = (airDistance: number) => {
-  const percent = (airDistance / 3000) * 100;
-  return (percent * 2.1) / 100;
+  const maxMultiplier = airDistance > 2000 ? 2.8 : 3.5;
+
+  const percent = (airDistance / 5000) * 100;
+  return (percent > 100 ? 100 : percent * maxMultiplier) / 100;
 };
 
 export const estimateSalary = (
