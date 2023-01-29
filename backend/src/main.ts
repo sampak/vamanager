@@ -17,7 +17,7 @@ async function bootstrap() {
     credentials: true,
   });
   app.use(express.json({ limit: '50mb' }));
-
-  await app.listen(4000);
+  console.log('Server listen on: ' + process.env.PORT);
+  await app.listen(process.env.PORT);
 }
 bootstrap();
