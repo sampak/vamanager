@@ -14,7 +14,9 @@ import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import authService from 'api/authService';
 import { setToken } from 'api/user';
 import codeContext from 'contexts/code';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import ErrorNoti from 'components/ErrorNoti';
+import { getAPIError } from 'utils/getAPIError';
 
 const SignIn: FC = () => {
   const navigate = useNavigate();
@@ -22,6 +24,7 @@ const SignIn: FC = () => {
   const { setCode } = useContext(codeContext);
   const t = (key: string) => translation.t(`signIn.${key}`);
   const { mutate: signIn, isLoading } = authService.useLogin();
+  const [error, setError] = useState('');
 
   const initialValues = {
     email: '',
@@ -40,7 +43,9 @@ const SignIn: FC = () => {
         if (e?.response?.status === 403) {
           setCode(e.response.data.id);
           navigate('/auth/verify');
+          return;
         }
+        setError(getAPIError(e, t));
       },
     });
   };
@@ -49,6 +54,7 @@ const SignIn: FC = () => {
 
   return (
     <div className={styles.content}>
+      {!!error.length && <ErrorNoti text={error} />}
       <div className={styles.badge}></div>
       <Title black>{t('title')}</Title>
       <BodyText black>{t('subTitle')}</BodyText>

@@ -13,6 +13,9 @@ export const TRANSLATIONS_EN = {
     dealer: 'Aircraft Dealer',
   },
   signIn: {
+    errors: {
+      NOT_FOUND: 'Email or password is invalid',
+    },
     title: 'Sign in to Manager',
     subTitle: 'faster, easier manage your virtual airline',
 
