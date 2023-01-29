@@ -1,8 +1,7 @@
 export const config = {
-  // develop: process.env.DEVELOP ?? false,
-  develop: false,
+  develop: process.env.DEVELOP ?? false,
   email: {
-    from: 'noreply VAManager',
+    from: 'noreply@vamanager.pl',
   },
   saltRounds: process.env.SALT_ROUNDS ?? 10,
   simbriefApiKey: process.env.SIMBRIEF_API_KEY,
