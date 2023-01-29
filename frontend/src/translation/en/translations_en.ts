@@ -37,6 +37,10 @@ export const TRANSLATIONS_EN = {
     title: 'Create an Account',
     subTitle: 'More effective manage your virtual airline',
 
+    errors: {
+      EMAIL_EXIST: 'Account with provided email is existing',
+    },
+
     inputFirstName: {
       label: 'First Name',
       placeholder: 'Enter first name',

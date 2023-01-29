@@ -13,7 +13,11 @@ import CTAButton from 'CTAButton';
 import { useNavigate } from 'react-router-dom';
 import { faUser, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import Checkbox from 'components/Checkbox';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import authService from 'api/authService';
+import codeContext from 'contexts/code';
+import { getAPIError } from 'utils/getAPIError';
+import ErrorNoti from 'components/ErrorNoti';
 
 interface InitialValues {
   firstName: string;
@@ -25,9 +29,12 @@ interface InitialValues {
 const SignUp: FC = () => {
   const navigate = useNavigate();
   const translation = useTranslation();
+  const { mutate: register, isLoading } = authService.useRegister();
   const t = (key: string) => translation.t(`signUp.${key}`);
+  const { setCode } = useContext(codeContext);
 
   const [showLastName, setShowLastName] = useState(false);
+  const [error, setError] = useState('');
 
   const initialValues: InitialValues = {
     firstName: '',
@@ -38,14 +45,28 @@ const SignUp: FC = () => {
 
   const handleSubmit = (e, values) => {
     e.preventDefault();
-
-    console.log('submitted');
+    setError('');
+    register(
+      { ...values, allowShowLastName: showLastName },
+      {
+        onSuccess: (response) => {
+          setCode(response.data.id);
+          navigate('/auth/verify');
+        },
+        onError: (err: any) => {
+          setError(getAPIError(err, t));
+        },
+      }
+    );
   };
 
   const handleSignIn = () => navigate('/auth/signin');
 
   return (
     <div className={styles.content}>
+      {!!error.length && (
+        <ErrorNoti className={styles.errorNoti} text={error} />
+      )}
       <div className={styles.badge}>
         <Badge text={t('beta')} />
       </div>
@@ -58,7 +79,7 @@ const SignUp: FC = () => {
         validateOnMount
         isInitialValid={false}
       >
-        {({ values, touched, handleChange, handleBlur, isValid }) => (
+        {({ values, touched, errors, handleChange, handleBlur, isValid }) => (
           <form
             onSubmit={(e) => handleSubmit(e, values)}
             className={styles.form}
@@ -72,7 +93,11 @@ const SignUp: FC = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.firstName}
-              error={touched.firstName ? t('inputFirstName.error') : ''}
+              error={
+                touched.firstName && errors.firstName
+                  ? t('inputFirstName.error')
+                  : ''
+              }
             />
             <Input
               icon={faUser}
@@ -83,7 +108,11 @@ const SignUp: FC = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.lastName}
-              error={touched.lastName ? t('inputLastName.error') : ''}
+              error={
+                touched.lastName && errors.lastName
+                  ? t('inputLastName.error')
+                  : ''
+              }
             />
             <Input
               icon={faEnvelope}
@@ -94,7 +123,7 @@ const SignUp: FC = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.email}
-              error={touched.email ? t('inputEmail.error') : ''}
+              error={touched.email && errors.email ? t('inputEmail.error') : ''}
             />
             <Input
               icon={faLock}
@@ -105,14 +134,20 @@ const SignUp: FC = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               type="password"
-              error={touched.password ? t('inputEmail.error') : ''}
+              error={
+                touched.password && errors.password ? t('inputEmail.error') : ''
+              }
             />
             <Checkbox
               label={t('showLastName')}
               checked={showLastName}
               onCheck={setShowLastName}
             />
-            <RoundedButton disabled={!isValid} className={styles.button}>
+            <RoundedButton
+              disabled={!isValid || isLoading}
+              isLoading={isLoading}
+              className={styles.button}
+            >
               {t('button')}
             </RoundedButton>
           </form>

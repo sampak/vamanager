@@ -1,9 +1,18 @@
 import { useMutation, useQuery } from 'react-query';
 import { LoginDTO } from '@shared/dto/LoginDTO';
+import { RegisterDTO } from '@shared/dto/RegisterDTO';
 import { axiosInstance } from './axios';
 
 const queryKeys = {
   resendCode: (userId: string) => ['authService.resendCode', userId],
+};
+
+const register = async (payload: RegisterDTO) => {
+  return await axiosInstance.post('/auth/signup', payload);
+};
+
+const useRegister = () => {
+  return useMutation(register);
 };
 
 const login = async (payload: LoginDTO) => {
@@ -33,6 +42,7 @@ const useSendCode = () => {
 };
 
 export default {
+  useRegister,
   useLogin,
   useResendCode,
   useSendCode,
