@@ -4,6 +4,7 @@ import * as express from 'express';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as AWS from 'aws-sdk';
+import emails from './utils/emails';
 
 AWS.config.update({ region: 'us-east-1' });
 

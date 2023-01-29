@@ -11,18 +11,19 @@ datasource db {
 }
 
 model Users {
-  id                String        @id @default(uuid())
+  id                String              @id @default(uuid())
   firstName         String
   lastName          String
-  email             String        @unique
+  email             String              @unique
   password          String
-  allowShowLastName Boolean?      @default(false)
-  status            users_status  @default(ACTIVE)
+  allowShowLastName Boolean?            @default(false)
+  status            users_status        @default(ACTIVE)
   airlines          Airlines[]
   schedules         Schedules[]
-  updatedAt         DateTime      @updatedAt
-  createdAt         DateTime      @default(now())
+  updatedAt         DateTime            @updatedAt
+  createdAt         DateTime            @default(now())
   memberships       Memberships[]
+  verificationCodes VerificationCodes[]
 }
 
 model Airports {
@@ -143,6 +144,15 @@ model Schedules {
   createdAt           DateTime          @default(now())
 }
 
+model VerificationCodes {
+  id        String   @id @default(uuid())
+  code      String
+  userId    String
+  user      Users    @relation(fields: [userId], references: [id])
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
 enum schedule_status {
   CREATING
   CREATED
@@ -183,4 +193,5 @@ enum users_status {
   ACTIVE
   NON_ACTIVE
   SUSPENDED
+  PENDING_CODE
 }

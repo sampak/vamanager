@@ -199,4 +199,12 @@ export const TRANSLATIONS_EN = {
     close: 'Close',
     create: 'Create',
   },
+
+  verify: {
+    title: 'Verification Code',
+    body: 'We have sent a verification code to this email address if you do not see it check your spam email',
+    button: 'Verify',
+    resend: 'Resend verification code',
+    error: 'Provided code is invalid',
+  },
 };

@@ -1,0 +1,43 @@
+@import 'src/styles/colors.scss';
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  width: 85%;
+  flex-direction: column;
+  padding-top: 24px;
+  text-align: center;
+}
+
+.otpWrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-top: 32px !important;
+  margin-bottom: 32px !important;
+}
+.otp {
+  width: 28px !important;
+  height: 24px !important;
+  font-size: 16px !important;
+
+  &:focus {
+    border-color: $logoColor !important;
+  }
+}
+
+.button {
+  width: 188px;
+  margin-bottom: 24px;
+}
+
+.error {
+  margin-bottom: 12px;
+}

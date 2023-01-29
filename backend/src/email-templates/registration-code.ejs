@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+  <style>
+      body {
+        font-family: 'Open Sans', sans-serif;
+        display: flex; 
+        flex-direction: column;
+        margin: auto;
+        width: 100%;
+      }
+
+      .modal {
+        width: 50%;
+        box-shadow: rgb(67 32 0 / 6%) 0px 8px 32px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 24px;
+        padding-bottom: 24px;
+        text-align: center;
+      }
+
+      .code-container {
+        text-align: center;
+      }
+
+      h1 {
+        line-height: 12px;
+      }
+
+      h2 {
+        line-height: 12px;
+      }
+
+      .codes {
+        line-height: 12px !important;
+        color: #006afd !important;
+      }
+
+      h4 {
+        font-size: 12px;
+        font-weight: 400;
+        width: 50%;
+        text-align: center;
+      }
+
+      p {
+        text-align: center;
+      }
+
+
+  </style>
+</head>
+<body>
+  <%- include('logo'); %>
+
+  <div class="modal">
+    <h1>Verify your account</h1>
+    <p>Thanks for signing up!<br />Use the code below to verify the email address associated with your account</p>
+
+
+    
+      <h2>Verification Code:</h2>
+      <h1 class="codes"><%= code %></h1>
+ 
+
+    <h4>If you didn't create an account, you can ignore this email.
+      Need help? Send us a note at <span>support@vamanager.com</span>.</h4>
+  </div>
+</body>
+</html>

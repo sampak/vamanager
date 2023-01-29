@@ -32,10 +32,12 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "csv-parser": "^3.0.0",
+    "ejs": "^3.1.8",
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.3.0",
     "moment": "^2.29.4",
+    "nodemailer": "^6.9.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"

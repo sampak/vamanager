@@ -5,3 +5,8 @@
   cursor: pointer;
   font-family: RobotoBold;
 }
+
+.disabled {
+  color: $disabledColor;
+  cursor: not-allowed;
+}

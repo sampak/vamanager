@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { RegisterDTO } from '@shared/dto/RegisterDTO';
 import { AuthService } from './auth.service';
 import { LoginDTO } from '@shared/dto/LoginDTO';
@@ -12,7 +12,19 @@ export class AuthController {
   }
 
   @Post('/signup')
-  async signUp(@Body() payload: RegisterDTO): Promise<string> {
+  async signUp(
+    @Body() payload: RegisterDTO
+  ): Promise<{ id: string; key: string }> {
     return await this.authService.signUp(payload);
+  }
+
+  @Post('/code')
+  async code(@Body() payload: { userId: string }) {
+    return await this.authService.code(payload);
+  }
+
+  @Get('/resend/:userId')
+  async resendCode(@Param('userId') userId: string) {
+    return this.authService.resendCode(userId);
   }
 }

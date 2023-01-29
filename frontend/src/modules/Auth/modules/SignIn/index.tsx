@@ -13,10 +13,13 @@ import { useNavigate } from 'react-router-dom';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import authService from 'api/authService';
 import { setToken } from 'api/user';
+import codeContext from 'contexts/code';
+import { useContext } from 'react';
 
 const SignIn: FC = () => {
   const navigate = useNavigate();
   const translation = useTranslation();
+  const { setCode } = useContext(codeContext);
   const t = (key: string) => translation.t(`signIn.${key}`);
   const { mutate: signIn, isLoading } = authService.useLogin();
 
@@ -33,7 +36,12 @@ const SignIn: FC = () => {
         setToken(response.data);
         navigate('/choose-workspace');
       },
-      onError: (e) => {},
+      onError: (e: any) => {
+        if (e?.response?.status === 403) {
+          setCode(e.response.data.id);
+          navigate('/auth/verify');
+        }
+      },
     });
   };
 

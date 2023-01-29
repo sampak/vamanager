@@ -1,5 +1,10 @@
 export const config = {
-  saltRounds: process.env.SALT_ROUNDS,
+  // develop: process.env.DEVELOP ?? false,
+  develop: false,
+  email: {
+    from: 'noreply VAManager',
+  },
+  saltRounds: process.env.SALT_ROUNDS ?? 10,
   simbriefApiKey: process.env.SIMBRIEF_API_KEY,
   simbriefOutputPage: 'http://localhost:3000',
   jwt: {
