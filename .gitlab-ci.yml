@@ -40,7 +40,7 @@ backend-build:       # This job runs in the build stage, which runs first.
     - npm run build
     - echo "Compile backend complete."
 
-deploy:
+backend-deploy:
   image: node:18-alpine3.14
   stage: deploy
   when: manual
@@ -52,4 +52,4 @@ deploy:
     - cd backend
     - npm install
     - npm run build
-    - lftp -c "set ftp:ssl-allow no; open -u $USERNAME,$PASSWORD $HOST; mirror -Rev dist/ /  --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
+    - lftp -c "set ftp:ssl-allow no; open -u $USERNAME,$PASSWORD $HOST; mirror -Rev dist/ api-node/  --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
