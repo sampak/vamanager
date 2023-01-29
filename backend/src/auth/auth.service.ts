@@ -108,7 +108,7 @@ export class AuthService {
 
     const prismaUser = await this.prisma.users.findFirst({
       where: {
-        id: payload.id,
+        id: payload.userId,
       },
     });
 
