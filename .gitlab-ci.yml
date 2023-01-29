@@ -52,4 +52,4 @@ backend-deploy:
     - cd backend
     - npm install
     - npm run build
-    - lftp -c "set ftp:ssl-allow no; open -u $USERNAME,$PASSWORD $HOST; mirror -Rev / api-node/  --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
+    - lftp -c "set ftp:ssl-allow no; open -u $USERNAME,$PASSWORD $HOST; mirror -Rev backend/ api-node/  --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
