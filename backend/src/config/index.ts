@@ -1,5 +1,5 @@
 export const config = {
-  develop: process.env.DEVELOP ?? false,
+  develop: process.env.DEVELOP === 'true' ? true : false,
   email: {
     from: 'noreply@vamanager.pl',
   },
