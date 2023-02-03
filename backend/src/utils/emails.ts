@@ -1,77 +1,29 @@
-import * as nodemailer from 'nodemailer';
-import * as ejs from 'ejs';
-import * as path from 'path';
 import { config } from 'src/config';
+
+import * as sgMail from '@sendgrid/mail';
+
 enum Templates {
-  REGISTRATION_CODE = 'registration-code.ejs',
+  REGISTRATION_CODE = 'd-7c9eee9a83aa46e7bdf9cbd5a05ae505',
 }
 
-const cvTemplatesPath = '../email-templates';
+sgMail.setApiKey(config.email.apikey);
 
-async function generateTemplate(templateName: Templates, data) {
-  const pathToTemplate = path.resolve(
-    __dirname,
-    '../',
-    cvTemplatesPath,
-    templateName
-  );
-  const html = await ejs.renderFile(pathToTemplate, data);
-  return html;
-}
+const sendEmail = async <T>(to, templateId: Templates, data: T) => {
+  const msg = {
+    from: config.email.from,
+    to: to,
+    templateId: templateId,
+    dynamicTemplateData: data,
+  };
 
-async function sendEmail(templateName, data, to, subject) {
   try {
-    const template = await generateTemplate(templateName, data);
-
-    let transporter = null;
-
-    if (config.develop) {
-      let testAccount = await nodemailer.createTestAccount();
-
-      transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-          user: testAccount.user, // generated ethereal user
-          pass: testAccount.pass, // generated ethereal password
-        },
-      });
-    }
-
-    if (!config.develop) {
-      transporter = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        secure: false,
-        auth: {
-          user: process.env.EMAIL_USER,
-
-          pass: process.env.EMAIL_PASSWORD,
-        },
-      });
-    }
-
-    // send mail with defined transport object
-    const info = await transporter.sendMail({
-      from: config.email.from, // sender address
-      to: to, // list of receivers
-      subject: subject, // Subject line
-      text: template, // plain text body
-      html: template, // html body
-    });
-    console.log('Message sent: %s', info.messageId);
-    if (config.develop) {
-      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-    }
-    return true;
+    await sgMail.send(msg);
+    console.log(`Email to: ` + to + ' template: ' + templateId + ' sended');
   } catch (e) {
-    console.error(e);
-    return false;
+    console.log(`Email Error: `, to, templateId, data, e);
   }
-}
-
+};
 export default {
   Templates,
-  generateTemplate,
   sendEmail,
 };

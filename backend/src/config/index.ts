@@ -1,6 +1,6 @@
 export const config = {
-  develop: process.env.DEVELOP === 'true' ? true : false,
   email: {
+    apikey: process.env.SENDGRID_API_KEY,
     from: 'noreply@vamanager.pl',
   },
   saltRounds: process.env.SALT_ROUNDS ?? 10,

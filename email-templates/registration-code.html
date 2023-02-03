@@ -1,12 +1,48 @@
 <!DOCTYPE html>
 <head>
+    <style>
+      .logo-container {
+        margin-top: 24px;
+        margin-bottom: 24px;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
 
+      .logo {
+        font-size: 48px;
+      }
+      .color {
+        color: #006afd;
+      }
+
+      .badge {
+        display: inline-block;
+        background: #006afd;
+        color: white;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size: 10px;
+        border-radius: 3px;
+      }
+
+      span {
+        color: #006afd;
+      }
+    </style>
 </head>
 <body>
   <table style="margin: auto;">
     <thead>
       <tr>
-        <th><%- include('logo'); %></th>
+          <div class="logo-container">
+             <div class="logo">
+                <span class="color">VA</span>Manager
+                <div class="badge">BETA</div>
+            </div>
+        </div>
       </tr>
     </thead>
     </table>
@@ -25,7 +61,7 @@
               <td style="padding-top: 24px; font-size: 24px; text-align: center;">Verification Code</td>
           </tr>
           <tr>
-              <td style="color: #006afd; font-size: 24px; font-weight: bold; text-align: center;"><%= code %></td>
+              <td style="color: #006afd; font-size: 24px; font-weight: bold; text-align: center;">{{{code}}}</td>
           </tr>
           <tr>
               <td style="padding-top: 84px; text-align: center; padding-left: 84px; padding-right: 84px;">If you didn't create an account, you can ignore this email.

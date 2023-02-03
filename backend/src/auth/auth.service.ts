@@ -13,6 +13,7 @@ import PrismaUserToUser from 'src/adapters/prismaUserToUser';
 import { users_status } from '@prisma/client';
 import makeId from 'src/utils/makeId';
 import emails from 'src/utils/emails';
+import { EmailVerificationEmail } from '@shared/emails/EmailVerification.email';
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService) {}
@@ -72,14 +73,9 @@ export class AuthService {
       },
     });
 
-    emails.sendEmail(
-      emails.Templates.REGISTRATION_CODE,
-      {
-        code: code.code,
-      },
-      newUser.email,
-      'VAManager - Verification Code'
-    );
+    emails.sendEmail(newUser.email, emails.Templates.REGISTRATION_CODE, {
+      code: code.code,
+    } as EmailVerificationEmail);
 
     return { key: 'CREATE', id: newUser.id };
   }
@@ -130,12 +126,9 @@ export class AuthService {
     }
 
     emails.sendEmail(
-      emails.Templates.REGISTRATION_CODE,
-      {
-        code: prismaCode.code,
-      },
       prismaCode.user.email,
-      'VAManager - Verification Code'
+      emails.Templates.REGISTRATION_CODE,
+      { code: prismaCode.code } as EmailVerificationEmail
     );
 
     return { id: userId, key: 'CREATED' };
