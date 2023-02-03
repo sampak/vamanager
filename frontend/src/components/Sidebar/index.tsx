@@ -77,7 +77,7 @@ const Sidebar = () => {
             {user?.firstName} {user?.lastName}
           </div>
           <div className={styles.role}>
-            {user?.membership?.airline?.name} -
+            {user?.membership?.airline?.name} -{' '}
             {t(`roles.${user?.membership?.role}`)}
           </div>
         </div>
