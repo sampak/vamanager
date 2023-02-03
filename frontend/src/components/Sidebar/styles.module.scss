@@ -43,7 +43,6 @@ $activeIconColor: $logoColor;
 .userContent {
   position: relative;
   display: flex;
-  align-items: center;
   gap: 21px;
   padding-left: 15px;
   overflow: hidden;
@@ -70,6 +69,7 @@ $activeIconColor: $logoColor;
   color: $bodyFontColor;
   margin-top: 5px;
   font-size: 12px;
+  user-select: none;
 }
 
 .border {
