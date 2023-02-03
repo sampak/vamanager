@@ -48,7 +48,9 @@ const Schedules: FC<Props> = () => {
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <Title className={styles.title} black>
-          <>Today Schedules ({schedules.length})</>
+          <>
+            {t('header')} ({schedules.length})
+          </>
         </Title>
         {user?.uiConfiguration?.createSchedules && (
           <div onClick={() => setOpen(true)} className={styles.createButton}>

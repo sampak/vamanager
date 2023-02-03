@@ -157,6 +157,7 @@ export const TRANSLATIONS_EN = {
     placeholder: 'Type ICAO or aircraft name',
   },
   schedules: {
+    header: 'Today Schedules',
     create: 'Create Schedule',
     card: {
       salary: 'Estimated Salary',
