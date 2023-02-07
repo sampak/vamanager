@@ -7,4 +7,6 @@ export class LoginDTO {
 
   @IsNotEmpty()
   password: string;
+
+  company?: string;
 }

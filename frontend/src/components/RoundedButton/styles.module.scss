@@ -23,8 +23,13 @@
 
 .outline {
   background: none;
+  color: $mainColor;
   border: 1px solid $lightButtonColor;
-  transition: background 1s;
+  transition: background 1s, color 0.7s;
+
+  &:hover {
+    color: $fontColor;
+  }
 
   .shadow {
     z-index: 0;

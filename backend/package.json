@@ -27,6 +27,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@prisma/client": "^4.7.1",
     "@sendgrid/mail": "^7.7.0",
+    "@sentry/node": "^5.9.0",
     "aws-sdk": "^2.1272.0",
     "axios": "^1.2.2",
     "bcrypt": "^5.1.0",

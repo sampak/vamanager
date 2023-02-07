@@ -38,7 +38,11 @@ const AirlineCard: FC<Props> = ({
   const elo = (1000 * (airline?.rating as number)) / 100;
   const stars = (elo * 5) / 100;
 
-  const isDisabled = choose && membership?.status !== MembershipStatus.ACTIVE;
+  const canJoin =
+    membership?.status === MembershipStatus.ACTIVE ||
+    membership?.status === MembershipStatus.WAITING_TO_JOIN;
+
+  const isDisabled = choose && !canJoin;
   const isChosenStylesButton = choose && styles.chooseButton;
 
   return (

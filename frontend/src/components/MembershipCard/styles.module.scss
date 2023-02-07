@@ -1,0 +1,66 @@
+@import 'src/styles/colors.scss';
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.avatar {
+  width: 32px !important;
+  height: 32px !important;
+  font-size: 12px !important;
+  border: $bodyFontColor solid 1px;
+}
+
+.data {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.name {
+  font-size: 16px !important;
+}
+
+.email {
+  font-size: 14px;
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.dropdownMenu {
+  position: relative;
+}
+
+.dropdown {
+  left: -124px !important;
+}
+
+.roleDropdown {
+  min-width: 124px !important;
+}
+
+.role {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 124px;
+  font-weight: 400 !important;
+  font-family: 'RobotoMedium' !important;
+  font-size: 14px !important;
+}
+
+.dropdownIcon {
+  cursor: pointer;
+}

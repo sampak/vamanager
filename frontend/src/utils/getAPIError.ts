@@ -8,9 +8,14 @@ export const getAPIError = (
     err &&
     err.response &&
     err.response.data.message &&
-    !!err.response.data.message.length
+    !!err.response.data.message.length &&
+    err.response.data.message !== 'Forbidden resource'
   ) {
     return translation(`errors.${err.response.data.message}`);
+  }
+
+  if (err.response.statusText === 'Forbidden') {
+    return translation(`errors.forbidden`);
   }
   return 'An error occurred, try again later.';
 };

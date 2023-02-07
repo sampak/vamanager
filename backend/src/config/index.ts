@@ -1,4 +1,5 @@
 export const config = {
+  frontendUrl: process.env.FRONTEND_URL,
   email: {
     apikey: process.env.SENDGRID_API_KEY,
     from: 'noreply@vamanager.pl',

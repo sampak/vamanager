@@ -1,7 +1,8 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
 import { CurrentUser } from 'src/decorators/CurrentUser.decorator';
+import { SentryInterceptor } from 'src/interceptors/SentryInterceptor';
 import { AirportService } from './airport.service';
-
+@UseInterceptors(SentryInterceptor)
 @Controller('airport')
 export class AirportController {
   constructor(private readonly airportService: AirportService) {}

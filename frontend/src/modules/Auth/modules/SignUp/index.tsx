@@ -9,7 +9,7 @@ import { Formik } from 'formik';
 import SignInSchema from './validation.schema';
 import { useTranslation } from 'react-i18next';
 import Badge from 'components/Badge';
-import CTAButton from 'CTAButton';
+import CTAButton from 'components/CTAButton';
 import { useNavigate } from 'react-router-dom';
 import { faUser, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import Checkbox from 'components/Checkbox';
@@ -27,6 +27,8 @@ interface InitialValues {
 }
 
 const SignUp: FC = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const queryEmail = urlParams.get('email');
   const navigate = useNavigate();
   const translation = useTranslation();
   const { mutate: register, isLoading } = authService.useRegister();
@@ -39,7 +41,7 @@ const SignUp: FC = () => {
   const initialValues: InitialValues = {
     firstName: '',
     lastName: '',
-    email: '',
+    email: queryEmail || '',
     password: '',
   };
 

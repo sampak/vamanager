@@ -1,0 +1,30 @@
+@import 'src/styles/colors.scss';
+
+.modalWrapper {
+  position: fixed;
+  width: 99.1vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.modal {
+  position: absolute;
+  background: $mainBackgroundColor;
+  width: 600px;
+  min-height: 32px;
+  border-radius: 6px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.closeIcon {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  cursor: pointer;
+}

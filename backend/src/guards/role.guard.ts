@@ -17,7 +17,7 @@ export class roleGuard implements CanActivate {
 
     const req = context.switchToHttp().getRequest();
 
-    const workspace = req.params.airlineId;
+    const workspace = req.params.airlineId || req.params.workspace;
 
     if (!workspace) return false;
 

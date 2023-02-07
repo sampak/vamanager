@@ -11,6 +11,8 @@ export const TRANSLATIONS_EN = {
     schedules: 'Schedules',
     aircrafts: 'Aircrafts',
     dealer: 'Aircraft Dealer',
+    verify: 'Email Verification',
+    users: 'Users',
   },
   signIn: {
     errors: {
@@ -132,6 +134,7 @@ export const TRANSLATIONS_EN = {
     home: 'Home',
     schedules: 'Schedules',
     aircrafts: 'Aircrafts',
+    users: 'Pilots',
     logOut: 'Log Out',
 
     roles: {
@@ -214,5 +217,45 @@ export const TRANSLATIONS_EN = {
     button: 'Verify',
     resend: 'Resend verification code',
     error: 'Provided code is invalid',
+  },
+
+  users: {
+    OLDEST: 'Sort by older',
+    LATEST: 'Sort by newer',
+    inviteButton: 'Invite User',
+    placeholder: 'Enter name or email',
+    empty: 'Invite your first pilots to your virtual airline!',
+
+    errors: {
+      OWN_COMPANY: 'You cannot edit yourself',
+      NOT_FOUND: 'Membership not found',
+      MEMBERSHIP: 'Membership not found',
+      NOT_FOUND_COMPANY: "You don't have permission to do that action",
+      COMPANY: "You don't have permission to do that action",
+      USER_EXIST: 'Provided Emailis exist in this airline',
+      forbidden: "You don't have permission to do that action",
+    },
+  },
+
+  inviteModal: {
+    header: 'Invite User',
+    placeholder: 'Provide user email',
+    cancelButton: 'Cancel',
+    acceptButton: 'Invite',
+  },
+
+  membershipCard: {
+    menu: {
+      canActive: 'Active user',
+      canDisable: 'Disable user',
+      canResendInvite: 'Resend Invite',
+    },
+    status: {
+      ACTIVE: 'Active',
+      NON_ACTIVE: 'Not Active',
+      DISABLED: 'Disabled',
+      WAITING_APPROVAL: 'Waiting For Approval',
+      WAITING_TO_JOIN: 'Waiting For Join',
+    },
   },
 };

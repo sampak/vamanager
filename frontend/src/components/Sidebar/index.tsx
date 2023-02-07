@@ -8,6 +8,7 @@ import {
   faPlaneUp,
   faCalendarAlt,
   faRightFromBracket,
+  faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import Logo from 'components/Logo';
 import { matchPath, useNavigate, useParams } from 'react-router-dom';
@@ -21,6 +22,7 @@ enum MenuOptions {
   Home = 'Home',
   Aircrafts = 'Aircrafts',
   Schedules = 'Schedules',
+  Users = 'Users',
 }
 
 const Sidebar = () => {
@@ -49,11 +51,15 @@ const Sidebar = () => {
     if (option === MenuOptions.Schedules) {
       return isPathActive(`/workspace/${workspaceId}/schedules`, location);
     }
+    if (option === MenuOptions.Users) {
+      return isPathActive(`/workspace/${workspaceId}/users`, location);
+    }
   };
 
   const isHome = isMenuOptionActive(MenuOptions.Home);
   const isAircrafts = isMenuOptionActive(MenuOptions.Aircrafts);
   const isSchedules = isMenuOptionActive(MenuOptions.Schedules);
+  const isUsers = isMenuOptionActive(MenuOptions.Users);
 
   const logout = useLogout();
 
@@ -139,6 +145,24 @@ const Sidebar = () => {
           >
             {t('aircrafts')}
           </div>
+        </div>
+
+        <div
+          onClick={() =>
+            navigateInsideWorkspace(navigate, workspaceId!, '/users')
+          }
+          className={classNames(styles.option)}
+        >
+          <div className={styles.iconBox}>
+            <FontAwesomeIcon
+              icon={faUsers}
+              className={classNames(
+                styles.optionIcon,
+                isUsers && styles.activeIcon
+              )}
+            />
+          </div>
+          <div className={classNames(styles.optionName)}>{t('users')}</div>
         </div>
 
         <div onClick={() => logout()} className={classNames(styles.option)}>

@@ -5,7 +5,7 @@ const GetUser = createParamDecorator((_, ctx: ExecutionContext) => {
   const request = ctx.switchToHttp().getRequest();
   return {
     token: request.headers.authorization,
-    workspace: request.params.workspace,
+    workspace: request.params.workspace ?? request.params.airlineId,
   };
 });
 

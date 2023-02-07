@@ -8,7 +8,9 @@ import {
   Memberships,
   membership_role,
   membership_status,
+  Prisma,
   Users,
+  users_status,
 } from '@prisma/client';
 import { CreateAirlineDTO } from '@shared/dto/CreateAirlineDTO';
 import { MembershipStatus } from '@shared/base/MembershipStatus';
@@ -18,6 +20,12 @@ import prismaAirlineToAirline from 'src/adapters/prismaAirlineToAirline';
 import { config } from 'src/config';
 import { User } from '@shared/base/User';
 import prismaAircraftToAircraft from 'src/adapters/prismaAircraftToAircraft';
+import prismaMembershipToMembership from 'src/adapters/prismaMembershipToMembership';
+import { UsersSearchOrder } from '@shared/dto/UsersSearchDTO';
+import getUserConfiguration from 'src/ui-configuration/user';
+import getMembershipConfiguration from 'src/ui-configuration/membership';
+import emails from 'src/utils/emails';
+import { InvitationEmail } from '@shared/emails/Invitation.email';
 @Injectable()
 export class AirlineService {
   constructor(private readonly prismaService: PrismaService) {}
@@ -35,6 +43,17 @@ export class AirlineService {
 
     if (airline.joining_type === joining_type.PUBLIC_ACCESS) {
       status = membership_status.ACTIVE;
+    }
+
+    const prismaMembership = await this.prismaService.memberships.findFirst({
+      where: {
+        airlineId: airline.id,
+        userId: currentUser.id,
+      },
+    });
+
+    if (prismaMembership) {
+      throw new BadRequestException('');
     }
 
     const payload = {
@@ -78,11 +97,82 @@ export class AirlineService {
     );
   }
 
-  async getAll() {
+  async getUsers(
+    currentUser: Users & { memberships: Memberships },
+    airlineId: string,
+    name: string,
+    orderBy: UsersSearchOrder
+  ) {
+    const currentUserMembership = currentUser.memberships[0];
+    const airline = await this.prismaService.airlines.findFirst({
+      where: { icao: airlineId },
+    });
+    if (!airline) throw new BadRequestException();
+
+    let membershipsFind: Prisma.MembershipsWhereInput = {
+      airlineId: airline.id,
+    };
+
+    if (!!name?.length) {
+      membershipsFind = {
+        ...membershipsFind,
+        user: {
+          OR: [
+            {
+              firstName: {
+                contains: name,
+              },
+            },
+            {
+              lastName: {
+                contains: name,
+              },
+            },
+            {
+              email: {
+                contains: name,
+              },
+            },
+          ],
+        },
+      };
+    }
+
+    const memberships = await this.prismaService.memberships.findMany({
+      where: membershipsFind,
+      orderBy: {
+        createdAt: orderBy === UsersSearchOrder.LATEST ? 'desc' : 'asc',
+      },
+      include: {
+        user: true,
+      },
+    });
+
+    return memberships.map((prismaMembership) => {
+      let membership = prismaMembershipToMembership(
+        prismaMembership,
+        currentUserMembership.role === membership_role.ADMIN
+      );
+      membership.uiConfiguration = getMembershipConfiguration(
+        prismaMembership,
+        currentUser,
+        airline
+      );
+
+      return membership;
+    });
+  }
+
+  async getAll(CurrentUser: Users) {
     const airlines = await this.prismaService.airlines.findMany({
       where: {
         joining_type: {
           in: [joining_type.APPROVAL_NEEDED, joining_type.PUBLIC_ACCESS],
+        },
+        memberships: {
+          none: {
+            userId: CurrentUser.id,
+          },
         },
       },
       include: {
@@ -175,5 +265,71 @@ export class AirlineService {
       `${currentUser.email} (${currentUser.id}) created airline: ${payload.name} (${payload.icao})`
     );
     return prismaAirlineToAirline(airline);
+  }
+
+  async invite(currentUser: Users, workspaceId: string, payload) {
+    const company = await this.prismaService.airlines.findFirst({
+      where: { icao: workspaceId },
+    });
+    if (!company) {
+      throw new BadRequestException('COMPANY');
+    }
+
+    let prismaUser = await this.prismaService.users.findFirst({
+      where: {
+        email: payload.email,
+      },
+    });
+
+    if (!prismaUser) {
+      prismaUser = await this.prismaService.users.create({
+        data: {
+          email: payload.email,
+          firstName: '',
+          lastName: '',
+          password: '',
+          allowShowLastName: false,
+          status: users_status.WAITING_TO_JOIN,
+        },
+      });
+    }
+
+    const userMembership = await this.prismaService.memberships.findFirst({
+      where: {
+        airlineId: company.id,
+        userId: prismaUser.id,
+      },
+    });
+
+    if (userMembership) {
+      throw new BadRequestException('USER_EXIST');
+    }
+
+    const membership = await this.prismaService.memberships.create({
+      data: {
+        airlineId: company.id,
+        role: membership_role.PILOT,
+        status: membership_status.WAITING_TO_JOIN,
+        userId: prismaUser.id,
+      },
+    });
+
+    let link = `${config.frontendUrl}/auth/signin?company=${membership.id}&email=${payload.email}`;
+
+    if (prismaUser.status === users_status.WAITING_TO_JOIN) {
+      link = `${config.frontendUrl}/auth/signup?company=${membership.id}&email=${payload.email}`;
+    }
+
+    emails.sendEmail(payload.email, emails.Templates.INVITATION, {
+      subject: `VAManager - You've been invited to a ${company.name}`,
+      name: company.name,
+      icao: company.icao,
+      firstName: currentUser.firstName,
+      email: currentUser.email,
+      image: company.image,
+      link: link,
+    } as InvitationEmail);
+
+    return { action: 'CREATE', value: membership.id };
   }
 }

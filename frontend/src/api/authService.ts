@@ -33,7 +33,11 @@ const useResendCode = (userId: string) => {
   });
 };
 
-const sendCode = async (payload: { code: string; userId: string }) => {
+const sendCode = async (payload: {
+  code: string;
+  userId: string;
+  company?: string;
+}) => {
   return await axiosInstance.post('/auth/code', payload);
 };
 

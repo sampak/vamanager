@@ -1,0 +1,44 @@
+@import 'src/styles/colors.scss';
+.container {
+  padding-top: 24px;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+}
+
+.inputWrapper {
+  width: 100%;
+}
+
+.filtersWrapper {
+  width: 20%;
+}
+
+.usersList {
+  margin-top: 84px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.createButton {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+  padding-bottom: 24px;
+  color: $badgeColor;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+}
+
+.error {
+  margin-bottom: 24px;
+}
+
+.loading {
+  left: 0;
+  top: 0;
+}

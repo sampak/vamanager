@@ -194,4 +194,5 @@ enum users_status {
   NON_ACTIVE
   SUSPENDED
   PENDING_CODE
+  WAITING_TO_JOIN
 }

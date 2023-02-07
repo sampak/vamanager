@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import AircraftList from './modules/AircraftList';
 import AircraftDealer from './modules/AircraftDealer';
 import Schedules from './modules/Schedules';
+import Users from './modules/Users';
 
 const WorkspaceRoutes = () => {
   return (
@@ -22,6 +23,14 @@ const WorkspaceRoutes = () => {
           element={
             <Routes>
               <Route path="*" element={<Schedules />} />
+            </Routes>
+          }
+        />
+        <Route
+          path="/users/*"
+          element={
+            <Routes>
+              <Route path="*" element={<Users />} />
             </Routes>
           }
         />

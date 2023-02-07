@@ -24,7 +24,6 @@ export class CurrentUserPipe implements PipeTransform {
     try {
       const access_token = token.replace('Bearer ', '');
       const jwtUser = await jwt.verify(access_token, config.jwt.secret);
-
       try {
         const user = await this.prismaService.users.findUniqueOrThrow({
           where: {
@@ -34,7 +33,14 @@ export class CurrentUserPipe implements PipeTransform {
           include: {
             memberships: {
               where: {
-                status: membership_status.ACTIVE,
+                OR: [
+                  {
+                    status: membership_status.ACTIVE,
+                  },
+                  {
+                    status: membership_status.WAITING_TO_JOIN,
+                  },
+                ],
                 airline: {
                   icao: workspace ?? '',
                 },
@@ -46,8 +52,25 @@ export class CurrentUserPipe implements PipeTransform {
             },
           },
         });
+
+        const waitingJoinWorkspace = user.memberships.find(
+          (membership) =>
+            membership.status === membership_status.WAITING_TO_JOIN &&
+            membership.airline.icao === workspace
+        );
+        if (waitingJoinWorkspace) {
+          await this.prismaService.memberships.update({
+            where: {
+              id: waitingJoinWorkspace.id,
+            },
+            data: {
+              status: membership_status.ACTIVE,
+            },
+          });
+        }
+
         if (!!workspace && !user.memberships.length) {
-          throw new HttpException('', HttpStatus.FORBIDDEN);
+          throw new HttpException('', HttpStatus.UNAUTHORIZED);
         }
         return user as Users;
       } catch (e) {

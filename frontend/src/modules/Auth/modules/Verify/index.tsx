@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import { useState, useContext, useEffect } from 'react';
 import OtpInput from 'react-verify-otp';
 import '/node_modules/react-verify-otp/dist/style.css';
-import CTAButton from 'CTAButton';
+import CTAButton from 'components/CTAButton';
 import codeContext from 'contexts/code';
 import authService from 'api/authService';
 import RoundedButton from 'components/RoundedButton';
@@ -13,6 +13,7 @@ import { setToken } from 'api/user';
 import ErrorNoti from 'components/ErrorNoti';
 
 import { useTranslation } from 'react-i18next';
+import { config } from 'config';
 
 const Verify = () => {
   const translation = useTranslation();
@@ -33,6 +34,7 @@ const Verify = () => {
       {
         code: inputCode,
         userId: code,
+        company: sessionStorage.getItem(config.SESSION_INVITIATION) ?? '',
       },
       {
         onSuccess: (response) => {

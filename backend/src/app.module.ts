@@ -7,8 +7,9 @@ import { AirportModule } from './airport/airport.module';
 import { AirlineModule } from './airline/airline.module';
 import { AircraftModule } from './aircraft/aircraft.module';
 import { ScheduleModule } from './schedule/schedule.module';
+import { MembershipsModule } from './memberships/memberships.module';
 @Module({
-  imports: [AuthModule, UserModule, AirportModule, AirlineModule, AircraftModule, ScheduleModule],
+  imports: [AuthModule, UserModule, AirportModule, AirlineModule, AircraftModule, ScheduleModule, MembershipsModule],
   controllers: [AppController],
   providers: [AppService],
 })

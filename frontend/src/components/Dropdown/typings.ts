@@ -14,4 +14,5 @@ export interface Props extends InputHTMLAttributes<any> {
   error?: string;
   onChangeValue: (value: DropdownOption) => void;
   options: DropdownOption[];
+  hideUsed?: boolean;
 }

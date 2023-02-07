@@ -8,7 +8,7 @@ import RoundedButton from 'components/RoundedButton';
 import { Formik } from 'formik';
 import SignInSchema from './validation.schema';
 import { useTranslation } from 'react-i18next';
-import CTAButton from 'CTAButton';
+import CTAButton from 'components/CTAButton';
 import { useNavigate } from 'react-router-dom';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import authService from 'api/authService';
@@ -17,8 +17,11 @@ import codeContext from 'contexts/code';
 import { useContext, useState } from 'react';
 import ErrorNoti from 'components/ErrorNoti';
 import { getAPIError } from 'utils/getAPIError';
+import { config } from 'config';
 
 const SignIn: FC = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const queryEmail = urlParams.get('email');
   const navigate = useNavigate();
   const translation = useTranslation();
   const { setCode } = useContext(codeContext);
@@ -27,27 +30,33 @@ const SignIn: FC = () => {
   const [error, setError] = useState('');
 
   const initialValues = {
-    email: '',
+    email: queryEmail ?? '',
     password: '',
   };
 
   const handleSubmit = (e, values) => {
     e.preventDefault();
 
-    signIn(values, {
-      onSuccess: (response) => {
-        setToken(response.data);
-        navigate('/choose-workspace');
+    signIn(
+      {
+        ...values,
+        company: sessionStorage.getItem(config.SESSION_INVITIATION),
       },
-      onError: (e: any) => {
-        if (e?.response?.status === 403) {
-          setCode(e.response.data.id);
-          navigate('/auth/verify');
-          return;
-        }
-        setError(getAPIError(e, t));
-      },
-    });
+      {
+        onSuccess: (response) => {
+          setToken(response.data);
+          navigate('/choose-workspace');
+        },
+        onError: (e: any) => {
+          if (e?.response?.status === 403) {
+            setCode(e.response.data.id);
+            navigate('/auth/verify');
+            return;
+          }
+          setError(getAPIError(e, t));
+        },
+      }
+    );
   };
 
   const handleSignUp = () => navigate('/auth/signup');

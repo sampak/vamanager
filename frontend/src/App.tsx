@@ -19,6 +19,9 @@ import OnbordingRoutes from 'modules/Onbording';
 import ChooseWorkspace from 'modules/ChooseWorkspace';
 import WorkspaceRoutes from 'modules/Workspace';
 import AppHeader from 'components/AppHeader';
+import * as Sentry from '@sentry/react';
+import { BrowserTracing } from '@sentry/tracing';
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -26,6 +29,18 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+if (process.env.NODE_ENV === 'production') {
+  Sentry.init({
+    dsn: process.env.REACT_APP_SENTRY_URL,
+    integrations: [new BrowserTracing()],
+
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 1.0,
+  });
+}
 
 const growthbook = new GrowthBook({
   // enableDevMode: true allows you to use the Chrome DevTools Extension to test/debug.

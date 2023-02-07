@@ -1,3 +1,4 @@
+import { MembershipUIConfiguration } from "../ui-configuration/membership";
 import Airline from "./Airline";
 import { MembershipRole } from "./MembershipRole";
 import { MembershipStatus } from "./MembershipStatus";
@@ -12,4 +13,5 @@ export interface Membership {
   rating: number;
   status: MembershipStatus;
   role: MembershipRole;
+  uiConfiguration?: MembershipUIConfiguration;
 }

@@ -1,0 +1,16 @@
+@import 'src/styles/colors.scss';
+
+.card {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  height: 147px;
+  width: 100%;
+  background: $mainBackgroundColor;
+  border: solid 1px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  color: $thirdFontColor !important;
+}

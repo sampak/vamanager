@@ -10,7 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { config } from 'src/config';
 import jwt from '../utils/jwt';
 import PrismaUserToUser from 'src/adapters/prismaUserToUser';
-import { users_status } from '@prisma/client';
+import { membership_status, users_status } from '@prisma/client';
 import makeId from 'src/utils/makeId';
 import emails from 'src/utils/emails';
 import { EmailVerificationEmail } from '@shared/emails/EmailVerification.email';
@@ -35,8 +35,47 @@ export class AuthService {
             });
           }
 
+          if (payload.company) {
+            const membership = await this.prisma.memberships.findFirst({
+              where: {
+                id: payload.company,
+                status: membership_status.WAITING_TO_JOIN,
+              },
+            });
+            if (membership) {
+              await this.prisma.memberships.update({
+                where: {
+                  id: payload.company,
+                },
+                data: {
+                  status: membership_status.ACTIVE,
+                },
+              });
+            }
+          }
+
           return jwt.genToken(PrismaUserToUser(prismaUser, true));
         }
+
+        if (payload.company) {
+          const membership = await this.prisma.memberships.findFirst({
+            where: {
+              id: payload.company,
+              status: membership_status.WAITING_TO_JOIN,
+            },
+          });
+          if (membership) {
+            await this.prisma.memberships.update({
+              where: {
+                id: payload.company,
+              },
+              data: {
+                status: membership_status.ACTIVE,
+              },
+            });
+          }
+        }
+
         return jwt.genToken(PrismaUserToUser(prismaUser, true));
       }
 
@@ -54,17 +93,35 @@ export class AuthService {
       where: { email: payload.email },
     });
 
-    if (existUser) {
+    if (existUser && existUser.status !== users_status.WAITING_TO_JOIN) {
       throw new BadRequestException('EMAIL_EXIST');
     }
+
     const salt = await bcrypt.genSaltSync(Number(config.saltRounds));
     payload.password = bcrypt.hashSync(payload.password, salt);
-    const newUser = PrismaUserToUser(
-      await this.prisma.users.create({
-        data: { ...payload, status: users_status.PENDING_CODE },
-      }),
-      true
-    );
+
+    let newUser = null;
+
+    if (existUser?.status === users_status.WAITING_TO_JOIN) {
+      newUser = await this.prisma.users.update({
+        where: {
+          id: existUser.id,
+        },
+        data: {
+          ...payload,
+          status: users_status.PENDING_CODE,
+        },
+      });
+    }
+
+    if (!existUser) {
+      newUser = PrismaUserToUser(
+        await this.prisma.users.create({
+          data: { ...payload, status: users_status.PENDING_CODE },
+        }),
+        true
+      );
+    }
 
     const code = await this.prisma.verificationCodes.create({
       data: {
@@ -83,7 +140,7 @@ export class AuthService {
   async code(payload) {
     const prismaCode = await this.prisma.verificationCodes.findFirst({
       where: {
-        userId: payload.id,
+        userId: payload.userId,
         code: payload.code,
       },
       include: {
@@ -107,6 +164,26 @@ export class AuthService {
         id: payload.userId,
       },
     });
+
+    if (payload.company) {
+      const membership = await this.prisma.memberships.findFirst({
+        where: {
+          id: payload.company,
+          status: membership_status.WAITING_TO_JOIN,
+        },
+      });
+
+      if (membership) {
+        await this.prisma.memberships.update({
+          where: {
+            id: payload.company,
+          },
+          data: {
+            status: membership_status.ACTIVE,
+          },
+        });
+      }
+    }
 
     return jwt.genToken(PrismaUserToUser(prismaUser, true));
   }

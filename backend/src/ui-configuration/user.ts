@@ -13,6 +13,7 @@ const getUserConfiguration = (
       membership?.role === membership_role.ADMIN ||
       membership?.role === membership_role.DISPATCHER,
     canManageAircrafts: membership?.role === membership_role.ADMIN ?? false,
+    canInviteUsers: membership?.role === membership_role.ADMIN ?? false,
   };
 };
 

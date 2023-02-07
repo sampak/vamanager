@@ -2,6 +2,7 @@ import Aircraft from '@shared/base/Aircraft';
 import { CreateAirlineDTO } from '@shared/dto/CreateAirlineDTO';
 import { useMutation, useQuery } from 'react-query';
 import { axiosInstance } from './axios';
+import { UsersSearchDTO } from '@shared/dto/UsersSearchDTO';
 
 const queryKeys = {
   getAll: 'airlineService.getAll',
@@ -9,6 +10,23 @@ const queryKeys = {
     'airlineService.getAircrafts',
     workspaceID,
   ],
+  getUsers: (workspaceID: string, payload: UsersSearchDTO) => [
+    'airlineService.getUsers',
+    workspaceID,
+    payload,
+  ],
+};
+
+const getUsers = (workspaceID, payload: UsersSearchDTO) => {
+  const url = new URLSearchParams(payload as any);
+
+  return axiosInstance.get(`/airline/${workspaceID}/users?${url}`);
+};
+
+const useGetUsers = (workspaceID, payload: UsersSearchDTO) => {
+  return useQuery(queryKeys.getUsers(workspaceID, payload), () =>
+    getUsers(workspaceID, payload)
+  );
 };
 
 const createAirline = (payload: CreateAirlineDTO) => {
@@ -45,9 +63,24 @@ const useGetAircrafts = (workspaceID: string) => {
   );
 };
 
+const sendInvite = (payload: {
+  workspaceID: string;
+  payload: { email: string };
+}) => {
+  return axiosInstance.post(
+    `/airline/${payload.workspaceID}/users`,
+    payload.payload
+  );
+};
+
+const useSendInvite = () => {
+  return useMutation(sendInvite);
+};
 export default {
+  useGetUsers,
   useCreateAirline,
   useGetAllAirlines,
   useJoinToAirline,
   useGetAircrafts,
+  useSendInvite,
 };

@@ -8,6 +8,7 @@ import {
   Put,
   SetMetadata,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ScheduleService } from './schedule.service';
 import { Users } from '@prisma/client';
@@ -15,6 +16,9 @@ import { CurrentUser } from 'src/decorators/CurrentUser.decorator';
 import { MembershipRole } from '@shared/base/MembershipRole';
 import { roleGuard } from 'src/guards/role.guard';
 import { CreateSimbriefDTO } from '@shared/dto/CreateSimbriefDTO';
+import { SentryInterceptor } from 'src/interceptors/SentryInterceptor';
+
+@UseInterceptors(SentryInterceptor)
 @Controller('airline/:airlineId/schedule')
 export class ScheduleController {
   constructor(private readonly scheduleService: ScheduleService) {}

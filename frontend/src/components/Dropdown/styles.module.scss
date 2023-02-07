@@ -16,8 +16,8 @@
 .inputWrapper {
   display: flex;
   width: 100%;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 7px;
+  padding-bottom: 7px;
 
   border: solid 1px $bodyFontColor;
   border-radius: 6px;
@@ -36,7 +36,7 @@
   position: absolute;
   width: 100%;
   user-select: none;
-  top: 84px;
+  top: 48px;
   border-radius: 8px;
   max-height: 512px;
   overflow: auto;
@@ -63,4 +63,9 @@
   margin-top: 5px !important;
   font-family: RobotoBold !important;
   font-size: 13px !important;
+}
+
+.disabled {
+  background: rgba(200, 200, 200, 0.3) !important;
+  cursor: not-allowed;
 }
