@@ -90,7 +90,6 @@ const CreateScheduleModal: FC<Props> = ({
         },
         {
           onSuccess: (response) => {
-            console.log(response);
             resetForm();
             toggle(false);
             refetchSchedules();
