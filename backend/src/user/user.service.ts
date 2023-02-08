@@ -28,7 +28,7 @@ export class UserService {
     });
 
     return prismaMemberships.map((membership) =>
-      prismaMembershipToMembership(membership)
+      prismaMembershipToMembership(membership, true)
     );
   }
 
