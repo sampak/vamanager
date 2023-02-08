@@ -276,4 +276,10 @@ export const TRANSLATIONS_EN = {
       INTERNAL: "Something wen't wrong, try again later.",
     },
   },
+
+  welcomeModal: {
+    title: 'Congratulation!',
+    body: "You have just become the owner of your own virtual airline, go to the 'aircrafts' tab and buy your first plane and become the best airline in the sky!",
+    button: 'Close',
+  },
 };

@@ -26,6 +26,8 @@ enum MenuOptions {
 }
 
 const Sidebar = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const firstExperience = urlParams.get('firstExperience');
   const navigate = useNavigate();
   const translation = useTranslation();
   const t = (key: string) => translation.t(`sidebar.${key}`);
@@ -35,8 +37,9 @@ const Sidebar = () => {
 
   const showedClassName = show ? styles.showed : '';
 
-  // const tutorialCreateAircraft = ? styles.createAircraftAnimation : '';
-  const tutorialCreateAircraft = '';
+  const tutorialCreateAircraft = firstExperience
+    ? styles.createAircraftAnimation
+    : '';
 
   const isPathActive = (path: string, location: Location) =>
     !!matchPath(location.pathname + location.search, path);

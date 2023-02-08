@@ -1,0 +1,34 @@
+@import 'src/styles/colors.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.emoji {
+  margin-top: 24px;
+  font-size: 84px;
+}
+
+.title {
+  font-size: 32px;
+  font-family: 'RobotoMedium' !important;
+}
+
+.body {
+  padding-top: 6px;
+  padding-left: 88px;
+  padding-right: 88px;
+  color: $secondaryBackgroundColor !important;
+  line-height: 20px;
+}
+
+.button {
+  width: 84px;
+  margin-top: 24px;
+  margin-bottom: 32px;
+}
