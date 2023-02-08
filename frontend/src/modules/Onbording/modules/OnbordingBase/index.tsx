@@ -63,7 +63,7 @@ const OnbordingBase: FC<Props> = ({
       },
       {
         onSuccess: () => {
-          navigate(`workspace/${details?.icao}?firstExperience=true`);
+          navigate(`/workspace/${details?.icao}?firstExperience=true`);
         },
       }
     );
