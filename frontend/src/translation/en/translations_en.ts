@@ -258,4 +258,18 @@ export const TRANSLATIONS_EN = {
       WAITING_TO_JOIN: 'Waiting For Join',
     },
   },
+
+  aircraftCard: {
+    sellModal: {
+      title: 'Sell Aircraft',
+      text: 'Are you sure you wanna sell aircraft {{aircraftReg}} ({{aircraftType}}) for {{money}} this action can not be undone!',
+    },
+
+    errors: {
+      NOT_FOUND_DEALER: 'Dealer now is not buying this aircraft.',
+      NOT_FOUND_AIRCRAFT: 'You cannot sell this aircraft',
+      COMPANY: 'You cannot sell this aircraft in this company',
+      INTERNAL: "Something wen't wrong, try again later.",
+    },
+  },
 };

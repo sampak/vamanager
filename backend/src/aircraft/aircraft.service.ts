@@ -8,6 +8,8 @@ import { Users } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { BuyAircraftDTO } from '@shared/dto/BuyAircraftDTO';
 import prismaAircraftToAircraft from 'src/adapters/prismaAircraftToAircraft';
+import { AuthedUser } from 'src/dto/AuthedUser';
+import { getSellAircraftCost } from 'src/utils/getSellAircraftCost';
 
 @Injectable()
 export class AircraftService {
@@ -120,7 +122,7 @@ export class AircraftService {
     try {
       const newAircraft = await this.prismaService.$transaction(
         async (transactionPrisma) => {
-          transactionPrisma.airlines.update({
+          await transactionPrisma.airlines.update({
             where: { id: airline.id },
             data: { balance: newBalance },
           });
@@ -144,6 +146,71 @@ export class AircraftService {
         throw new BadRequestException('REGISTRATION_OWNED');
       }
       throw new InternalServerErrorException('TRANSACTION');
+    }
+  }
+
+  async sell(currentUser: AuthedUser, airlineId: string, aircraftId: string) {
+    const company = await this.prismaService.airlines.findFirst({
+      where: {
+        icao: airlineId,
+      },
+    });
+
+    if (!company) {
+      throw new BadRequestException('COMPANY');
+    }
+
+    const aircraft = await this.prismaService.aircrafts.findFirst({
+      where: {
+        airlineId: company.id,
+        id: aircraftId,
+      },
+      include: {
+        type: true,
+      },
+    });
+
+    if (!aircraft) {
+      throw new BadRequestException('NOT_FOUND_AIRCRAFT');
+    }
+
+    const dealerAircraft = await this.prismaService.aircraftsDealer.findFirst({
+      where: {
+        typeId: aircraft.typeId,
+      },
+    });
+
+    if (!dealerAircraft) {
+      throw new BadRequestException('NOT_FOUND_DEALER');
+    }
+
+    const sellCost = getSellAircraftCost(dealerAircraft);
+
+    try {
+      const transactionResult = await this.prismaService.$transaction([
+        this.prismaService.airlines.update({
+          data: {
+            balance: company.balance + sellCost,
+          },
+
+          where: {
+            id: company.id,
+          },
+        }),
+
+        this.prismaService.aircrafts.delete({
+          where: {
+            id: aircraft.id,
+          },
+        }),
+      ]);
+      console.log(
+        `Aircraft ${aircraft.type.type} reg. ${aircraft.registration} from company ${company.name} was sold by ${currentUser.firstName} ${currentUser.id}`
+      );
+      return { action: 'DELETE', key: aircraft.id };
+    } catch (e) {
+      console.log(e);
+      throw new InternalServerErrorException('INTERNAL');
     }
   }
 }

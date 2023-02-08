@@ -1,8 +1,9 @@
 import { Memberships, membership_role, prisma, Users } from '@prisma/client';
 import { UserUIConfiguration } from '@shared/ui-configuration/user';
+import { AuthedUser } from 'src/dto/AuthedUser';
 
 const getUserConfiguration = (
-  prismaUser: Users & { memberships?: Memberships },
+  prismaUser: AuthedUser,
   memberships: Memberships[]
 ): UserUIConfiguration => {
   const membership = prismaUser?.memberships?.[0];

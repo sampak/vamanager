@@ -26,6 +26,8 @@ import getUserConfiguration from 'src/ui-configuration/user';
 import getMembershipConfiguration from 'src/ui-configuration/membership';
 import emails from 'src/utils/emails';
 import { InvitationEmail } from '@shared/emails/Invitation.email';
+import { AuthedUser } from 'src/dto/AuthedUser';
+import { getSellAircraftCost } from 'src/utils/getSellAircraftCost';
 @Injectable()
 export class AirlineService {
   constructor(private readonly prismaService: PrismaService) {}
@@ -74,7 +76,7 @@ export class AirlineService {
     }
   }
 
-  async getAircrafts(airlineId: string) {
+  async getAircrafts(currentUser: AuthedUser, airlineId: string) {
     const airline = await this.prismaService.airlines.findFirst({
       where: {
         icao: airlineId,
@@ -88,17 +90,28 @@ export class AirlineService {
         airlineId: airline.id,
       },
       include: {
-        type: true,
+        type: {
+          include: {
+            aircraftsDealer: true,
+          },
+        },
       },
     });
 
-    return prismaAircrafts.map((aircraft) =>
-      prismaAircraftToAircraft(aircraft)
-    );
+    return prismaAircrafts.map((prismaAircraft) => {
+      let aircraft = prismaAircraftToAircraft(prismaAircraft, currentUser);
+      aircraft.sellCost = getSellAircraftCost(
+        prismaAircraft.type.aircraftsDealer.find(
+          (dealer) => dealer.typeId === prismaAircraft.typeId
+        )
+      );
+
+      return aircraft;
+    });
   }
 
   async getUsers(
-    currentUser: Users & { memberships: Memberships },
+    currentUser: AuthedUser,
     airlineId: string,
     name: string,
     orderBy: UsersSearchOrder

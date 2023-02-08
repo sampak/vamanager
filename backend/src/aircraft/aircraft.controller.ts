@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -14,6 +15,7 @@ import { BuyAircraftDTO } from '@shared/dto/BuyAircraftDTO';
 import { MembershipRole } from '@shared/base/MembershipRole';
 import { roleGuard } from 'src/guards/role.guard';
 import { SentryInterceptor } from 'src/interceptors/SentryInterceptor';
+import { AuthedUser } from 'src/dto/AuthedUser';
 @UseInterceptors(SentryInterceptor)
 @Controller('airline/:airlineId/aircraft')
 export class AircraftController {
@@ -50,5 +52,16 @@ export class AircraftController {
     @Body() payload: BuyAircraftDTO
   ) {
     return this.aircraftService.buy(airlineId, aircraftId, payload);
+  }
+
+  @SetMetadata('roles', [MembershipRole.ADMIN])
+  @UseGuards(roleGuard)
+  @Delete('/:aircraftId')
+  async sell(
+    @CurrentUser() currentUser: AuthedUser,
+    @Param('airlineId') airlineId,
+    @Param('aircraftId') aircraftId
+  ) {
+    return this.aircraftService.sell(currentUser, airlineId, aircraftId);
   }
 }

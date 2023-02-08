@@ -1,3 +1,4 @@
+import { AircraftUIConfiguration } from "../ui-configuration/aircraft";
 import Airline from "./Airline";
 import TypeOfAircraft from "./TypeOfAircraft";
 
@@ -12,4 +13,6 @@ export default interface Aircraft {
   minutes: number;
   miles: number;
   createdAt: Date;
+  sellCost?: number;
+  uiConfiguration: AircraftUIConfiguration;
 }

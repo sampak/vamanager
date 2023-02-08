@@ -15,11 +15,13 @@ const SmallModal: FC<Props> = ({
         <div className={styles.modalWrapper}>
           <div className={styles.modal}>
             <>
-              <FontAwesomeIcon
-                onClick={() => handleClose(false)}
-                className={styles.closeIcon}
-                icon={faClose}
-              />
+              {isCloseButton && (
+                <FontAwesomeIcon
+                  onClick={() => handleClose(false)}
+                  className={styles.closeIcon}
+                  icon={faClose}
+                />
+              )}
               {children}
             </>
           </div>

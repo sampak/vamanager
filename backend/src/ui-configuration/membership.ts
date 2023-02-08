@@ -6,10 +6,11 @@ import {
   Users,
 } from '@prisma/client';
 import { MembershipUIConfiguration } from '@shared/ui-configuration/membership';
+import { AuthedUser } from 'src/dto/AuthedUser';
 
 const getMembershipConfiguration = (
   prismaMembership: Memberships & { user?: Users },
-  currentUser: Users & { memberships: Memberships },
+  currentUser: AuthedUser,
   company?: Airlines
 ): MembershipUIConfiguration => {
   const currentUserMembership = currentUser.memberships[0];

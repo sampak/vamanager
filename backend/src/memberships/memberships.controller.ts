@@ -13,6 +13,7 @@ import { UpdateMembershipStatusDTO } from '@shared/dto/UpdateMembershipStatusDTO
 import { roleGuard } from 'src/guards/role.guard';
 import { CurrentUser } from 'src/decorators/CurrentUser.decorator';
 import { Memberships, Users } from '@prisma/client';
+import { AuthedUser } from 'src/dto/AuthedUser';
 
 @Controller('airline/:airlineId/memberships')
 export class MembershipsController {
@@ -23,7 +24,7 @@ export class MembershipsController {
   @Put('/:membershipID/role')
   async updateRole(
     @CurrentUser()
-    currentUser: Users & { memberships: Memberships[] },
+    currentUser: AuthedUser,
     @Param('membershipID') membershipID: string,
     @Body() payload: updateRoleDTO
   ) {
@@ -39,7 +40,7 @@ export class MembershipsController {
   @Put('/:membershipID/status')
   async updateStatus(
     @CurrentUser()
-    currentUser: Users & { memberships: Memberships[] },
+    currentUser: AuthedUser,
     @Param('membershipID') membershipID: string,
     @Body() payload: UpdateMembershipStatusDTO
   ) {
@@ -55,7 +56,7 @@ export class MembershipsController {
   @Put('/:membershipID/reinvite')
   async resendInvite(
     @CurrentUser()
-    currentUser: Users & { memberships: Memberships[] },
+    currentUser: AuthedUser,
     @Param('membershipID') membershipID: string
   ) {
     return await this.membershipService.resendInvite(currentUser, membershipID);

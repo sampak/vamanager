@@ -14,12 +14,13 @@ import { CreateAirlineDTO } from '@shared/dto/CreateAirlineDTO';
 import { CurrentUser } from 'src/decorators/CurrentUser.decorator';
 import { S3Client } from 'src/decorators/S3Client.decoratior';
 import * as AWS from 'aws-sdk';
-import { Users } from '@prisma/client';
+import { Memberships, Users } from '@prisma/client';
 import { UsersSearchOrder } from '@shared/dto/UsersSearchDTO';
 import { roleGuard } from 'src/guards/role.guard';
 import { MembershipRole } from '@shared/base/MembershipRole';
 import { InviteUserDTO } from '@shared/dto/InviteUserDTO';
 import { SentryInterceptor } from 'src/interceptors/SentryInterceptor';
+import { AuthedUser } from 'src/dto/AuthedUser';
 @UseInterceptors(SentryInterceptor)
 @Controller('airline')
 export class AirlineController {
@@ -46,10 +47,10 @@ export class AirlineController {
 
   @Get(':airlineId/aircrafts')
   async getAircrafts(
-    @CurrentUser() currentUser: Users,
+    @CurrentUser() currentUser: AuthedUser,
     @Param('airlineId') airlineId: string
   ) {
-    return await this.airlineService.getAircrafts(airlineId);
+    return await this.airlineService.getAircrafts(currentUser, airlineId);
   }
 
   @Get('/')

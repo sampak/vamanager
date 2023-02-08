@@ -9,6 +9,7 @@
   display: flex;
   padding-top: 48px;
   gap: 48px;
+  flex-wrap: wrap;
 }
 
 .header {
@@ -25,4 +26,8 @@
 .createButton {
   color: $CTAButton;
   cursor: pointer;
+}
+
+.error {
+  margin-top: 24px;
 }

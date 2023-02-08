@@ -65,8 +65,19 @@ const useGetAllDealerAircrafts = (workspaceId: string) => {
   );
 };
 
+const sellAircraft = (payload: { workspaceId: string; aircraftId: string }) => {
+  return axiosInstance.delete(
+    `/airline/${payload.workspaceId}/aircraft/${payload.aircraftId}`
+  );
+};
+
+const useSellAircraft = () => {
+  return useMutation(sellAircraft);
+};
+
 export default {
   useGetAllDealerAircrafts,
   useBuyAircraft,
   useSearchCompanyTypeOfAircraft,
+  useSellAircraft,
 };

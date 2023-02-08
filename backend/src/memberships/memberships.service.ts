@@ -13,13 +13,14 @@ import { PrismaService } from 'src/prisma.service';
 import { config } from 'src/config';
 import emails from 'src/utils/emails';
 import { InvitationEmail } from '@shared/emails/Invitation.email';
+import { AuthedUser } from 'src/dto/AuthedUser';
 
 @Injectable()
 export class MembershipsService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async updateRole(
-    currentUser: Users & { memberships: Memberships[] },
+    currentUser: AuthedUser,
     membershipId: string,
     payload: updateRoleDTO
   ) {
@@ -61,7 +62,7 @@ export class MembershipsService {
   }
 
   async updateStatus(
-    currentUser: Users & { memberships: Memberships[] },
+    currentUser: AuthedUser,
     membershipId: string,
     payload: UpdateMembershipStatusDTO
   ) {
@@ -102,10 +103,7 @@ export class MembershipsService {
     return { action: 'UPDATE', key: membership.id };
   }
 
-  async resendInvite(
-    currentUser: Users & { memberships: Memberships[] },
-    membershipId: string
-  ) {
+  async resendInvite(currentUser: AuthedUser, membershipId: string) {
     const currentUserMembership = currentUser.memberships[0];
     const company = await this.prismaService.airlines.findFirst({
       where: { id: currentUserMembership.airlineId },

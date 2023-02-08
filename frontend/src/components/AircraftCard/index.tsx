@@ -9,19 +9,51 @@ import DropdownMenu from 'components/DropdownMenu';
 import { FeatureFlags } from '@shared/base/FeatureFlags';
 import { useState } from 'react';
 import DropdownMenuV2 from 'components/DropdownMenuv2';
+import aircraftService from 'api/aircraftService';
+import { useParams } from 'react-router-dom';
+import { getAPIError } from 'utils/getAPIError';
+import { useTranslation } from 'react-i18next';
+import ErrorModal from 'components/ErrorModal';
 
-const AircraftCard: FC<Props> = ({ aircraft }) => {
+const AircraftCard: FC<Props> = ({ setError, refetchAircrafts, aircraft }) => {
+  const translation = useTranslation();
+  const [isDeleteModal, setDeleteModal] = useState(false);
+  const t = (
+    key: string,
+    params?: { aircraftReg: string; aircraftType: string; money: string }
+  ) => translation.t(`aircraftCard.${key}`, params);
+  const { workspaceId } = useParams();
   const [menu, setMenu] = useState(false);
+  const { mutate: sellAircraft, isLoading } = aircraftService.useSellAircraft();
   const isAircraftConditionEnabled = useFeature(
     FeatureFlags.AIRCRAFT_CONDITION
   ).on;
-  const sellAircraft = () => {
-    console.log('clicked');
+  const handleSellAircraft = () => {
+    setError('');
+    sellAircraft(
+      {
+        workspaceId: workspaceId!,
+        aircraftId: aircraft.id,
+      },
+      {
+        onSuccess: () => {
+          refetchAircrafts();
+        },
+        onError: (err: any) => {
+          setError(getAPIError(err, t));
+        },
+      }
+    );
   };
 
+  const sellCost = new Intl.NumberFormat('en-EN', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(aircraft.sellCost!);
+
   const options = [
-    { text: 'Change Image', onClick: sellAircraft },
-    { text: 'Sell', onClick: sellAircraft },
+    { text: 'Change Image', onClick: handleSellAircraft },
+    { text: `Sell Aircraft`, onClick: () => setDeleteModal(true) },
   ];
 
   return (
@@ -51,6 +83,22 @@ const AircraftCard: FC<Props> = ({ aircraft }) => {
           <AircraftStatusBar percent={100} />
         </div>
       )}
+      <ErrorModal
+        isOpen={isDeleteModal}
+        toggle={setDeleteModal}
+        title={t('sellModal.title')}
+        text={t('sellModal.text', {
+          aircraftReg: aircraft.registration,
+          aircraftType: aircraft.type.type,
+          money: sellCost,
+        })}
+        acceptText="Sell"
+        cancelText="Cancel"
+        isLoading={isLoading}
+        isDisabled={isLoading}
+        onAccept={() => handleSellAircraft()}
+        onCancel={() => setDeleteModal(false)}
+      />
     </div>
   );
 };

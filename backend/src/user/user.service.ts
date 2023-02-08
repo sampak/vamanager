@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Memberships, membership_status, Users } from '@prisma/client';
 import prismaMembershipToMembership from 'src/adapters/prismaMembershipToMembership';
 import PrismaUserToUser from 'src/adapters/prismaUserToUser';
+import { AuthedUser } from 'src/dto/AuthedUser';
 import { PrismaService } from 'src/prisma.service';
 import getUserConfiguration from 'src/ui-configuration/user';
 
@@ -31,7 +32,7 @@ export class UserService {
     );
   }
 
-  async getMe(prismaUser: Users & { memberships?: Memberships }) {
+  async getMe(prismaUser: AuthedUser) {
     const memberships = await this.prisma.memberships.findMany({
       where: {
         userId: prismaUser.id,
