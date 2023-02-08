@@ -8,6 +8,7 @@ import { useFeature } from '@growthbook/growthbook-react';
 import DropdownMenu from 'components/DropdownMenu';
 import { FeatureFlags } from '@shared/base/FeatureFlags';
 import { useState } from 'react';
+import DropdownMenuV2 from 'components/DropdownMenuv2';
 
 const AircraftCard: FC<Props> = ({ aircraft }) => {
   const [menu, setMenu] = useState(false);
@@ -26,10 +27,10 @@ const AircraftCard: FC<Props> = ({ aircraft }) => {
   return (
     <div className={styles.card}>
       <div className={styles.imageContainer}>
-        <div onClick={() => setMenu(!menu)} className={styles.overflowMenu}>
-          <FontAwesomeIcon icon={faEllipsis} />
-        </div>
         <img src={aircraft.image} />
+      </div>
+      <div onClick={() => setMenu(!menu)} className={styles.overflowMenu}>
+        <DropdownMenuV2 options={options} />
       </div>
       <div className={styles.description}>
         <Title className={styles.name} black>
@@ -38,9 +39,9 @@ const AircraftCard: FC<Props> = ({ aircraft }) => {
       </div>
 
       <div className={styles.context}>
-        <div className={styles.info}>Reg. SP-RSA</div>
-        <div className={styles.info}>0 miles</div>
-        <div className={styles.info}>last flight: EPWA -&gt; EPWR</div>
+        <div className={styles.info}>Reg. {aircraft.registration}</div>
+        <div className={styles.info}>{aircraft.miles} miles</div>
+        {/* <div className={styles.info}>last flight: EPWA -&gt; EPWR</div> */}
       </div>
       {isAircraftConditionEnabled && (
         <div className={styles.barWrapper}>
@@ -50,12 +51,6 @@ const AircraftCard: FC<Props> = ({ aircraft }) => {
           <AircraftStatusBar percent={100} />
         </div>
       )}
-      <DropdownMenu
-        className={styles.dropdown}
-        toggle={setMenu}
-        isOpen={menu}
-        options={options}
-      />
     </div>
   );
 };

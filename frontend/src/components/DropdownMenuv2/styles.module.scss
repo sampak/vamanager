@@ -20,11 +20,13 @@
 }
 
 .option {
+  z-index: 100;
   cursor: pointer;
   display: flex;
   align-items: center;
   padding-left: 12px;
   height: 48px;
+  font-size: 16px;
   font-family: RobotoRegular;
   overflow: hidden;
   &:hover {
