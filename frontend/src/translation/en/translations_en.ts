@@ -260,6 +260,10 @@ export const TRANSLATIONS_EN = {
   },
 
   aircraftCard: {
+    menu: {
+      canSellAircraft: 'Sell Aircraft',
+    },
+
     sellModal: {
       title: 'Sell Aircraft',
       text: 'Are you sure you wanna sell aircraft {{aircraftReg}} ({{aircraftType}}) for {{money}} this action can not be undone!',

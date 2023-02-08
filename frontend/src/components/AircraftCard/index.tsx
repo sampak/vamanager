@@ -14,6 +14,9 @@ import { useParams } from 'react-router-dom';
 import { getAPIError } from 'utils/getAPIError';
 import { useTranslation } from 'react-i18next';
 import ErrorModal from 'components/ErrorModal';
+import { AircraftButtons } from '@shared/ui-configuration/aircraft';
+import { getVisibleButtons } from 'utils/getVisibleButtons';
+import { getButtonWithCallback } from 'utils/getButtonWithCallback';
 
 const AircraftCard: FC<Props> = ({ setError, refetchAircrafts, aircraft }) => {
   const translation = useTranslation();
@@ -51,10 +54,28 @@ const AircraftCard: FC<Props> = ({ setError, refetchAircrafts, aircraft }) => {
     currency: 'USD',
   }).format(aircraft.sellCost!);
 
-  const options = [
-    { text: 'Change Image', onClick: handleSellAircraft },
-    { text: `Sell Aircraft`, onClick: () => setDeleteModal(true) },
-  ];
+  const CTACallbacks: { [x in AircraftButtons]?: () => void } = {
+    [AircraftButtons.canSellAircraft]: () => {
+      setDeleteModal(true);
+    },
+  };
+
+  const dropdownDownMenu = () => {
+    const visibleButtons = getVisibleButtons(aircraft.uiConfiguration!);
+
+    return (
+      visibleButtons
+        ?.map((button) => {
+          const isCallback = getButtonWithCallback(CTACallbacks, button);
+          if (isCallback) {
+            return { text: t(`menu.${button.key}`), onClick: isCallback };
+          }
+
+          return null;
+        })
+        .filter((option) => option !== null) ?? []
+    );
+  };
 
   return (
     <div className={styles.card}>
@@ -62,7 +83,9 @@ const AircraftCard: FC<Props> = ({ setError, refetchAircrafts, aircraft }) => {
         <img src={aircraft.image} />
       </div>
       <div onClick={() => setMenu(!menu)} className={styles.overflowMenu}>
-        <DropdownMenuV2 options={options} />
+        {!!dropdownDownMenu().length && (
+          <DropdownMenuV2 options={dropdownDownMenu()} />
+        )}
       </div>
       <div className={styles.description}>
         <Title className={styles.name} black>
