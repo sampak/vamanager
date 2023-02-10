@@ -1,0 +1,8 @@
+services:
+  backend:
+    image: sampak/vamanager-backend:latest
+    restart: always
+    ports: 
+      - 4000:4000
+    env_file:
+      - backend/.env.prod

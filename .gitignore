@@ -2,3 +2,4 @@
 shared/dist
 backend/.env
 frontend/.env
+backend/.env.prod
