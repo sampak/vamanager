@@ -15,7 +15,7 @@ const prismaAircraftToAircraft = (
     typeId: aircraft.type.id,
     type: aircraft.type,
     miles: aircraft.miles,
-
+    condition: aircraft.condition,
     minutes: aircraft.minutes,
     createdAt: aircraft.createdAt,
     uiConfiguration: getAircraftConfiguration(aircraft, currentUser),

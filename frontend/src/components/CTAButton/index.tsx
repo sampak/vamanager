@@ -8,7 +8,7 @@ const CTAButton: FC<Props> = ({
 }) => {
   return (
     <span
-      onClick={onClick}
+      onClick={() => onClick()}
       className={`${styles.button} ${className} ${disabled && styles.disabled}`}
     >
       {text}

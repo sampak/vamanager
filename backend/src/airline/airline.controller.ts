@@ -53,6 +53,23 @@ export class AirlineController {
     return await this.airlineService.getAircrafts(currentUser, airlineId);
   }
 
+  @Get(':airlineId/aircrafts/search')
+  async searchAircrafts(
+    @CurrentUser() currentUser: AuthedUser,
+    @Param('airlineId') airlineId: string,
+    @Query('type') type: string,
+    @Query('minCondition') minCondition: number,
+    @Query('search') search: string
+  ) {
+    return await this.airlineService.search(
+      currentUser,
+      airlineId,
+      type,
+      minCondition,
+      search
+    );
+  }
+
   @Get('/')
   async getAll(@CurrentUser() CurrentUser) {
     return await this.airlineService.getAll(CurrentUser);

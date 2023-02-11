@@ -20,10 +20,13 @@ model Users {
   status            users_status        @default(ACTIVE)
   airlines          Airlines[]
   schedules         Schedules[]
+  pireps            Pireps[]
   updatedAt         DateTime            @updatedAt
   createdAt         DateTime            @default(now())
   memberships       Memberships[]
   verificationCodes VerificationCodes[]
+
+  @@map("users")
 }
 
 model Airports {
@@ -41,8 +44,12 @@ model Airports {
   airlines              Airlines[]
   schedules_origin      Schedules[] @relation("origin")
   schedules_destination Schedules[] @relation("destination")
+  pirep_origin          Pireps[]    @relation("pirep_origin")
+  pirep_destination     Pireps[]    @relation("pirep_destination")
   updatedAt             DateTime    @updatedAt
   createdAt             DateTime    @default(now())
+
+  @@map("airports")
 }
 
 model Airlines {
@@ -57,6 +64,7 @@ model Airlines {
   memberships  Memberships[]
   aircrafts    Aircrafts[]
   schedules    Schedules[]
+  Pireps       Pireps[]
   costIndex    Int           @default(15)
   balance      Int
   rating       Int           @default(500)
@@ -64,6 +72,8 @@ model Airlines {
   options      String
   updatedAt    DateTime      @updatedAt
   createdAt    DateTime      @default(now())
+
+  @@map("airlines")
 }
 
 model Memberships {
@@ -77,6 +87,8 @@ model Memberships {
   rating    Int               @default(500)
   updatedAt DateTime          @updatedAt
   createdAt DateTime          @default(now())
+
+  @@map("memberships")
 }
 
 model Aircrafts {
@@ -90,8 +102,11 @@ model Aircrafts {
   minutes      Int            @default(0)
   miles        Int            @default(0)
   condition    Int            @default(100)
+  pireps       Pireps[]
   updatedAt    DateTime       @updatedAt
   createdAt    DateTime       @default(now())
+
+  @@map("aircrafts")
 }
 
 model AircraftsDealer {
@@ -102,6 +117,8 @@ model AircraftsDealer {
   cost      Int
   updatedAt DateTime       @updatedAt
   createdAt DateTime       @default(now())
+
+  @@map("aircrafts_dealer")
 }
 
 model TypeOfAircraft {
@@ -113,6 +130,8 @@ model TypeOfAircraft {
   aircraftsDealer AircraftsDealer[]
   updatedAt       DateTime          @updatedAt
   createdAt       DateTime          @default(now())
+
+  @@map("type_of_aircraft")
 }
 
 model Schedules {
@@ -142,6 +161,72 @@ model Schedules {
   type_of_flight      type_of_flight
   updatedAt           DateTime          @updatedAt
   createdAt           DateTime          @default(now())
+
+  @@map("schedules")
+}
+
+model PirepsRoute {
+  id          String  @id @default(uuid())
+  ident       String
+  name        String
+  type        String
+  pos_lat     String
+  pos_lng     String
+  airway      String
+  is_sid_star Boolean
+  pirepId     String
+  pirep       Pireps  @relation(fields: [pirepId], references: [id])
+  index       Int
+
+  @@map("pireps_route")
+}
+
+model Pireps {
+  id                    String        @id @default(uuid())
+  callsign              String
+  flightNumber          String
+  estimatedFuel         Int           @default(0)
+  blockFuel             Int           @default(0)
+  estminatedAirDistance Int           @default(0)
+  airDistance           Int           @default(0)
+  passangers            Int           @default(0)
+  estimatedFlightTime   Int           @default(0)
+  flightTime            Int           @default(0)
+  takeoffTime           DateTime?
+  landingTime           DateTime?
+  dx_rmk                String        @default("") @db.Text
+  flightplanText        String        @default("") @db.Text
+  routeText             String        @default("") @db.Text
+  remarks               String        @default("") @db.Text
+  est_zfw               Int           @default(0)
+  est_tow               Int           @default(0)
+  orig_metar            String        @default("") @db.Text
+  orig_taf              String        @default("") @db.Text
+  dest_metar            String        @default("") @db.Text
+  dest_taf              String        @default("") @db.Text
+  altn_metar            String        @default("") @db.Text
+  altn_taf              String        @default("") @db.Text
+  pilot_notes           String        @default("")
+  plan_html             String        @default("") @db.LongText
+  originId              String
+  destinationId         String
+  pilotId               String
+  route                 PirepsRoute[]
+  pilot                 Users         @relation(fields: [pilotId], references: [id])
+  airlineId             String
+  airline               Airlines      @relation(fields: [airlineId], references: [id])
+  origin                Airports      @relation("pirep_origin", fields: [originId], references: [id])
+  destination           Airports      @relation("pirep_destination", fields: [destinationId], references: [id])
+  aircraftId            String
+  aircraft              Aircrafts     @relation(fields: [aircraftId], references: [id])
+  updatedAt             DateTime      @updatedAt
+  createdAt             DateTime      @default(now())
+  status                pirep_status
+  zfw                   Int           @default(0)
+  tow                   Int           @default(0)
+  units                 String        @default("kgs")
+
+  @@map("pireps")
 }
 
 model VerificationCodes {
@@ -151,6 +236,16 @@ model VerificationCodes {
   user      Users    @relation(fields: [userId], references: [id])
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
+
+  @@map("verification_codes")
+}
+
+enum pirep_status {
+  CREATING
+  CREATED
+  REJECTED
+  ACCEPTED
+  AWAITING_VALIDATION
 }
 
 enum schedule_status {

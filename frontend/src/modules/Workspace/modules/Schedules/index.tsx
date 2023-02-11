@@ -12,11 +12,15 @@ import { faAdd, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import AuthContext from 'contexts/auth';
 import Loading from 'components/Loading';
 import { useTranslation } from 'react-i18next';
+import BookModal from 'components/BookModal';
+import Schedule from '@shared/base/Schedule';
 
 const Schedules: FC<Props> = () => {
   const { workspaceId } = useParams();
   const { user } = useContext(AuthContext);
   const [isOpen, setOpen] = useState(false);
+  const [isBookModal, setIsBookModal] = useState(false);
+  const [bookSchedule, setBookSchedule] = useState<Schedule | null>(null);
 
   const translation = useTranslation();
   const t = (key: string) => translation.t(`schedules.${key}`);
@@ -64,6 +68,8 @@ const Schedules: FC<Props> = () => {
           <>
             {schedules.map((schedule) => (
               <ScheduleCard
+                setIsBookModal={setIsBookModal}
+                setBookSchedule={setBookSchedule}
                 key={schedule.id}
                 removeSchedule={handleRemoveSchedule}
                 schedule={schedule}
@@ -77,6 +83,11 @@ const Schedules: FC<Props> = () => {
         refetchSchedules={refetchSchedules}
         isOpen={isOpen}
         toggle={setOpen}
+      />
+      <BookModal
+        isOpen={isBookModal}
+        setToggle={setIsBookModal}
+        schedule={bookSchedule}
       />
     </div>
   );

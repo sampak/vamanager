@@ -12,6 +12,7 @@ export default interface Aircraft {
   registration: string;
   minutes: number;
   miles: number;
+  condition: number;
   createdAt: Date;
   sellCost?: number;
   uiConfiguration: AircraftUIConfiguration;

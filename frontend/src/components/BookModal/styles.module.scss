@@ -1,0 +1,35 @@
+.wrapper {
+  padding-top: 38px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 24px;
+}
+
+.callsign {
+  width: 100%;
+}
+
+.selectorWrapper {
+  width: 100%;
+}
+
+form {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+}
+
+.button {
+  width: 144px;
+}
+
+.error {
+  margin-bottom: 12px;
+}

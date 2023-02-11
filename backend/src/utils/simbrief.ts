@@ -25,7 +25,7 @@ interface AdditionalProps {
 const create = async (
   currentUser: Users,
   airlineName,
-  scheduleId,
+  static_id,
   flightNumber,
   type,
   originICAO,
@@ -34,7 +34,7 @@ const create = async (
     callsign: '',
     reg: '',
     route: '',
-    costIndex: '10',
+    costIndex: 'AUTO',
   }
 ) => {
   const url = new URL('https://www.simbrief.com/ofp/ofp.loader.api.php');
@@ -44,8 +44,10 @@ const create = async (
   );
 
   url.searchParams.append('airline', airlineName);
-  url.searchParams.append('static_id', scheduleId);
-  url.searchParams.append('route', additionalData.route);
+  url.searchParams.append('static_id', static_id);
+  if (additionalData.route) {
+    url.searchParams.append('route', additionalData.route);
+  }
   url.searchParams.append('callsign', additionalData.callsign);
   url.searchParams.append('fltnum', flightNumber);
   url.searchParams.append('type', type);

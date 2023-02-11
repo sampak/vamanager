@@ -15,7 +15,13 @@ import { useContext, useEffect, useState } from 'react';
 import moment from 'moment';
 import DropdownMenu from 'components/DropdownMenu';
 import { useTranslation } from 'react-i18next';
-const ScheduleCard: FC<Props> = ({ schedule, removeSchedule }) => {
+import BookModal from 'components/BookModal';
+const ScheduleCard: FC<Props> = ({
+  schedule,
+  removeSchedule,
+  setBookSchedule,
+  setIsBookModal,
+}) => {
   const translation = useTranslation();
   const t = (key: string) => translation.t(`schedules.card.${key}`);
   const { user } = useContext(AuthContext);
@@ -40,8 +46,13 @@ const ScheduleCard: FC<Props> = ({ schedule, removeSchedule }) => {
     createOptions();
   }, []);
 
+  const handleClick = () => {
+    setBookSchedule(schedule);
+    setIsBookModal(true);
+  };
+
   return (
-    <div className={styles.wrapper}>
+    <div onClick={() => handleClick()} className={styles.wrapper}>
       <div className={styles.progress}></div>
       <div className={styles.card}>
         <div className={styles.header}>

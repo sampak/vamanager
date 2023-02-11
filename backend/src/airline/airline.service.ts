@@ -76,6 +76,59 @@ export class AirlineService {
     }
   }
 
+  async search(
+    currentUser: AuthedUser,
+    airlineId: string,
+    type: string = '',
+    minCondition: number = 0,
+    search: string = ''
+  ) {
+    const airline = await this.prismaService.airlines.findFirst({
+      where: {
+        icao: airlineId,
+      },
+    });
+
+    if (!airline) throw new BadRequestException('BAD_REQUEST');
+
+    const prismaAircrafts = await this.prismaService.aircrafts.findMany({
+      where: {
+        airlineId: airline.id,
+        condition: {
+          gt: minCondition,
+        },
+        OR: [
+          {
+            registration: {
+              contains: search?.toLocaleLowerCase() ?? '',
+            },
+          },
+        ],
+        type: {
+          type: type,
+        },
+      },
+      include: {
+        type: {
+          include: {
+            aircraftsDealer: true,
+          },
+        },
+      },
+    });
+
+    return prismaAircrafts.map((prismaAircraft) => {
+      let aircraft = prismaAircraftToAircraft(prismaAircraft, currentUser);
+      aircraft.sellCost = getSellAircraftCost(
+        prismaAircraft.type.aircraftsDealer.find(
+          (dealer) => dealer.typeId === prismaAircraft.typeId
+        )
+      );
+
+      return aircraft;
+    });
+  }
+
   async getAircrafts(currentUser: AuthedUser, airlineId: string) {
     const airline = await this.prismaService.airlines.findFirst({
       where: {

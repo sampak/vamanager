@@ -282,4 +282,24 @@ export const TRANSLATIONS_EN = {
     body: "You have just become the owner of your own virtual airline, go to the 'aircrafts' tab and buy your first plane and become the best airline in the sky!",
     button: 'Close',
   },
+
+  bookModal: {
+    title: 'Book Flight',
+    callLabel: 'Callsign',
+    callPlaceholder: 'provide callsign for your flight',
+    airLabel: 'Select Aircraft',
+    airPlaceholder: 'Choose aircraft for flight',
+    cancelButton: 'Cancel',
+    acceptButton: 'Book Flight',
+    errors: {
+      INTERNAL_SERVER_ERROR: 'Something went wrong. Try again later',
+      NOT_FOUND_AIRLINE: 'You cannot book flight in this company',
+      NOT_FOUND_SCHEDULE: 'You cannot book flight in this company',
+      NOT_FOUND_AIRCRAFT: 'You cannot book flight in this company',
+      NOT_FOUND_PIREP: 'Pirep not found',
+      TRANSACTION: 'Something went wrong with getting the route',
+      AIRCRAFT_CONDITION:
+        'Aircraft is in bad condition you cannot book this aircraft for the flight',
+    },
+  },
 };

@@ -1,0 +1,69 @@
+@import 'src/styles/colors.scss';
+
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.options {
+  width: 100%;
+  position: absolute;
+  background: $mainBackgroundColor;
+  box-shadow: $shadowColor 0px 8px 32px;
+  top: 78px;
+  border-radius: 6px;
+  max-height: 168px;
+  overflow: auto;
+  z-index: 10;
+  border: solid 1px rgba(200, 200, 200, 0.3);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background: rgba(200, 200, 200, 0.3);
+  }
+}
+
+.name {
+  // width: 50%;
+  padding-left: 12px;
+}
+
+.condition {
+  width: 140px;
+  padding-right: 12px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+  padding-bottom: 12px;
+
+  & > * {
+    color: $errorColor;
+    animation-name: loading;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
