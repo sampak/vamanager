@@ -11,7 +11,7 @@
 require('dotenv').config();
 import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
-import { autoUpdater } from 'electron-updater';
+import { autoUpdater, NsisUpdater } from 'electron-updater';
 import log from 'electron-log';
 import { resolveHtmlPath } from './util';
 
@@ -19,7 +19,14 @@ require('./events/tokenEvents');
 
 class AppUpdater {
   constructor() {
-    log.transports.file.level = 'info';
+    const options: any = {
+      provider: 'generic',
+      url: 'http://update.server435386.nazwa.pl/',
+    };
+
+    const autoUpdater = new NsisUpdater(options);
+    log.transports.file.level = 'debug';
+    autoUpdater.forceDevUpdateConfig = true;
     autoUpdater.logger = log;
     autoUpdater.checkForUpdatesAndNotify();
   }

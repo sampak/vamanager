@@ -1,5 +1,6 @@
 {
   "description": "A foundation for scalable desktop apps",
+  "version": "0.0.1",
   "keywords": [
     "electron",
     "boilerplate",
@@ -139,7 +140,7 @@
     "css-loader": "^6.7.3",
     "css-minimizer-webpack-plugin": "^4.2.2",
     "detect-port": "^1.5.1",
-    "electron": "^23.0.0",
+    "electron": "^1.0.0",
     "electron-builder": "^23.6.0",
     "electron-devtools-installer": "^3.2.0",
     "electronmon": "^2.0.2",
@@ -182,8 +183,9 @@
     "webpack-merge": "^5.8.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "VAManager",
+    "artifactName": "VAManager-Setup.${ext}",
+    "appId": "org.erb.VAManager",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -242,15 +244,7 @@
     },
     "extraResources": [
       "./assets/**"
-    ],
-    "publish": {
-      "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
-    }
-  },
-  "collective": {
-    "url": "https://opencollective.com/electron-react-boilerplate-594"
+    ]
   },
   "devEngines": {
     "node": ">=14.x",
