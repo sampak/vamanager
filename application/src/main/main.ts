@@ -15,6 +15,8 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import { resolveHtmlPath } from './util';
 
+require('./events/tokenEvents');
+
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -40,7 +42,9 @@ const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 
 if (isDebug) {
-  require('electron-debug')();
+  require('electron-debug')({
+    devToolsMode: 'undocked',
+  });
 }
 
 const installExtensions = async () => {
@@ -74,6 +78,7 @@ const createWindow = async () => {
     width: 1024,
     height: 728,
     icon: getAssetPath('icon.png'),
+    frame: false,
     webPreferences: {
       nodeIntegration: true,
       preload: app.isPackaged

@@ -2,4 +2,5 @@
 shared/dist
 backend/.env
 frontend/.env
+application/.env
 backend/.env.prod

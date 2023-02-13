@@ -1,0 +1,12 @@
+@import '../../styles/colors.scss';
+.button {
+  color: $CTAButton;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: RobotoBold;
+}
+
+.disabled {
+  color: $disabledColor;
+  cursor: not-allowed;
+}

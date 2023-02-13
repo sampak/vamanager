@@ -1,15 +1,16 @@
 import { FC, Props } from './typings';
-import styles from './styles.module.scss';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getToken } from '../../api/user';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import userService from '../../api/userService';
 import AuthContext from '../../contexts/auth';
 import { User } from '@shared/base/User';
-// import LoadingScreen from 'components/LoadingScreen';
+import LoadingScreen from '../LoadingScreen';
+import { EventsType } from '../../../dto/Events';
 
 const ProtectedRoute: FC<Props> = ({ children }) => {
   const access_token = getToken();
+  const location = useLocation();
   const navigate = useNavigate();
   const { workspaceId } = useParams();
   const { data, refetch, isError, error, isFetching } = userService.useGetMe(
@@ -39,14 +40,23 @@ const ProtectedRoute: FC<Props> = ({ children }) => {
     const user = data?.data as User;
 
     if (user?.id) {
-      if (user.uiConfiguration?.showOnbording) {
-        navigate('/onbording/method');
-      }
-
       setUser(user);
       setLoading(false);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (
+      location.pathname !== 'choose-workspace' &&
+      !workspaceId &&
+      access_token
+    ) {
+      window.electron.ipcRenderer.sendMessage(EventsType.SEND_TOKEN, {
+        token: access_token,
+      });
+      navigate('/choose-workspace');
+    }
+  }, [location, workspaceId]);
 
   const showLoadingScreen = loading || isFetching;
   const showErrorScreen = isError;
@@ -56,8 +66,7 @@ const ProtectedRoute: FC<Props> = ({ children }) => {
   }
 
   if (showLoadingScreen) {
-    // return <LoadingScreen />;
-    return <>Loading</>
+    return <LoadingScreen />;
   }
 
   return children;
