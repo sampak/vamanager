@@ -10,27 +10,13 @@
  */
 require('dotenv').config();
 import path from 'path';
+import config from './config';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
-import { autoUpdater, NsisUpdater } from 'electron-updater';
-import log from 'electron-log';
 import { resolveHtmlPath } from './util';
+import updater from './utils/update';
+import { EventsType } from '../dto/Events';
 
 require('./events/tokenEvents');
-
-class AppUpdater {
-  constructor() {
-    const options: any = {
-      provider: 'generic',
-      url: 'http://update.server435386.nazwa.pl/',
-    };
-
-    const autoUpdater = new NsisUpdater(options);
-    log.transports.file.level = 'debug';
-    autoUpdater.forceDevUpdateConfig = true;
-    autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-}
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -94,17 +80,29 @@ const createWindow = async () => {
     },
   });
 
+  config.mainWindow = mainWindow;
+
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
-    if (process.env.START_MINIMIZED) {
-      mainWindow.minimize();
-    } else {
-      mainWindow.show();
-    }
+    mainWindow.setSize(500, 250);
+    mainWindow.center();
+    mainWindow.show();
+    setTimeout(() => {
+      if (updater.isUpdaterActive()) {
+        updater.checkForUpdates();
+        return;
+      }
+
+      mainWindow?.webContents.send(EventsType.SEND_DOWNLOAD_STATUS, {
+        isAvailable: false,
+      });
+      mainWindow?.setSize(1024, 728);
+      mainWindow?.center();
+    }, 1000);
   });
 
   mainWindow.on('closed', () => {
@@ -116,10 +114,6 @@ const createWindow = async () => {
     shell.openExternal(edata.url);
     return { action: 'deny' };
   });
-
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  new AppUpdater();
 };
 
 /**

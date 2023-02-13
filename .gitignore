@@ -4,3 +4,4 @@ backend/.env
 frontend/.env
 application/.env
 backend/.env.prod
+application/.env

@@ -1,3 +1,7 @@
 export type { FC } from 'react';
 
-export interface Props {}
+export interface Props {
+  text?: string;
+  className?: string;
+  logoClassName?: string;
+}

@@ -8,8 +8,8 @@ const electronHandler = {
     sendMessage<T>(channel: string, args: any) {
       ipcRenderer.send(channel, args);
     },
-    on(channel: string, func: (...args: unknown[]) => void) {
-      const subscription = (_event: IpcRendererEvent, ...args: unknown[]) =>
+    on(channel: string, func: (...args: any[]) => void) {
+      const subscription = (_event: IpcRendererEvent, ...args: any[]) =>
         func(...args);
       ipcRenderer.on(channel, subscription);
 
