@@ -1,0 +1,44 @@
+@import '../../styles/colors.scss';
+
+.wrapper {
+  width: 100%;
+  background: $logoColor;
+  height: 32px;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  color: $buttonsBackground;
+  padding-left: 24px;
+  span {
+    color: $buttonsBackground;
+  }
+}
+.badgeLogo {
+  opacity: 0;
+}
+
+.buttons {
+  color: $buttonsBackground;
+  padding-right: 12px;
+  display: flex;
+  height: 100%;
+  -webkit-app-region: no-drag;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 32px;
+  cursor: pointer;
+
+  &:hover {
+    background: $activeButtonColor;
+  }
+}

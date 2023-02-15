@@ -1,0 +1,51 @@
+@import '../../styles/colors.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.title {
+  margin-top: 38px;
+  margin-left: 38px;
+  font-size: 24px !important;
+}
+
+.bodyText {
+  margin-left: 38px;
+  margin-right: 38px;
+  padding-bottom: 24px;
+  font-size: 12px !important;
+  line-height: 18px;
+  color: rgb(50, 50, 50) !important;
+  font-family: 'RobotoMedium' !important;
+}
+
+.buttons {
+  background: $buttonsBackground;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  gap: 24px;
+  padding-right: 48px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.button {
+  width: 111px !important;
+}
+
+.removeButton {
+  width: 111px !important;
+  background: $errorColor !important;
+
+  &:hover {
+    background: $adminColor !important;
+  }
+
+  &:disabled {
+    background: $disabledColor !important;
+  }
+}

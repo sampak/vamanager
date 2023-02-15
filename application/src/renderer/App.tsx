@@ -10,6 +10,7 @@ import LoadingScreen from './components/LoadingScreen';
 import { EventsType } from '../dto/Events';
 import styles from './styles.module.scss';
 import DownloadUpdate from './components/DownloadUpdate';
+import Layout from './components/Layout';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,7 +22,7 @@ const queryClient = new QueryClient({
 
 export default function App() {
   const [isUpdate, setIsUpdate] = useState(false);
-  const [checkingIsUpdate, setCheckingIsUpdate] = useState(true);
+  const [checkingIsUpdate, setCheckingIsUpdate] = useState(false);
   const [downloadState, setDownloadState] = useState({
     total: 0,
     downloaded: 0,
@@ -31,7 +32,6 @@ export default function App() {
   window.electron.ipcRenderer.on(
     EventsType.SEND_DOWNLOAD_STATUS,
     (data: { isAvailable: boolean }) => {
-      console.log('isUpdate');
       setIsUpdate(data.isAvailable);
       setCheckingIsUpdate(false);
     }
@@ -70,18 +70,20 @@ export default function App() {
     <Router>
       <AxiosInterceptor>
         <QueryClientProvider client={queryClient}>
-          <Routes>
-            <Route path="auth/signin" element={<SignIn />} />
-            <Route path="choose-workspace" element={<>choose workspace</>} />
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <>hello</>
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
+          <Layout>
+            <Routes>
+              <Route path="auth/signin" element={<SignIn />} />
+              <Route path="choose-workspace" element={<>choose workspace</>} />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <>hello</>
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </Layout>
         </QueryClientProvider>
       </AxiosInterceptor>
     </Router>
