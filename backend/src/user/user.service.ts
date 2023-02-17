@@ -33,6 +33,10 @@ export class UserService {
   }
 
   async getMe(prismaUser: AuthedUser) {
+    if (!prismaUser?.id) {
+      throw new UnauthorizedException();
+    }
+
     const memberships = await this.prisma.memberships.findMany({
       where: {
         userId: prismaUser.id,

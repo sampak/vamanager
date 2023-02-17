@@ -1,0 +1,15 @@
+@import '../../styles/colors.scss';
+
+.content {
+  display: flex;
+  margin: auto;
+  padding-left: 44px;
+  padding-right: 44px;
+  margin-top: 44px;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-bottom: 84px;
+}
+.button {
+  cursor: pointer;
+}

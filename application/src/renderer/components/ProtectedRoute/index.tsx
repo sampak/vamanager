@@ -23,6 +23,7 @@ const ProtectedRoute: FC<Props> = ({ children }) => {
   useEffect(() => {
     if (!access_token) {
       navigate('/auth/signin');
+      return;
     }
     setLoading(true);
     refetch();
@@ -47,7 +48,7 @@ const ProtectedRoute: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (
-      location.pathname !== 'choose-workspace' &&
+      location.pathname !== '/choose-workspace' &&
       !workspaceId &&
       access_token
     ) {

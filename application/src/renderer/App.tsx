@@ -11,6 +11,7 @@ import { EventsType } from '../dto/Events';
 import styles from './styles.module.scss';
 import DownloadUpdate from './components/DownloadUpdate';
 import Layout from './components/Layout';
+import ChooseWorkspace from './modules/ChooseWorkspace';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,7 +23,7 @@ const queryClient = new QueryClient({
 
 export default function App() {
   const [isUpdate, setIsUpdate] = useState(false);
-  const [checkingIsUpdate, setCheckingIsUpdate] = useState(false);
+  const [checkingIsUpdate, setCheckingIsUpdate] = useState(true);
   const [downloadState, setDownloadState] = useState({
     total: 0,
     downloaded: 0,
@@ -73,12 +74,27 @@ export default function App() {
           <Layout>
             <Routes>
               <Route path="auth/signin" element={<SignIn />} />
-              <Route path="choose-workspace" element={<>choose workspace</>} />
+              <Route
+                path="choose-workspace"
+                element={
+                  <ProtectedRoute>
+                    <ChooseWorkspace />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/workspace/:workspaceId/*"
+                element={
+                  <ProtectedRoute>
+                    <>hello</>
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/"
                 element={
                   <ProtectedRoute>
-                    <>hello</>
+                    <ChooseWorkspace />
                   </ProtectedRoute>
                 }
               />
