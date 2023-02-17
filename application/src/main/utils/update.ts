@@ -5,7 +5,7 @@ import { NsisUpdater } from 'electron-updater';
 import config from '../config';
 
 const autoUpdater = new NsisUpdater({
-  provider: 'generic',
+  provider: 'generic' as any,
   url: process.env.UPDATE_URL,
 });
 

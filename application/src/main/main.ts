@@ -18,6 +18,7 @@ import { EventsType } from '../dto/Events';
 
 require('./events/tokenEvents');
 require('./events/topbarEvents');
+require('./events/updateEvents');
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -88,17 +89,9 @@ const createWindow = async () => {
     mainWindow.setSize(500, 250);
     mainWindow.center();
     mainWindow.show();
+    mainWindow.setAlwaysOnTop(true);
     setTimeout(() => {
-      if (updater.isUpdaterActive()) {
-        updater.checkForUpdates();
-        return;
-      }
-
-      mainWindow?.webContents.send(EventsType.SEND_DOWNLOAD_STATUS, {
-        isAvailable: false,
-      });
-      mainWindow?.setSize(1024, 728);
-      mainWindow?.center();
+      mainWindow?.setAlwaysOnTop(false);
     }, 1000);
   });
 

@@ -45,6 +45,10 @@ export default function App() {
     }
   );
 
+  useEffect(() => {
+    window.electron.ipcRenderer.sendMessage(EventsType.CHECK_IS_UPDATE, {});
+  }, []);
+
   if (checkingIsUpdate) {
     return (
       <div className={styles.updateWrapper}>
