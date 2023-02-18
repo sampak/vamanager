@@ -19,6 +19,7 @@ import { EventsType } from '../dto/Events';
 require('./events/tokenEvents');
 require('./events/topbarEvents');
 require('./events/updateEvents');
+require('./events/pirepEvents');
 
 let mainWindow: BrowserWindow | null = null;
 

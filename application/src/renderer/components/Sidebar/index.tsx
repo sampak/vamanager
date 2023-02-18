@@ -25,9 +25,7 @@ import { navigateInsideWorkspace } from '../../utils/navigateInsideWorkspace';
 
 enum MenuOptions {
   Home = 'Home',
-  Aircrafts = 'Aircrafts',
-  Schedules = 'Schedules',
-  Users = 'Users',
+  Pireps = 'Pireps',
 }
 
 const Sidebar = () => {
@@ -47,21 +45,13 @@ const Sidebar = () => {
     if (option === MenuOptions.Home) {
       return isPathActive(`/workspace/${workspaceId}`, location);
     }
-    if (option === MenuOptions.Aircrafts) {
+    if (option === MenuOptions.Pireps) {
       return isPathActive(`/workspace/${workspaceId}/aircrafts`, location);
-    }
-    if (option === MenuOptions.Schedules) {
-      return isPathActive(`/workspace/${workspaceId}/schedules`, location);
-    }
-    if (option === MenuOptions.Users) {
-      return isPathActive(`/workspace/${workspaceId}/users`, location);
     }
   };
 
   const isHome = isMenuOptionActive(MenuOptions.Home);
-  const isAircrafts = isMenuOptionActive(MenuOptions.Aircrafts);
-  const isSchedules = isMenuOptionActive(MenuOptions.Schedules);
-  const isUsers = isMenuOptionActive(MenuOptions.Users);
+  const isPireps = isMenuOptionActive(MenuOptions.Pireps);
 
   const elo = ((user?.membership?.rating as number) / 1000) * 100;
   const stars = (elo * 5) / 100;
@@ -113,7 +103,7 @@ const Sidebar = () => {
         </div>
         <div
           onClick={() =>
-            navigateInsideWorkspace(navigate, workspaceId!, '/schedules')
+            navigateInsideWorkspace(navigate, workspaceId!, '/pireps')
           }
           className={styles.option}
         >
@@ -122,7 +112,7 @@ const Sidebar = () => {
               icon={faCalendarAlt}
               className={classNames(
                 styles.optionIcon,
-                isSchedules && styles.activeIcon
+                isPireps && styles.activeIcon
               )}
             />
           </div>
