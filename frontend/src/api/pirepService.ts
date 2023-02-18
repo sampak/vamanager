@@ -9,7 +9,7 @@ const createPirep = (payload: {
 }) => {
   return axiosInstance.post(
     `/airline/${payload.workspaceID}/pireps/${payload.scheduleID}`,
-    payload
+    payload.payload
   );
 };
 const useCreatePirep = () => {
