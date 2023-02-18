@@ -4,14 +4,20 @@ import autoUpdater from '../utils/update';
 import config from '../config';
 
 ipcMain.on(EventsType.CHECK_IS_UPDATE, () => {
-  if (!autoUpdater.isUpdaterActive()) {
-    config.mainWindow?.webContents.send(EventsType.SEND_DOWNLOAD_STATUS, {
-      isAvailable: false,
-    });
-    config.mainWindow?.setSize(1024, 728);
-    config.mainWindow?.center();
-    return;
-  }
+  setTimeout(() => {
+    if (!autoUpdater.isUpdaterActive()) {
+      config.mainWindow?.webContents.send(EventsType.SEND_DOWNLOAD_STATUS, {
+        isAvailable: false,
+      });
+      config.mainWindow?.hide();
+      setTimeout(() => {
+        config.mainWindow?.setSize(1024, 728);
+        config.mainWindow?.center();
+        config.mainWindow?.show();
+      }, 500);
+      return;
+    }
 
-  autoUpdater.checkForUpdates();
+    autoUpdater.checkForUpdates();
+  }, 1000);
 });

@@ -1,0 +1,132 @@
+@import '../../styles/colors.scss';
+
+$iconColor: black;
+$activeIconColor: $logoColor;
+
+.menu {
+  z-index: 100;
+  position: relative;
+  padding-top: 24px;
+  width: 268px;
+  height: 100vh;
+  border-right: 1px solid $fontColor;
+  background: $mainBackgroundColor;
+  overflow: hidden;
+
+  .logoContent {
+    div {
+      color: black;
+    }
+  }
+}
+
+.logoContent {
+  cursor: pointer;
+  width: 201px;
+  display: flex;
+  overflow: hidden;
+  flex-wrap: nowrap;
+  margin-bottom: 24px;
+  margin-left: 16px;
+
+  div {
+    transition: color 0.2s;
+    color: $mainBackgroundColor;
+  }
+}
+
+.userContent {
+  position: relative;
+  display: flex;
+  gap: 21px;
+  padding-left: 15px;
+  overflow: hidden;
+  flex-wrap: nowrap;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 32px !important;
+  height: 32px !important;
+  font-size: 12px !important;
+  background: $badgeColor !important;
+  border: $bodyFontColor solid 1px;
+}
+
+.name {
+  width: 120px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.role {
+  color: $bodyFontColor;
+  margin-top: 5px;
+  font-size: 12px;
+  user-select: none;
+}
+
+.border {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin-left: 6px;
+  width: calc(100% - 12px);
+  height: 1px;
+  background: $bodyFontColor;
+  opacity: 0.3;
+}
+
+.options {
+  padding-left: 19px;
+  overflow: hidden;
+  flex-wrap: nowrap;
+}
+
+.option {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  gap: 23px;
+  width: 180px;
+  font-size: 14px;
+
+  &:hover {
+    .optionIcon {
+      color: $logoColor;
+    }
+  }
+}
+
+.iconBox {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.optionIcon {
+  width: 18px !important;
+  height: 18px !important;
+  font-size: 14px !important;
+  transition: color 0.2s;
+}
+
+.activeIcon {
+  color: $logoColor;
+}
+
+.optionName {
+  width: 120px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.stars {
+  font-size: 16px;
+}

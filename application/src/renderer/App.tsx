@@ -12,6 +12,10 @@ import styles from './styles.module.scss';
 import DownloadUpdate from './components/DownloadUpdate';
 import Layout from './components/Layout';
 import ChooseWorkspace from './modules/ChooseWorkspace';
+import AppLayout from './components/AppLayout';
+import { User } from '@shared/base/User';
+import AuthContext from './contexts/auth';
+import WorkspaceRoutes from './modules/Workspace';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,6 +26,7 @@ const queryClient = new QueryClient({
 });
 
 export default function App() {
+  const [user, setUser] = useState<null | User>(null);
   const [isUpdate, setIsUpdate] = useState(false);
   const [checkingIsUpdate, setCheckingIsUpdate] = useState(true);
   const [downloadState, setDownloadState] = useState({
@@ -72,40 +77,47 @@ export default function App() {
   }
 
   return (
-    <Router>
-      <AxiosInterceptor>
-        <QueryClientProvider client={queryClient}>
-          <Layout>
-            <Routes>
-              <Route path="auth/signin" element={<SignIn />} />
-              <Route
-                path="choose-workspace"
-                element={
-                  <ProtectedRoute>
-                    <ChooseWorkspace />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/workspace/:workspaceId/*"
-                element={
-                  <ProtectedRoute>
-                    <>hello</>
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/"
-                element={
-                  <ProtectedRoute>
-                    <ChooseWorkspace />
-                  </ProtectedRoute>
-                }
-              />
-            </Routes>
-          </Layout>
-        </QueryClientProvider>
-      </AxiosInterceptor>
-    </Router>
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+      }}
+    >
+      <Router>
+        <AxiosInterceptor>
+          <QueryClientProvider client={queryClient}>
+            <Layout>
+              <Routes>
+                <Route path="auth/signin" element={<SignIn />} />
+                <Route
+                  path="choose-workspace"
+                  element={
+                    <ProtectedRoute>
+                      <ChooseWorkspace />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/workspace/:workspaceId/*"
+                  element={
+                    <ProtectedRoute>
+                      <WorkspaceRoutes />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/"
+                  element={
+                    <ProtectedRoute>
+                      <ChooseWorkspace />
+                    </ProtectedRoute>
+                  }
+                />
+              </Routes>
+            </Layout>
+          </QueryClientProvider>
+        </AxiosInterceptor>
+      </Router>
+    </AuthContext.Provider>
   );
 }
