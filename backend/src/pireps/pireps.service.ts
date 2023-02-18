@@ -9,10 +9,42 @@ import { AuthedUser } from 'src/dto/AuthedUser';
 import { PrismaService } from 'src/prisma.service';
 import simbrief from '../utils/simbrief';
 import { CreatePirepDTO } from '@shared/dto/CreatePirepDTO';
+import prismaPirepToPirep from 'src/adapters/prismaPirepToPirep';
 
 @Injectable()
 export class PirepsService {
   constructor(private readonly prismaService: PrismaService) {}
+
+  async getBookedPireps(currentUser: AuthedUser, airlineId: string) {
+    const airline = await this.prismaService.airlines.findFirst({
+      where: {
+        icao: airlineId,
+      },
+    });
+
+    if (!airline) {
+      throw new NotFoundException('NOT_FOUND_AIRLINE');
+    }
+
+    const prismaPireps = await this.prismaService.pireps.findMany({
+      where: {
+        airlineId: airline.id,
+        pilotId: currentUser.id,
+        status: pirep_status.CREATED,
+      },
+      include: {
+        aircraft: {
+          include: {
+            type: true,
+          },
+        },
+        destination: true,
+        origin: true,
+      },
+    });
+
+    return prismaPireps.map((prismaPirep) => prismaPirepToPirep(prismaPirep));
+  }
 
   async insertSimbrief(currentUser: AuthedUser, airlineId, pirepId: string) {
     const prismaPirep = await this.prismaService.pireps.findFirst({
