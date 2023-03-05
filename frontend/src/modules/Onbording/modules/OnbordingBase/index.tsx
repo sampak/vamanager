@@ -36,7 +36,7 @@ const OnbordingBase: FC<Props> = ({
   const translation = useTranslation();
   const mapRef = useRef(null);
   const t = (key: string, params?: { airlineName?: string }) =>
-    translation.t(`onbording.base.${key}`, params);
+    translation.t(`onbording.base.${key}`, params ?? []);
 
   const { mutate: createAirline, isLoading } =
     airlineService.useCreateAirline();

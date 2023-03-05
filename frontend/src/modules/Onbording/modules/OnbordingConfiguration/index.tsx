@@ -17,7 +17,7 @@ const OnbordingConfiguration: FC<Props> = ({
   const navigate = useNavigate();
   const translation = useTranslation();
   const t = (key: string, params?: { airlineName?: string }) =>
-    translation.t(`onbording.configuration.${key}`, params);
+    translation.t(`onbording.configuration.${key}`, params ?? []);
 
   const handleCheck = (index) => {
     let newValues = [...options];

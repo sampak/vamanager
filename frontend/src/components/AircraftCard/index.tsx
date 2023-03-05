@@ -24,7 +24,7 @@ const AircraftCard: FC<Props> = ({ setError, refetchAircrafts, aircraft }) => {
   const t = (
     key: string,
     params?: { aircraftReg: string; aircraftType: string; money: string }
-  ) => translation.t(`aircraftCard.${key}`, params);
+  ) => translation.t(`aircraftCard.${key}`, params ?? []);
   const { workspaceId } = useParams();
   const [menu, setMenu] = useState(false);
   const { mutate: sellAircraft, isLoading } = aircraftService.useSellAircraft();
