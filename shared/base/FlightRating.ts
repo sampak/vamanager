@@ -1,0 +1,12 @@
+export enum Rating {
+  HORRIBLE = "HORRIBLE",
+  THE_WORST = "THE_WORST",
+  MUCH_WORSE = "MUCH_WORSE",
+  WORSE = "WORSE",
+  BAD = "BAD",
+  GOOD = "GOOD",
+  BETTER = "BETTER",
+  MUCH_BETTER = "MUCH_BETTER",
+  BEST = "BEST",
+  PERFECT = "PERFECT",
+}

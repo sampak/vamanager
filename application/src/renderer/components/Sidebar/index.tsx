@@ -22,10 +22,12 @@ import AuthContext from '../../contexts/auth';
 import { getLettersFromName } from '../../utils/getLettersFromName';
 import { useTranslation } from 'react-i18next';
 import { navigateInsideWorkspace } from '../../utils/navigateInsideWorkspace';
+import AcarsContext from 'renderer/contexts/acars';
 
 enum MenuOptions {
   Home = 'Home',
   Pireps = 'Pireps',
+  Acars = 'Acars',
 }
 
 const Sidebar = () => {
@@ -35,6 +37,7 @@ const Sidebar = () => {
   const t = (key: string) => translation.t(`sidebar.${key}`);
   const { workspaceId } = useParams();
   const { user } = useContext(AuthContext);
+  const { acars } = useContext(AcarsContext);
 
   const showedClassName = styles.showed;
 
@@ -46,12 +49,16 @@ const Sidebar = () => {
       return isPathActive(`/workspace/${workspaceId}`, location);
     }
     if (option === MenuOptions.Pireps) {
-      return isPathActive(`/workspace/${workspaceId}/aircrafts`, location);
+      return isPathActive(`/workspace/${workspaceId}/pireps`, location);
+    }
+    if (option === MenuOptions.Acars) {
+      return isPathActive(`/workspace/${workspaceId}/flight`, location);
     }
   };
 
   const isHome = isMenuOptionActive(MenuOptions.Home);
   const isPireps = isMenuOptionActive(MenuOptions.Pireps);
+  const isAcars = isMenuOptionActive(MenuOptions.Acars);
 
   const elo = ((user?.membership?.rating as number) / 1000) * 100;
   const stars = (elo * 5) / 100;
@@ -118,6 +125,25 @@ const Sidebar = () => {
           </div>
           <div className={styles.optionName}>{t('pireps')}</div>
         </div>
+        {acars?.trackerId && (
+          <div
+            onClick={() =>
+              navigateInsideWorkspace(navigate, workspaceId!, '/flight')
+            }
+            className={styles.option}
+          >
+            <div className={styles.iconBox}>
+              <FontAwesomeIcon
+                icon={faCalendarAlt}
+                className={classNames(
+                  styles.optionIcon,
+                  isAcars && styles.activeIcon
+                )}
+              />
+            </div>
+            <div className={styles.optionName}>Acars</div>
+          </div>
+        )}
       </div>
     </div>
   );

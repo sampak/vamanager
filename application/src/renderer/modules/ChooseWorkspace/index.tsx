@@ -6,6 +6,7 @@ import AirlineCard from '../../components/AirlineCard';
 import { MembershipStatus } from '@shared/base/MembershipStatus';
 import { useNavigate } from 'react-router-dom';
 import { Membership } from '@shared/base/Membership';
+import { EventsType } from '../../../dto/Events';
 const ChooseWorkspace: FC<Props> = () => {
   const navigate = useNavigate();
   const { data: membershipsData } = userService.useGetMemberships();
@@ -24,11 +25,17 @@ const ChooseWorkspace: FC<Props> = () => {
             <AirlineCard
               membership={membership}
               choose={true}
-              onClick={() =>
+              onClick={() => {
                 navigate(
                   `/workspace/${membership?.airline?.icao.toUpperCase()}`
-                )
-              }
+                );
+                window.electron.ipcRenderer.sendMessage(
+                  EventsType.SET_WORKSPACE,
+                  {
+                    workspaceId: membership?.airline?.icao.toUpperCase(),
+                  }
+                );
+              }}
               airline={membership.airline!}
             />
           ))}

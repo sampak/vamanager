@@ -103,7 +103,7 @@ const AircraftCard: FC<Props> = ({ setError, refetchAircrafts, aircraft }) => {
           <Title className={styles.barTitle} black>
             Conditon:
           </Title>
-          <AircraftStatusBar percent={100} />
+          <AircraftStatusBar percent={aircraft.condition} />
         </div>
       )}
       <ErrorModal

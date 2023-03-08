@@ -10,6 +10,6 @@ export interface PirepRoute {
   airway: string;
   is_sid_star: boolean;
   pirepId: string;
-  pirep: Pirep;
+  pirep?: Pirep;
   index: number;
 }

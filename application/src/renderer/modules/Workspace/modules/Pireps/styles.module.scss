@@ -1,3 +1,5 @@
+@import '../../../../styles/colors.scss';
+
 .title {
   margin-top: 24px;
   margin-bottom: 24px;
@@ -5,4 +7,10 @@
 
 .error {
   margin-bottom: 24px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }

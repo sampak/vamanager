@@ -21,3 +21,7 @@ ipcMain.on(EventsType.CHECK_IS_UPDATE, () => {
     autoUpdater.checkForUpdates();
   }, 1000);
 });
+
+ipcMain.on(EventsType.SET_WORKSPACE, (_, data) => {
+  config.workspaceId = data.workspaceId;
+});

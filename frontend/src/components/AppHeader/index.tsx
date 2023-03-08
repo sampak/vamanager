@@ -28,12 +28,18 @@ const AppHeader: FC<Props> = ({ children }) => {
     { key: 'dealer', title: t('dealer') },
     { key: 'verify', title: t('verify') },
     { key: 'users', title: t('users') },
+    { key: 'pirep', title: t('pirep') },
+    { key: 'pireps', title: t('pireps') },
   ];
 
   const getPath = () => {
     const pathname = location.pathname.split('/');
     const searchPath = pathname[pathname.length - 1];
-    const path = paths.find((path) => path.key.search(searchPath) !== -1);
+    const searchPathSecond = pathname[pathname.length - 2];
+
+    const path = paths.find(
+      (path) => path.key === searchPath || path.key === searchPathSecond
+    );
     if (path?.title && !!searchPath.length) {
       return `VAManager - ${path.title}`;
     }

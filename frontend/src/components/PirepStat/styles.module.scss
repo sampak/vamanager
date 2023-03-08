@@ -1,0 +1,32 @@
+@import 'src/styles/colors.scss';
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 220px;
+  background: $fontColor;
+  box-shadow: $shadowColor 0px 8px 32px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.bigText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding-top: 5px;
+  font-size: 24px;
+}
+
+.smallText {
+  text-align: center;
+  color: $secondaryFontColor;
+  font-weight: 400;
+  font-family: RobotoRegular;
+  width: 100%;
+  padding-bottom: 10px;
+  font-size: 12px;
+}

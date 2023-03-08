@@ -1,0 +1,156 @@
+@import '../../../../styles/colors.scss';
+
+$tabSize: 350px;
+
+.pageWrapper {
+}
+
+.title {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.tabs {
+  min-height: $tabSize + calc(28px * 2);
+}
+
+.container {
+}
+
+.flightHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.code {
+  padding-top: 6px;
+  font-size: 12px !important;
+}
+
+.mapHeader {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 28px;
+  background: $logoColor;
+  color: $fontColor;
+  font-weight: 400;
+  font-family: 'RobotoBold' !important;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  user-select: none;
+}
+
+.logsHeader {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 28px;
+  background: $logoColor;
+  color: $fontColor;
+  font-weight: 400;
+  font-family: 'RobotoBold' !important;
+  user-select: none;
+}
+
+.mapWrapper {
+  width: 100%;
+  height: $tabSize;
+}
+
+.logs {
+  width: 100%;
+  height: $tabSize;
+  background: white;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.header {
+  margin-left: 24px;
+
+  font-family: 'RobotoRegular' !important;
+  font-size: 14px !important;
+}
+
+.headerIcon {
+  font-weight: 400;
+  margin-right: 24px;
+}
+
+.progressWrapper {
+  margin-top: 24px;
+}
+
+.stats {
+  display: flex;
+  margin-top: 24px;
+  justify-content: space-around;
+}
+
+.stat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.topText {
+}
+
+.bottomText {
+  font-size: 11px;
+}
+
+.blocked {
+  backdrop-filter: blur(1.5px);
+  width: 100%;
+  height: 100%;
+  color: $errorColor;
+  z-index: 1;
+  position: absolute;
+}
+.blockedIcon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.buttons {
+  margin-top: 48px;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  display: flex;
+  gap: 24px;
+}
+
+.submitButton {
+  width: 108px !important;
+}
+
+.cancelButton {
+  width: 108px !important;
+  background: $adminColor !important;
+
+  &:hover {
+    background: $errorColor !important;
+  }
+}
+
+.icon {
+  color: $logoColor;
+}
+
+:export {
+  pathColor: $logoColor;
+}

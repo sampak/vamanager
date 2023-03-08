@@ -1,5 +1,19 @@
 @import 'src/styles/colors.scss';
 
+.container {
+  border: solid 1px rgba(0, 0, 0, 0);
+  &:hover {
+    border-color: $logoColor;
+  }
+  overflow: hidden;
+
+  transition: border-color 0.4s;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
 .wrapper {
   position: relative;
   width: 100%;
@@ -7,13 +21,9 @@
   background: $mainBackgroundColor;
   height: 100%;
   overflow: hidden;
-  border-radius: 6px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
   cursor: pointer;
-  border: solid 1px rgba(0, 0, 0, 0);
-  transition: border-color 0.4s;
-  &:hover {
-    border-color: $logoColor;
-  }
 }
 
 .progress {
@@ -127,6 +137,7 @@
 
 .estimated {
   font-size: 18px;
+  text-align: right;
 }
 
 .price {
@@ -208,4 +219,40 @@
 
 .dropdown {
   left: 0%;
+}
+
+.mapWrapper {
+  position: relative;
+  width: 100%;
+  height: 0px;
+}
+
+.mapShowed {
+  height: 300px;
+}
+
+.icon {
+  color: $logoColor;
+}
+
+.footer {
+  cursor: pointer;
+  // background: $logoColor;
+  background: $gradientButton;
+  color: $fontColor;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: normal;
+  font-family: RobotoMedium;
+  width: 100%;
+  height: 28px;
+  gap: 10px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+:export {
+  lineColor: $logoColor;
 }

@@ -27,7 +27,11 @@ const prismaScheduleToSchedule = (
     airDistance: schedule.airDistance,
     recommendedRoute: schedule.recommendedRoute,
     costIndex: schedule.costIndex,
-    salary: estimateSalary(schedule),
+    salary: estimateSalary(
+      schedule.airDistance,
+      schedule.estimatedPassangers,
+      schedule.estimatedPassangers
+    ),
   };
 };
 

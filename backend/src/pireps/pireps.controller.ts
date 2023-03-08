@@ -16,6 +16,23 @@ export class PirepsController {
     return await this.pirepsService.getBookedPireps(currentUser, airlineId);
   }
 
+  @Get('/')
+  async pireps(
+    @CurrentUser() currentUser: AuthedUser,
+    @Param('airlineId') airlineId: string
+  ) {
+    return await this.pirepsService.getPireps(currentUser, airlineId);
+  }
+
+  @Get('/:pirepId')
+  async pirep(
+    @CurrentUser() currentUser: AuthedUser,
+    @Param('airlineId') airlineId: string,
+    @Param('pirepId') pirepId: string
+  ) {
+    return await this.pirepsService.getPirep(currentUser, airlineId, pirepId);
+  }
+
   @Post('/:scheduleId')
   async bookSchedule(
     @CurrentUser() currentUser: AuthedUser,

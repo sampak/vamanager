@@ -25,6 +25,7 @@ model Users {
   createdAt         DateTime            @default(now())
   memberships       Memberships[]
   verificationCodes VerificationCodes[]
+  tracker           Tracker[]
 
   @@map("users")
 }
@@ -166,7 +167,7 @@ model Schedules {
 }
 
 model PirepsRoute {
-  id          String  @id @default(uuid())
+  id          String   @id @default(uuid())
   ident       String
   name        String
   type        String
@@ -175,10 +176,47 @@ model PirepsRoute {
   airway      String
   is_sid_star Boolean
   pirepId     String
-  pirep       Pireps  @relation(fields: [pirepId], references: [id])
+  pirep       Pireps   @relation(fields: [pirepId], references: [id])
   index       Int
+  updatedAt   DateTime @default(now()) @updatedAt
+  createdAt   DateTime @default(now())
 
   @@map("pireps_route")
+}
+
+model Tracker {
+  id           String          @id @default(uuid())
+  trackerId    String
+  userId       String
+  user         Users           @relation(fields: [userId], references: [id])
+  type         type_of_tracker
+  eventType    String
+  log          String
+  lat          Float
+  lng          Float
+  ias          Int
+  heading      Int
+  vs           Int
+  gs           Int
+  altitude     Int
+  distance     Int
+  sim_time     String
+  engines      String
+  gearState    gear_state
+  flight_phase flight_phase
+  onGround     Boolean         @default(true)
+  flaps        Int
+  fuel         Int
+  weight       Int
+  landing_rate Int
+  stall        Boolean
+  overspeed    Boolean
+  sim_paused   Boolean
+  transponder  String
+  updatedAt    DateTime        @updatedAt
+  createdAt    DateTime        @default(now())
+
+  @@map("tracker")
 }
 
 model Pireps {
@@ -219,12 +257,19 @@ model Pireps {
   destination           Airports      @relation("pirep_destination", fields: [destinationId], references: [id])
   aircraftId            String
   aircraft              Aircrafts     @relation(fields: [aircraftId], references: [id])
-  updatedAt             DateTime      @updatedAt
-  createdAt             DateTime      @default(now())
   status                pirep_status
   zfw                   Int           @default(0)
   tow                   Int           @default(0)
   units                 String        @default("kgs")
+  salary                Int?
+  score                 Int?
+  landing_rate          Int?
+  fuel_burned           Int?
+  trackerId             String        @default(uuid())
+  ivaoLink              String?       @db.Text
+  vatsimLink            String?       @db.Text
+  updatedAt             DateTime      @updatedAt
+  createdAt             DateTime      @default(now())
 
   @@map("pireps")
 }
@@ -238,6 +283,33 @@ model VerificationCodes {
   createdAt DateTime @default(now())
 
   @@map("verification_codes")
+}
+
+enum gear_state {
+  UP
+  DOWN
+  UNDEFINED
+}
+
+enum flight_phase {
+  INITIALIZED
+  SCHEDULED
+  BOARDING
+  PUSHBACK
+  TAXI
+  TAKE_OFF
+  CLIMB
+  ENROUTE
+  DESCENT
+  FINAL_APPROACH
+  LANDED
+  ARRIVED
+  DIVERTED
+}
+
+enum type_of_tracker {
+  EVENT
+  TRACKER
 }
 
 enum pirep_status {

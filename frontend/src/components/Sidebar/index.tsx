@@ -9,6 +9,7 @@ import {
   faCalendarAlt,
   faRightFromBracket,
   faUsers,
+  faBook,
 } from '@fortawesome/free-solid-svg-icons';
 import Logo from 'components/Logo';
 import { matchPath, useNavigate, useParams } from 'react-router-dom';
@@ -23,6 +24,7 @@ enum MenuOptions {
   Aircrafts = 'Aircrafts',
   Schedules = 'Schedules',
   Users = 'Users',
+  Pireps = 'Pireps',
 }
 
 const Sidebar = () => {
@@ -57,12 +59,16 @@ const Sidebar = () => {
     if (option === MenuOptions.Users) {
       return isPathActive(`/workspace/${workspaceId}/users`, location);
     }
+    if (option === MenuOptions.Pireps) {
+      return isPathActive(`/workspace/${workspaceId}/pireps`, location);
+    }
   };
 
   const isHome = isMenuOptionActive(MenuOptions.Home);
   const isAircrafts = isMenuOptionActive(MenuOptions.Aircrafts);
   const isSchedules = isMenuOptionActive(MenuOptions.Schedules);
   const isUsers = isMenuOptionActive(MenuOptions.Users);
+  const isPireps = isMenuOptionActive(MenuOptions.Pireps);
 
   const logout = useLogout();
 
@@ -109,6 +115,23 @@ const Sidebar = () => {
             />
           </div>
           <div className={styles.optionName}>{t('home')}</div>
+        </div>
+        <div
+          onClick={() =>
+            navigateInsideWorkspace(navigate, workspaceId!, '/pireps')
+          }
+          className={styles.option}
+        >
+          <div className={styles.iconBox}>
+            <FontAwesomeIcon
+              icon={faBook}
+              className={classNames(
+                styles.optionIcon,
+                isPireps && styles.activeIcon
+              )}
+            />
+          </div>
+          <div className={styles.optionName}>{t('pireps')}</div>
         </div>
         <div
           onClick={() =>

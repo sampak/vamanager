@@ -1,4 +1,7 @@
 import { Airports, Schedules, TypeOfAircraft } from '@prisma/client';
+import { Pirep } from '@shared/base/Pirep';
+import { randomIntFromInterval } from './randomIntFromInterval';
+import { calculateLandingOnDestination } from './validators/calculateLandingOnDestination';
 
 const ticketCost = 150;
 const fuelCost = 2;
@@ -11,17 +14,22 @@ export const calculateAirMultiplier = (airDistance: number) => {
 };
 
 export const estimateSalary = (
-  schedule: Schedules & {
-    origin?: Airports;
-    destination?: Airports;
-    type_of_aircraft?: TypeOfAircraft;
-  }
+  airDistance: number,
+  estimatedPassangers: number,
+  estimatedFuel: number,
+  onDestination?: boolean
 ): number => {
-  const multiplier = calculateAirMultiplier(schedule.airDistance);
-  const passangersProfit =
-    ticketCost * schedule.estimatedPassangers * multiplier;
-  const fuel = schedule.estimatedFuel * fuelCost;
+  const multiplier = calculateAirMultiplier(airDistance);
+  const passangersProfit = ticketCost * estimatedPassangers * multiplier;
+  const fuel = estimatedFuel * fuelCost;
 
-  const salary = passangersProfit - fuel;
+  let onDestinationProfit = 0;
+
+  if (onDestination === false) {
+    onDestinationProfit =
+      passangersProfit * 2 + randomIntFromInterval(1000, 5000);
+  }
+
+  const salary = passangersProfit - fuel - onDestinationProfit;
   return Math.floor(salary);
 };

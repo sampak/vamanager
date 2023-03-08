@@ -5,7 +5,6 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as AWS from 'aws-sdk';
 import * as Sentry from '@sentry/node';
-
 AWS.config.update({ region: 'us-east-1' });
 
 async function bootstrap() {

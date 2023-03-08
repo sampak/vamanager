@@ -1,8 +1,10 @@
 import Aircraft from "./Aircraft";
 import Airline from "./Airline";
 import Airport from "./Airport";
+import { Rating } from "./Rating";
 import { PirepRoute } from "./PirepRoute";
 import { PirepStatus } from "./PirepStatus";
+import { Tracker } from "./Tracker";
 import { User } from "./User";
 
 export interface Pirep {
@@ -47,4 +49,12 @@ export interface Pirep {
   zfw: number;
   tow: number;
   units: string;
+  salary?: number;
+  tracker?: Tracker[];
+  landing_rate: number;
+  fuel_burned: number;
+  flightRating?: Rating;
+  ivaoLink?: string;
+  vatsimLink?: string;
+  createdAt: Date;
 }

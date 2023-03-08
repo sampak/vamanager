@@ -1,0 +1,155 @@
+@import 'src/styles/colors.scss';
+
+.wrapper {
+  padding-bottom: 84px;
+  margin-top: 32px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.menu {
+  display: flex;
+
+  padding-bottom: 48px;
+}
+
+.menuItem {
+  user-select: none;
+  cursor: pointer;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.activeMenuItem {
+  color: $logoColor !important;
+  border-bottom: 2.5px solid $logoColor;
+}
+
+.pirepId {
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  font-family: RobotoMedium;
+}
+
+.sides {
+  display: flex;
+  gap: 10px;
+}
+
+.left {
+  width: 60%;
+}
+
+.right {
+  position: relative;
+  width: 40%;
+}
+
+.map {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  position: relative;
+  background: $fontColor;
+  box-shadow: $shadowColor 0px 8px 32px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  overflow: hidden;
+}
+
+.charts {
+  margin-top: 24px;
+  background: $fontColor;
+  box-shadow: $shadowColor 0px 8px 32px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.route {
+  margin-top: 24px;
+  background: $fontColor;
+  box-shadow: $shadowColor 0px 8px 32px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.networks {
+  margin-top: 24px;
+  background: $fontColor;
+  box-shadow: $shadowColor 0px 8px 32px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.network {
+  min-height: 48px;
+  display: flex;
+  gap: 7vw;
+  padding-left: 4vw;
+  padding-right: 4vw;
+  align-items: center;
+  justify-content: space-around;
+}
+
+@media (max-width: 1200px) {
+  .sides {
+    flex-direction: column;
+  }
+
+  .left {
+    width: 100% !important;
+    order: 1;
+  }
+
+  .right {
+    width: 100%;
+    order: 0;
+  }
+}
+
+.routeText {
+  padding: 10px;
+}
+
+.buttonWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+}
+
+.button {
+  width: 84px;
+
+  margin-right: 10px;
+}
+
+.chart {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.accepted {
+  background: $activeColor !important;
+}
+.rejected {
+  background: $adminColor !important;
+}
+.awaiting {
+  background: orange !important;
+}
+
+:export {
+  mainColor: $logoColor;
+}
+
+.loading {
+  left: 0;
+  top: 0;
+}

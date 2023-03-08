@@ -16,6 +16,7 @@ import AppLayout from './components/AppLayout';
 import { User } from '@shared/base/User';
 import AuthContext from './contexts/auth';
 import WorkspaceRoutes from './modules/Workspace';
+import AcarsContext, { IAcars } from './contexts/acars';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,6 +28,7 @@ const queryClient = new QueryClient({
 
 export default function App() {
   const [user, setUser] = useState<null | User>(null);
+  const [acars, setAcars] = useState<null | IAcars>(null);
   const [isUpdate, setIsUpdate] = useState(false);
   const [checkingIsUpdate, setCheckingIsUpdate] = useState(true);
   const [downloadState, setDownloadState] = useState({
@@ -83,41 +85,48 @@ export default function App() {
         setUser,
       }}
     >
-      <Router>
-        <AxiosInterceptor>
-          <QueryClientProvider client={queryClient}>
-            <Layout>
-              <Routes>
-                <Route path="auth/signin" element={<SignIn />} />
-                <Route
-                  path="choose-workspace"
-                  element={
-                    <ProtectedRoute>
-                      <ChooseWorkspace />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/workspace/:workspaceId/*"
-                  element={
-                    <ProtectedRoute>
-                      <WorkspaceRoutes />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/"
-                  element={
-                    <ProtectedRoute>
-                      <ChooseWorkspace />
-                    </ProtectedRoute>
-                  }
-                />
-              </Routes>
-            </Layout>
-          </QueryClientProvider>
-        </AxiosInterceptor>
-      </Router>
+      <AcarsContext.Provider
+        value={{
+          acars,
+          setAcars,
+        }}
+      >
+        <Router>
+          <AxiosInterceptor>
+            <QueryClientProvider client={queryClient}>
+              <Layout>
+                <Routes>
+                  <Route path="auth/signin" element={<SignIn />} />
+                  <Route
+                    path="choose-workspace"
+                    element={
+                      <ProtectedRoute>
+                        <ChooseWorkspace />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/workspace/:workspaceId/*"
+                    element={
+                      <ProtectedRoute>
+                        <WorkspaceRoutes />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/"
+                    element={
+                      <ProtectedRoute>
+                        <ChooseWorkspace />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Routes>
+              </Layout>
+            </QueryClientProvider>
+          </AxiosInterceptor>
+        </Router>
+      </AcarsContext.Provider>
     </AuthContext.Provider>
   );
 }

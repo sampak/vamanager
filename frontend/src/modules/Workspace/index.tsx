@@ -5,6 +5,8 @@ import AircraftDealer from './modules/AircraftDealer';
 import Schedules from './modules/Schedules';
 import Users from './modules/Users';
 import WelcomeModal from 'components/WelcomeModal';
+import Pireps from './modules/Pireps';
+import PirepModule from './modules/Pirep';
 
 const WorkspaceRoutes = () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -36,6 +38,22 @@ const WorkspaceRoutes = () => {
             element={
               <Routes>
                 <Route path="*" element={<Users />} />
+              </Routes>
+            }
+          />
+          <Route
+            path="/pireps/*"
+            element={
+              <Routes>
+                <Route path="*" element={<Pireps />} />
+              </Routes>
+            }
+          />
+          <Route
+            path="/pirep/*"
+            element={
+              <Routes>
+                <Route path=":pirepId" element={<PirepModule />} />
               </Routes>
             }
           />

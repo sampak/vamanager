@@ -17,6 +17,7 @@ import { FormEvent, useContext, useState } from 'react';
 import ErrorNoti from '../../components/ErrorNoti';
 import { getAPIError } from '../../utils/getAPIError';
 import AuthLayout from 'renderer/components/AuthLayout';
+import { EventsType } from '../../../dto/Events';
 
 const SignIn: FC = () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -44,6 +45,9 @@ const SignIn: FC = () => {
       {
         onSuccess: (response) => {
           setToken(response.data);
+          window.electron.ipcRenderer.sendMessage(EventsType.SEND_TOKEN, {
+            token: response.data,
+          });
           navigate('/choose-workspace');
         },
         onError: (e: any) => {

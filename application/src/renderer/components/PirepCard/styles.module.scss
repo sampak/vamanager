@@ -1,6 +1,7 @@
 @import '../../styles/colors.scss';
 
 .wrapper {
+  position: relative;
   display: flex;
   align-items: center;
   background: $fontColor;
@@ -9,8 +10,83 @@
   padding-left: 12px;
   padding-right: 12px;
   box-shadow: $shadowColor 0px 8px 32px;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
+.flightNumber {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.flight {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.distance {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.time {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.downText {
+  font-weight: 200;
+  font-family: RobotoRegular;
+  font-size: 11px;
 }
 
 .button {
   width: 84px;
+}
+
+.mapWrapper {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 0px;
+}
+
+.mapShowed {
+  height: 200px;
+}
+
+.map {
+  height: 200px;
+}
+
+.icon {
+  color: $logoColor;
+}
+
+:export {
+  pathColor: $logoColor;
+}
+
+.footer {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: normal;
+  font-family: RobotoMedium;
+  width: 100%;
+  height: 28px;
+  background: $fontColor;
+  gap: 10px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+
+  &:hover {
+    color: $logoColor;
+  }
 }

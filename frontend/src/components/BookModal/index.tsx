@@ -8,21 +8,25 @@ import { useState, useEffect } from 'react';
 import Input from 'components/Input';
 import RoundedButton from 'components/RoundedButton';
 import CTAButton from 'components/CTAButton';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import pirepService from 'api/pirepService';
 import { getAPIError } from 'utils/getAPIError';
 import { useTranslation } from 'react-i18next';
 import ErrorNoti from 'components/ErrorNoti';
+import { navigateInsideWorkspace } from 'utils/navigateInsideWorkspace';
 
 const BookModal: FC<Props> = ({ isOpen, schedule, setToggle }) => {
   const translation = useTranslation();
   const t = (key: string) => translation.t(`bookModal.${key}`);
+  const navigate = useNavigate();
   const { workspaceId } = useParams();
   const [selectedAircraft, setSelectedAircraft] = useState<Aircraft | null>(
     null
   );
 
-  const [callsign, setCallsign] = useState(schedule?.callsign);
+  const [callsign, setCallsign] = useState(
+    schedule?.callsign ?? schedule?.flightNumber
+  );
 
   const [valid, setValid] = useState(false);
   const [simbriefWindow, setSimbriefWindow] = useState<Window | null>();
@@ -54,7 +58,7 @@ const BookModal: FC<Props> = ({ isOpen, schedule, setToggle }) => {
         },
         {
           onSuccess: (response) => {
-            handleClose();
+            handleClose(pirepID);
           },
           onError: (err: any) => {
             setError(getAPIError(err, t));
@@ -82,12 +86,17 @@ const BookModal: FC<Props> = ({ isOpen, schedule, setToggle }) => {
     validation();
   }, [callsign, selectedAircraft]);
 
+  useEffect(() => {
+    setCallsign(schedule?.callsign ?? schedule?.flightNumber);
+  }, [schedule]);
+
   const handleWindow = () => {
     createPirep(
       {
         workspaceID: workspaceId!,
         scheduleID: schedule?.id!,
         payload: {
+          callsign: callsign!,
           aircraftID: selectedAircraft!.id,
         },
       },
@@ -113,9 +122,12 @@ const BookModal: FC<Props> = ({ isOpen, schedule, setToggle }) => {
     );
   };
 
-  const handleClose = () => {
+  const handleClose = (pirepID?: string) => {
     setToggle(false);
     setError('');
+    if (pirepID) {
+      navigateInsideWorkspace(navigate, workspaceId!, `/pirep/${pirepID}`);
+    }
   };
 
   return (

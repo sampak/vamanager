@@ -4,16 +4,108 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { pirep_status, prisma } from '@prisma/client';
+import { pirep_status, prisma, Tracker, type_of_tracker } from '@prisma/client';
 import { AuthedUser } from 'src/dto/AuthedUser';
 import { PrismaService } from 'src/prisma.service';
 import simbrief from '../utils/simbrief';
 import { CreatePirepDTO } from '@shared/dto/CreatePirepDTO';
 import prismaPirepToPirep from 'src/adapters/prismaPirepToPirep';
+import { buildRouteFromTracker } from 'src/utils/buildRouteFromTracker';
 
 @Injectable()
 export class PirepsService {
   constructor(private readonly prismaService: PrismaService) {}
+
+  async getPireps(currentUser: AuthedUser, airlineId: string) {
+    const airline = await this.prismaService.airlines.findFirst({
+      where: {
+        icao: airlineId,
+      },
+    });
+
+    if (!airline) {
+      throw new NotFoundException('NOT_FOUND_AIRLINE');
+    }
+
+    const prismaPireps = await this.prismaService.pireps.findMany({
+      where: {
+        airlineId: airline.id,
+        pilotId: currentUser.id,
+        status: {
+          in: [
+            pirep_status.AWAITING_VALIDATION,
+            pirep_status.CREATED,
+            pirep_status.ACCEPTED,
+            pirep_status.REJECTED,
+          ],
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      include: {
+        aircraft: {
+          include: {
+            type: true,
+          },
+        },
+        route: true,
+        destination: true,
+        origin: true,
+      },
+    });
+
+    return prismaPireps.map((prismaPirep) => prismaPirepToPirep(prismaPirep));
+  }
+
+  async getPirep(currentUser: AuthedUser, airlineId: string, pirepId: string) {
+    const airline = await this.prismaService.airlines.findFirst({
+      where: {
+        icao: airlineId,
+      },
+    });
+
+    if (!airline) {
+      throw new NotFoundException('NOT_FOUND_AIRLINE');
+    }
+
+    const prismaPirep = await this.prismaService.pireps.findFirst({
+      where: {
+        id: pirepId,
+        airlineId: airline.id,
+        pilotId: currentUser.id,
+      },
+
+      include: {
+        aircraft: {
+          include: {
+            type: true,
+          },
+        },
+        route: true,
+        destination: true,
+        origin: true,
+      },
+    });
+
+    let route: Tracker[] = [];
+
+    if (prismaPirep.status !== pirep_status.CREATED) {
+      const prismaTrackers = await this.prismaService.tracker.findMany({
+        where: {
+          trackerId: prismaPirep.trackerId,
+          type: type_of_tracker.TRACKER,
+        },
+        orderBy: {
+          createdAt: 'asc',
+        },
+      });
+
+      route = await buildRouteFromTracker(prismaTrackers);
+    }
+
+    return prismaPirepToPirep(prismaPirep, route);
+  }
 
   async getBookedPireps(currentUser: AuthedUser, airlineId: string) {
     const airline = await this.prismaService.airlines.findFirst({
@@ -38,6 +130,7 @@ export class PirepsService {
             type: true,
           },
         },
+        route: true,
         destination: true,
         origin: true,
       },
@@ -68,6 +161,9 @@ export class PirepsService {
     const altn_taf = simbriefData.weather.altn_taf;
     const plan_html = simbriefData.text.plan_html;
     const fixes = simbriefData.navlog.fix;
+    const prefile = simbriefData.prefile;
+    const vatsimLink = prefile['vatsim'].link;
+    const ivaoLink = prefile['ivao'].link;
 
     await this.prismaService.pireps.update({
       where: {
@@ -89,6 +185,8 @@ export class PirepsService {
         plan_html: plan_html,
         units: simbriefData.params.units,
         status: pirep_status.CREATED,
+        vatsimLink: vatsimLink,
+        ivaoLink: ivaoLink,
       },
     });
 
@@ -176,7 +274,7 @@ export class PirepsService {
 
     const prismaPirep = await this.prismaService.pireps.create({
       data: {
-        callsign: schedule.callsign,
+        callsign: payload.callsign,
         flightNumber: schedule.flightNumber,
         estimatedFuel: schedule.estimatedFuel,
         estminatedAirDistance: schedule.airDistance,
@@ -200,7 +298,7 @@ export class PirepsService {
       schedule.origin.icao,
       schedule.destination.icao,
       {
-        callsign: schedule.callsign,
+        callsign: payload.callsign,
         reg: aircraft.registration,
         costIndex: schedule.costIndex,
       }

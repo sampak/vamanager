@@ -1,0 +1,16 @@
+@import 'src/styles/colors.scss';
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 32px);
+}
+
+.icon {
+  color: $logoColor;
+}
+
+:export {
+  activeLineColor: $logoColor;
+  disabledLineColor: $disabledColor;
+}

@@ -11,10 +11,8 @@
 require('dotenv').config();
 import path from 'path';
 import config from './config';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell } from 'electron';
 import { resolveHtmlPath } from './util';
-import updater from './utils/update';
-import { EventsType } from '../dto/Events';
 
 require('./events/tokenEvents');
 require('./events/topbarEvents');
