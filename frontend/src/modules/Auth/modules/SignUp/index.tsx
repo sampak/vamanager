@@ -18,6 +18,7 @@ import authService from 'api/authService';
 import codeContext from 'contexts/code';
 import { getAPIError } from 'utils/getAPIError';
 import ErrorNoti from 'components/ErrorNoti';
+import useGoogleAnalytics from 'hooks/useGoogleAnalytics';
 
 interface InitialValues {
   firstName: string;
@@ -34,7 +35,7 @@ const SignUp: FC = () => {
   const { mutate: register, isLoading } = authService.useRegister();
   const t = (key: string) => translation.t(`signUp.${key}`);
   const { setCode } = useContext(codeContext);
-
+  const analytics = useGoogleAnalytics();
   const [showLastName, setShowLastName] = useState(false);
   const [error, setError] = useState('');
 
@@ -54,6 +55,11 @@ const SignUp: FC = () => {
         onSuccess: (response) => {
           setCode(response.data.id);
           navigate('/auth/verify');
+          analytics!.track('new_signup', {
+            id: response.data.id,
+            firstName: values.firstName,
+            email: values.email,
+          });
         },
         onError: (err: any) => {
           setError(getAPIError(err, t));

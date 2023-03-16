@@ -4,10 +4,13 @@ import { useLocation } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 import AuthContext from 'contexts/auth';
 import { useTranslation } from 'react-i18next';
+import useGoogleAnalytics from 'hooks/useGoogleAnalytics';
 
 const AppHeader: FC<Props> = ({ children }) => {
   const location = useLocation();
   const translation = useTranslation();
+  const analytics = useGoogleAnalytics();
+
   const t = (key: string) => translation.t(`headers.${key}`);
 
   const [title, setTitle] = useState('');
@@ -57,6 +60,13 @@ const AppHeader: FC<Props> = ({ children }) => {
   useEffect(() => {
     setTitle(getPath());
   }, [location, user]);
+
+  useEffect(() => {
+    if (!analytics) return;
+    if (process.env.NODE_ENV === 'production') {
+      analytics.page();
+    }
+  }, [analytics]);
 
   return (
     <>

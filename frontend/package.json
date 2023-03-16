@@ -4,6 +4,7 @@
   "author": "Lukasz Sampak Wojdat",
   "private": true,
   "dependencies": {
+    "@analytics/google-analytics": "^1.0.5",
     "@craco/craco": "^7.0.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -22,6 +23,7 @@
     "@types/node": "^16.18.4",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
+    "analytics": "^0.8.1",
     "axios": "^1.2.1",
     "classnames": "^2.3.2",
     "formik": "^2.2.9",
