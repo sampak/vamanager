@@ -1,0 +1,51 @@
+@import 'src/styles/colors.scss';
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.data {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.index {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 24px;
+  height: 24px;
+  margin-right: 14px;
+  border-radius: 50%;
+  color: white;
+}
+
+.gold {
+  background: gold;
+}
+
+.silver {
+  background: silver;
+}
+
+.bronze {
+  background: brown;
+}
+
+.avatar {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50%;
+  font-size: 12px !important;
+  background: $logoColor !important;
+}
+
+.name {
+  font-size: 16px !important;
+  font-family: RobotoMedium;
+}

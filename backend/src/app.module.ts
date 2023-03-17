@@ -10,8 +10,9 @@ import { ScheduleModule } from './schedule/schedule.module';
 import { MembershipsModule } from './memberships/memberships.module';
 import { PirepsModule } from './pireps/pireps.module';
 import { TrackerModule } from './tracker/tracker.module';
+import { StatsModule } from './stats/stats.module';
 @Module({
-  imports: [AuthModule, UserModule, AirportModule, AirlineModule, AircraftModule, ScheduleModule, MembershipsModule, PirepsModule, TrackerModule],
+  imports: [AuthModule, UserModule, AirportModule, AirlineModule, AircraftModule, ScheduleModule, MembershipsModule, PirepsModule, TrackerModule, StatsModule],
   controllers: [AppController],
   providers: [AppService],
 })

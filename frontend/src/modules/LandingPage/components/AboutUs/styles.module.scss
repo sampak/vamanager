@@ -1,0 +1,93 @@
+@import 'src/styles/colors.scss';
+
+.wrapper {
+  display: flex;
+  min-height: 480px;
+  padding-left: 24px;
+  width: 80%;
+  margin: auto;
+  margin-top: 124px;
+}
+
+.description {
+  width: 100%;
+}
+
+.image {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  order: 1;
+}
+
+.img {
+  left: 50%;
+  transform: translateX(-50%) rotate(-5deg);
+  position: absolute;
+  width: 100%;
+  max-width: 629px;
+  height: auto;
+}
+
+.mockup {
+  width: 100%;
+  max-width: 629px;
+  position: absolute;
+  transform: rotate(-5deg);
+  height: auto;
+}
+
+.text {
+  margin-top: 24px;
+  color: $logoColor;
+  margin-bottom: 12px;
+}
+
+.subText {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.info {
+  span {
+    color: $logoColor;
+  }
+}
+
+.buttonWrapper {
+  margin-top: 24px;
+  width: 144px;
+}
+.insideButton {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1300px) {
+  .wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .image {
+    order: 0;
+    margin-bottom: 24px;
+
+    img {
+      position: relative;
+      transform: rotate(0deg);
+      left: 0%;
+    }
+  }
+
+  .description {
+    margin-top: 48px;
+  }
+
+  .buttonWrapper {
+    margin: auto;
+    margin-top: 24px;
+  }
+}

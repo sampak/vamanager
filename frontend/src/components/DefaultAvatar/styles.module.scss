@@ -1,0 +1,17 @@
+@import 'src/styles/colors.scss';
+
+.admin {
+  background: $adminColor !important;
+}
+
+.dispatcher {
+  background: $dispatcherColor !important;
+}
+
+.pilot {
+  background: $badgeColor !important;
+}
+
+.disabled {
+  background: $bodyFontColor !important;
+}

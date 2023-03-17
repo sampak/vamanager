@@ -19,8 +19,9 @@ import BookModal from 'components/BookModal';
 import { navigateInsideWorkspace } from 'utils/navigateInsideWorkspace';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PirepStatus } from '@shared/base/PirepStatus';
+import DefaultAvatar from 'components/DefaultAvatar';
 
-const PirepCard: FC<Props> = ({ pirep }) => {
+const PirepCard: FC<Props> = ({ pirep, disableShow }) => {
   const { workspaceId } = useParams();
   const navigate = useNavigate();
   const translation = useTranslation();
@@ -63,7 +64,18 @@ const PirepCard: FC<Props> = ({ pirep }) => {
       <div className={styles.card}>
         <div className={styles.header}>
           <div className={styles.airline}>
-            <img src={user?.membership?.airline?.image} />
+            {user?.membership?.airline?.image || pirep.airline?.image ? (
+              <img
+                src={user?.membership?.airline?.image ?? pirep.airline?.image}
+              />
+            ) : (
+              <DefaultAvatar
+                className={styles.image}
+                name={
+                  user?.membership?.airline?.name ?? pirep.airline?.name ?? ''
+                }
+              />
+            )}
             {pirep.flightNumber}
           </div>
           <div className={styles.options}>
@@ -123,9 +135,11 @@ const PirepCard: FC<Props> = ({ pirep }) => {
             }).format(pirep!.salary!)}
           </div>
         </div>
-        <div className={styles.button}>
-          {t('book')} <FontAwesomeIcon icon={faArrowAltCircleRight} />
-        </div>
+        {!disableShow && (
+          <div className={styles.button}>
+            {t('book')} <FontAwesomeIcon icon={faArrowAltCircleRight} />
+          </div>
+        )}
       </div>
     </div>
   );

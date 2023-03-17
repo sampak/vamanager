@@ -1,0 +1,182 @@
+@import 'src/styles/colors.scss';
+
+.header {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+}
+
+.info {
+  position: relative;
+  width: 60%;
+  height: 100%;
+}
+
+.text {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: 1s;
+}
+
+.fadeText {
+  opacity: 1;
+}
+
+.title {
+  padding-left: 20%;
+  padding-top: 25vh;
+  width: 100%;
+  font-size: 48px !important;
+}
+
+.subTitle {
+  padding-left: 20%;
+  width: 100%;
+  font-size: 48px !important;
+}
+
+.description {
+  padding-left: 20%;
+  padding-right: 84px;
+  padding-top: 25px;
+  color: $secondaryFontColor !important;
+}
+
+.req {
+  padding-left: 20%;
+  padding-right: 84px;
+  padding-bottom: 5px;
+  color: $secondaryFontColor !important;
+}
+
+.buttonWrapper {
+  width: 144px;
+  padding-left: 20%;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.insideButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.preview {
+  position: relative;
+  width: 40%;
+  height: 100%;
+}
+
+.previewImage {
+  position: absolute;
+  width: 40vw;
+  max-width: 628px;
+  height: auto;
+  top: 50%;
+  transform: translate(-0%, -50%);
+  z-index: 1;
+  opacity: 0;
+  left: 100%;
+  transition: left 1s, opacity 1s;
+}
+
+.fadeActive {
+  opacity: 1;
+  left: 0%;
+}
+
+.color {
+  position: absolute;
+  width: 50%;
+  left: 50%;
+  height: 100%;
+  background: $logoColor;
+}
+
+@media (max-width: 1200px) {
+  .header {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .info {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .text {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title {
+    padding-left: 5%;
+    padding-top: 128px;
+    width: 100%;
+    font-size: 48px !important;
+  }
+
+  .subTitle {
+    padding-left: 5%;
+    width: 100%;
+    font-size: 48px !important;
+  }
+
+  .description {
+    padding-left: 5%;
+    padding-right: 84px;
+    padding-top: 25px;
+    color: $secondaryFontColor !important;
+  }
+
+  .req {
+    padding-left: 5%;
+    padding-right: 84px;
+    padding-bottom: 5px;
+    color: $secondaryFontColor !important;
+  }
+
+  .buttonWrapper {
+    width: 144px;
+    padding-left: 5%;
+    padding-top: 48px;
+  }
+
+  .preview {
+    margin-top: 10%;
+    height: 450px !important;
+    width: 100%;
+  }
+
+  .previewImage {
+    position: absolute;
+    width: 100%;
+    max-width: 628px;
+    height: auto;
+    left: -100%;
+    top: 0%;
+    transform: translate(-50%, -10%);
+    z-index: 1;
+  }
+
+  .fadeActive {
+    opacity: 1;
+    left: 50%;
+  }
+
+  .color {
+    width: 100%;
+    height: 100%;
+    left: 0%;
+  }
+}

@@ -23,6 +23,7 @@ import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
 import AnalyticsContext from 'contexts/analytics';
 import { AnalyticsInstance } from 'analytics';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -66,54 +67,56 @@ function App() {
   return (
     <GrowthBookProvider growthbook={growthbook}>
       <BrowserRouter>
-        <AxiosInterceptor>
-          <QueryClientProvider client={queryClient}>
-            <AnalyticsContext.Provider
-              value={{
-                analytics,
-                setAnalytics,
-              }}
-            >
-              <AuthContext.Provider
+        <ErrorBoundary>
+          <AxiosInterceptor>
+            <QueryClientProvider client={queryClient}>
+              <AnalyticsContext.Provider
                 value={{
-                  user,
-                  setUser,
+                  analytics,
+                  setAnalytics,
                 }}
               >
-                <AppHeader>
-                  <>
-                    <Routes>
-                      <Route
-                        path="/workspace/:workspaceId/*"
-                        element={
-                          <ProtectedRoute>
-                            <WorkspaceRoutes />
-                          </ProtectedRoute>
-                        }
-                      />
-                      <Route
-                        path="/choose-workspace"
-                        element={
-                          <ProtectedRoute>
-                            <ChooseWorkspace />
-                          </ProtectedRoute>
-                        }
-                      />
-                      <Route
-                        path="/onbording/*"
-                        element={<OnbordingRoutes />}
-                      />
-                      <Route path="/auth/*" element={<AuthRoutes />} />
-                      <Route path="/*" element={<LandingPageRoutes />} />
-                    </Routes>
+                <AuthContext.Provider
+                  value={{
+                    user,
+                    setUser,
+                  }}
+                >
+                  <AppHeader>
+                    <>
+                      <Routes>
+                        <Route
+                          path="/workspace/:workspaceId/*"
+                          element={
+                            <ProtectedRoute>
+                              <WorkspaceRoutes />
+                            </ProtectedRoute>
+                          }
+                        />
+                        <Route
+                          path="/choose-workspace"
+                          element={
+                            <ProtectedRoute>
+                              <ChooseWorkspace />
+                            </ProtectedRoute>
+                          }
+                        />
+                        <Route
+                          path="/onbording/*"
+                          element={<OnbordingRoutes />}
+                        />
+                        <Route path="/auth/*" element={<AuthRoutes />} />
+                        <Route path="/*" element={<LandingPageRoutes />} />
+                      </Routes>
 
-                    <ReactQueryDevtools />
-                  </>
-                </AppHeader>
-              </AuthContext.Provider>
-            </AnalyticsContext.Provider>
-          </QueryClientProvider>
-        </AxiosInterceptor>
+                      <ReactQueryDevtools />
+                    </>
+                  </AppHeader>
+                </AuthContext.Provider>
+              </AnalyticsContext.Provider>
+            </QueryClientProvider>
+          </AxiosInterceptor>
+        </ErrorBoundary>
       </BrowserRouter>
     </GrowthBookProvider>
   );

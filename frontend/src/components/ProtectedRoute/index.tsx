@@ -1,12 +1,13 @@
 import { FC, Props } from './typings';
 import styles from './styles.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getToken } from 'api/user';
+import { getToken, removeToken } from 'api/user';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import userService from 'api/userService';
 import AuthContext from 'contexts/auth';
 import { User } from '@shared/base/User';
 import LoadingScreen from 'components/LoadingScreen';
+import ErrorScreen from 'components/ErrorScreen';
 
 const ProtectedRoute: FC<Props> = ({ children }) => {
   const access_token = getToken();
@@ -48,11 +49,17 @@ const ProtectedRoute: FC<Props> = ({ children }) => {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (isError) {
+      removeToken();
+    }
+  }, [isError]);
+
   const showLoadingScreen = loading || isFetching;
   const showErrorScreen = isError;
 
   if (showErrorScreen) {
-    return <>Error</>;
+    return <ErrorScreen onClick={() => navigate('/')} />;
   }
 
   if (showLoadingScreen) {

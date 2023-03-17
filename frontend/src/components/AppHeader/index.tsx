@@ -33,6 +33,8 @@ const AppHeader: FC<Props> = ({ children }) => {
     { key: 'users', title: t('users') },
     { key: 'pirep', title: t('pirep') },
     { key: 'pireps', title: t('pireps') },
+    { key: 'ranking', title: t('ranking') },
+    { key: 'tracker', title: t('tracker') },
   ];
 
   const getPath = () => {

@@ -13,7 +13,7 @@ import CTAButton from 'components/CTAButton';
 import { useNavigate } from 'react-router-dom';
 import { faUser, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import Checkbox from 'components/Checkbox';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import authService from 'api/authService';
 import codeContext from 'contexts/code';
 import { getAPIError } from 'utils/getAPIError';
@@ -69,6 +69,12 @@ const SignUp: FC = () => {
   };
 
   const handleSignIn = () => navigate('/auth/signin');
+
+  useEffect(() => {
+    if (!queryEmail) {
+      navigate('/roadmap');
+    }
+  }, [queryEmail]);
 
   return (
     <div className={styles.content}>

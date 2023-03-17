@@ -15,7 +15,67 @@ export const TRANSLATIONS_EN = {
     users: 'Users',
     pireps: 'Pireps',
     pirep: 'Pirep',
+    tracker: 'Tracker',
+    ranking: 'Ranking',
   },
+  landingPage: {
+    title: 'The fun starts',
+    subTitle: 'with a good airline.',
+    startNowButton: 'Get started now',
+    headerDescription: ` With VAManager toolkit, create and manage your own virtual
+              airline, gaining full control and development of your aviation
+              business in the world of air travel.`,
+    whyHeader: 'VAManager | Made to Perfection.',
+    whySubHeader: 'A NEW EXPERIENCE',
+    aboutUsHeader: 'Making things simple, intuitive and expertly crafted!',
+    aboutUsSubHeader: 'RESPONSIVELY DESIGNED CREW CENTER',
+    aboutUsName: 'VAManager',
+    aboutUsText: `is an innovative application created in 2023 by
+    a group of aviation enthusiasts who sought to bring more dynamics and
+    purpose to virtual flying. Bored with monotonous flights without a
+    specific goal, they developed a tool that allows not only for flight
+    simulation but also for managing one's own virtual airline according
+    to the user's individual preferences. With vaManager, aviation
+    enthusiasts gain the ability to take full control of their virtual
+    airspace, combining pleasure with passion and developing their
+    management skills in a unique, interactive environment.`,
+    pirepsHeader: 'Last Pireps',
+
+    whys: {
+      title1: 'DETAILED SCHEDULE BRIEFING',
+      title2: 'INFORMATION SECURED',
+      title3: 'ADVANCED DASHBOARD',
+      title4: 'REAL TIME FLIGHT TRACKER',
+      description1:
+        'Schedule Briefings are one of the ost important aspects of a flight and we have built in Simbrief support',
+      description2:
+        'We keep your personal details very secured in our database.',
+      description3:
+        'The most advanced Dashboard ever seen in our Virtual World',
+      description4:
+        'Our Advanced Flight Tracking feature tracks actual routes flown by our pilots and includes a speed, vs, altitude graph.',
+    },
+  },
+
+  ranking: {
+    airlines: 'Top Airlines',
+    users: 'Top Users',
+  },
+
+  tracker: {
+    header: 'VAManager',
+    subHeader: 'Tracker.',
+    description: `With our advanced tracker, you'll effortlessly be able to monitor
+    your pilots' activities, keeping an eye on their altitude, speed,
+    landing accuracy, and much more! Experience seamless tracking and
+    gain valuable insights into your pilots' performance with this
+    powerful feature.`,
+    button: 'Coming soon',
+    requirements: 'Requirements: ',
+    windows: 'Windows 7 or newer',
+    addon: 'FSUIPC or XPUIPC',
+  },
+
   signIn: {
     errors: {
       NOT_FOUND: 'Email or password is invalid',

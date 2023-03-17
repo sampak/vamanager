@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.header {
+  margin-top: 48px;
+  margin-bottom: 48px;
+  font-size: 32px;
+  font-weight: 200;
+  font-family: RobotoRegular;
+}
+
+.list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 84px;
+  gap: 10px;
+  width: 80%;
+}

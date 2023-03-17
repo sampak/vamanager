@@ -1,0 +1,38 @@
+@import 'src/styles/colors.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 160px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background: $logoColor;
+  border-radius: 50%;
+  box-shadow: $shadowColor 0px 8px 32px;
+}
+
+.img {
+  width: 32px;
+  fill: white;
+}
+
+.title {
+  font-family: RobotoRegular;
+  font-size: 16px !important;
+  margin-top: 10px;
+}
+
+.body {
+  color: $secondaryFontColor !important;
+  font-size: 14px;
+  margin-top: 12px;
+}

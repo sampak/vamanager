@@ -1,0 +1,48 @@
+@import 'src/styles/colors.scss';
+
+.whyUs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3vh;
+}
+
+.title {
+  color: $logoColor;
+  line-height: 32px;
+}
+
+.subTitle {
+  font-size: 32px;
+  font-weight: 200;
+  font-family: RobotoRegular;
+}
+
+.list {
+  justify-content: center;
+  display: flex;
+  gap: 15%;
+  margin-top: 84px;
+  width: 60%;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.fadeActive {
+  opacity: 1;
+}
+
+@media (max-width: 1200px) {
+  .list {
+    width: 90%;
+    flex-wrap: wrap;
+  }
+}
