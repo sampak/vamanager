@@ -24,12 +24,9 @@ export const calculateCompanyScore = (
   score += calculateHardDescent(tracker);
   score += pointsForCorrectDestination;
   if (pointsForCorrectDestination > 0) {
-    console.log('wchodze tu');
     score += calculateLandingOnTime(pirep, tracker);
   }
   const landingScore: LandingScore = calculateLanding(tracker);
-
-  console.log('Landing rate: ', landingScore);
 
   switch (landingScore) {
     case LandingScore.PERFECT:

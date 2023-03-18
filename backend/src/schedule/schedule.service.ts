@@ -16,9 +16,9 @@ import simbrief from '../utils/simbrief';
 import * as moment from 'moment';
 import prismaScheduleToSchedule from 'src/adapters/prismaScheduleToSchedule';
 import getScheduleConfiguration from 'src/ui-configuration/schedule';
-import { CurrentUser } from 'src/decorators/CurrentUser.decorator';
 import { Cron } from '@nestjs/schedule';
 import { CronExpression } from '@nestjs/schedule/dist';
+import loggerService from 'src/services/loggerService';
 
 @Injectable()
 export class ScheduleService {
@@ -251,7 +251,7 @@ export class ScheduleService {
 
   @Cron(CronExpression.EVERY_2_HOURS)
   async removedCreatingSchedules() {
-    console.log('[CRON] Running cleaning schedules');
+    loggerService.info('[CRON] Running cleaning schedules');
     const prismaSchedules = await this.prismaService.schedules.findMany({
       where: {
         status: schedule_status.CREATING,
@@ -278,6 +278,7 @@ export class ScheduleService {
         },
       },
     });
-    console.log(`[CRON] Removed ${schedulesToRemove.length} schedules`);
+
+    loggerService.info(`[CRON] Removed ${schedulesToRemove.length} schedules`);
   }
 }

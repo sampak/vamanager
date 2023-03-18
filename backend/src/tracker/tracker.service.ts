@@ -33,6 +33,7 @@ import { getAirDistance } from 'src/utils/getAirDistance';
 import emails from 'src/utils/emails';
 import { PirepEmail } from '@shared/emails/Pirep.email';
 import { config } from 'src/config';
+import loggerService from 'src/services/loggerService';
 
 @Injectable()
 export class TrackerService {
@@ -200,7 +201,7 @@ export class TrackerService {
       throw new NotFoundException(ERROR_CODES.COMPANY_NOT_FOUND);
     }
 
-    console.log(
+    loggerService.info(
       `Submitting flight ${trackId} for  ${currentUser.email} (${currentUser.id})`
     );
 
@@ -279,12 +280,19 @@ export class TrackerService {
 
     if (isCorrectAircraft === false) {
       pirepStatus = pirep_status.AWAITING_VALIDATION;
-      console.log('Aircraft is not correct changing to ' + pirepStatus);
+      loggerService.info(
+        'Aircraft is not correct changing to ' + pirepStatus + ' for ' + trackId
+      );
     }
 
     if (isCorrectDestination === false) {
       pirepStatus = pirep_status.AWAITING_VALIDATION;
-      console.log('Destiantion is not correct changing to ' + pirepStatus);
+      loggerService.info(
+        'Destiantion is not correct changing to ' +
+          pirepStatus +
+          ' for ' +
+          trackId
+      );
     }
 
     const landingRate = prismaTrackers.find(
@@ -376,7 +384,7 @@ export class TrackerService {
     trackId: string,
     payload: RequestTrackingDTO
   ) {
-    console.log(
+    loggerService.info(
       `Tracking flight ${trackId} for ${currentUser.email} (${currentUser.id})`
     );
 
@@ -417,9 +425,6 @@ export class TrackerService {
     );
 
     const findedAircraftType = findTypeFromAlias(payload.type);
-    console.log(
-      'Aircraft Model: ' + payload.type + ' alias ' + findedAircraftType
-    );
 
     if (findedAircraftType !== pirep.aircraft.type.type) {
       throw new BadRequestException('AIRCRAFT');
@@ -434,9 +439,10 @@ export class TrackerService {
     pirepId: string,
     payload: RequestTrackingDTO
   ) {
-    console.log(
+    loggerService.info(
       `Request tracking for ${currentUser.email} (${currentUser.id}) - ${pirepId}`
     );
+
     const company = await this.prismaService.airlines.findFirst({
       where: {
         icao: airlineId,
@@ -474,10 +480,6 @@ export class TrackerService {
     );
 
     const findedAircraftType = findTypeFromAlias(payload.type);
-    console.log(
-      'Aircraft Model: ' + payload.type + ' alias ' + findedAircraftType
-    );
-
     if (findedAircraftType !== pirep.aircraft.type.type) {
       throw new BadRequestException('AIRCRAFT');
     }
@@ -505,7 +507,7 @@ export class TrackerService {
             `Resume tracking ${payload.type}`,
             EventType.RESUME_FLIGHT
           );
-          console.log(
+          loggerService.info(
             `Resumed tracking for ${currentUser.email} (${currentUser.id}) - ${pirepId} - tracker id - ${pirep.trackerId}`
           );
           return { action: 'CREATE', key: pirep.trackerId };
@@ -547,7 +549,7 @@ export class TrackerService {
       trackerId
     );
 
-    console.log(
+    loggerService.info(
       `Requested tracking for ${currentUser.email} (${currentUser.id}) - ${pirepId} - tracker id - ${trackerId}`
     );
 

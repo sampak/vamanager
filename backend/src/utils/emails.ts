@@ -1,6 +1,7 @@
 import { config } from 'src/config';
 
 import * as sgMail from '@sendgrid/mail';
+import loggerService from 'src/services/loggerService';
 
 enum Templates {
   REGISTRATION_CODE = 'd-7c9eee9a83aa46e7bdf9cbd5a05ae505',
@@ -22,10 +23,15 @@ const sendEmail = async <T>(to, templateId: Templates, data: T) => {
 
   try {
     await sgMail.send(msg);
-    console.log(`Email to: ` + to + ' template: ' + templateId + ' sended');
+    loggerService.info(
+      `Email to: ` + to + ' template: ' + templateId + ' sended'
+    );
   } catch (e) {
-    console.log(`Email Error: `, to, templateId, data, e);
-    console.log(e.response.body);
+    loggerService.error(
+      `Email Error: ${to} ${templateId} ${JSON.stringify(data)} ${
+        e.response.body
+      }`
+    );
   }
 };
 export default {

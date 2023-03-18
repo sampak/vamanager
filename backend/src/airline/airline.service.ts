@@ -28,6 +28,7 @@ import emails from 'src/utils/emails';
 import { InvitationEmail } from '@shared/emails/Invitation.email';
 import { AuthedUser } from 'src/dto/AuthedUser';
 import { getSellAircraftCost } from 'src/utils/getSellAircraftCost';
+import loggerService from 'src/services/loggerService';
 @Injectable()
 export class AirlineService {
   constructor(private readonly prismaService: PrismaService) {}
@@ -72,7 +73,7 @@ export class AirlineService {
 
       return { key: membership.id, type: 'CREATE' };
     } catch (e) {
-      console.log('Joining to workspace failed', e);
+      loggerService.error(`Joining to workspace failed ${e}`);
     }
   }
 
@@ -318,16 +319,16 @@ export class AirlineService {
           },
           where: { id: airline?.id },
         });
-        console.log(
+        loggerService.info(
           `${currentUser.email} (${currentUser.id}) created airline: ${payload.name} (${payload.icao})`
         );
         return prismaAirlineToAirline(updatedAirline);
       } catch (e) {
-        console.log('Failed to create airline');
-        console.log(e);
+        loggerService.error('Failed to create airline');
       }
     }
-    console.log(
+
+    loggerService.info(
       `${currentUser.email} (${currentUser.id}) created airline: ${payload.name} (${payload.icao})`
     );
     return prismaAirlineToAirline(airline);

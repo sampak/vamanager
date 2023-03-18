@@ -10,6 +10,7 @@ import { BuyAircraftDTO } from '@shared/dto/BuyAircraftDTO';
 import prismaAircraftToAircraft from 'src/adapters/prismaAircraftToAircraft';
 import { AuthedUser } from 'src/dto/AuthedUser';
 import { getSellAircraftCost } from 'src/utils/getSellAircraftCost';
+import loggerService from 'src/services/loggerService';
 
 @Injectable()
 export class AircraftService {
@@ -209,7 +210,7 @@ export class AircraftService {
       );
       return { action: 'DELETE', key: aircraft.id };
     } catch (e) {
-      console.log(e);
+      loggerService.error(e);
       throw new InternalServerErrorException('INTERNAL');
     }
   }

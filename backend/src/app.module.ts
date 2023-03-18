@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -12,6 +12,8 @@ import { PirepsModule } from './pireps/pireps.module';
 import { TrackerModule } from './tracker/tracker.module';
 import { StatsModule } from './stats/stats.module';
 import { ScheduleModule as CronModule } from '@nestjs/schedule';
+import { LoggerMiddleware } from './middleware/logger.middleware';
+
 @Module({
   imports: [
     AuthModule,
@@ -29,4 +31,8 @@ import { ScheduleModule as CronModule } from '@nestjs/schedule';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('/');
+  }
+}
