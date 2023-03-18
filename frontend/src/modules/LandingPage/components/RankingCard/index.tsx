@@ -13,11 +13,20 @@ const RankingCard: FC<Props> = ({ index, avatar, name, rating }) => {
   const isGold = index === 1 && styles.gold;
   const isSilver = index === 2 && styles.silver;
   const isBronze = index === 3 && styles.bronze;
+  const isNon = !isGold && !isSilver && !isBronze && styles.normal;
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.data}>
-        <div className={classNames(styles.index, isGold, isSilver, isBronze)}>
+        <div
+          className={classNames(
+            styles.index,
+            isGold,
+            isSilver,
+            isBronze,
+            isNon
+          )}
+        >
           {index}
         </div>
         {avatar ? (

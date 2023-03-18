@@ -2,11 +2,13 @@ import BodyText from 'components/BodyText';
 import Logo from 'components/Logo';
 import RoundedButton from 'components/RoundedButton';
 import Title from 'components/Title';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { navigateInsideWorkspace } from 'utils/navigateInsideWorkspace';
 import styles from './styles.module.scss';
 
-const NotFound = ({ onClick }) => {
+const NotFound = () => {
   const navigate = useNavigate();
+  const { workspaceId } = useParams();
 
   return (
     <div className={styles.page}>
@@ -27,6 +29,10 @@ const NotFound = ({ onClick }) => {
         <div className={styles.buttonsWrapper}>
           <RoundedButton
             onClick={() => {
+              if (workspaceId) {
+                navigateInsideWorkspace(navigate, workspaceId, '/');
+                return;
+              }
               navigate('/');
             }}
           >

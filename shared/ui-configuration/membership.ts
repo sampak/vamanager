@@ -3,6 +3,9 @@ export interface MembershipUIConfiguration {
   canDisable?: boolean;
   canChangeRole?: boolean;
   canResendInvite?: boolean;
+  isDelayedPirepHeader?: boolean;
+  noPirepsHeader?: boolean;
+  scheduledPirepsHeader?: boolean;
 }
 
 export enum MembershipButtons {
@@ -10,4 +13,7 @@ export enum MembershipButtons {
   canDisable = "canDisable",
   canChangeRole = "canChangeRole",
   canResendInvite = "canResendInvite",
+  isDelayedPirepHeader = "isDelayedPirepHeader",
+  noPirepsHeader = "noPirepsHeader",
+  noScheduledPirepsHeader = "scheduledPirepsHeader",
 }

@@ -13,5 +13,8 @@ export interface Membership {
   rating: number;
   status: MembershipStatus;
   role: MembershipRole;
+  hours?: string;
+  pirepsFilled?: number;
+  averageLandingRate?: number;
   uiConfiguration?: MembershipUIConfiguration;
 }

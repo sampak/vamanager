@@ -1,0 +1,47 @@
+@import 'src/styles/colors.scss';
+
+.stat {
+  position: relative;
+  width: 248px;
+  box-shadow: $shadowColor 0px 8px 32px;
+  height: 94px;
+  background: white;
+  border-radius: 8px;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  position: absolute;
+  left: 50%;
+  top: -50%;
+  border-radius: 50%;
+  transform: translate(-50%, 40%);
+  background: $logoColor;
+  width: 48px;
+  height: 48px;
+}
+
+.textWrapper {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-top: 12px;
+}
+
+.text {
+  font-weight: bold;
+  font-family: RobotoBold;
+  height: 24px;
+}
+
+.subText {
+  margin-top: 10px;
+  font-family: RobotoMedium;
+}

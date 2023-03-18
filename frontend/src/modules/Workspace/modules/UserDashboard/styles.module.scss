@@ -1,0 +1,63 @@
+@import 'src/styles/colors.scss';
+
+.wrapper {
+  width: 90%;
+  margin: auto;
+  padding-bottom: 127px;
+}
+
+.user {
+  font-size: 32px;
+  padding-top: 48px;
+  font-weight: bold;
+}
+
+.pirep {
+  margin-top: 5px;
+  font-size: 24px;
+}
+
+.statistics {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 84px;
+  margin-top: 84px;
+}
+
+.charts {
+  margin: auto;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  margin-top: 84px;
+  background: white;
+}
+
+.lastPireps {
+  margin-top: 24px;
+}
+
+.pirepsHeader {
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.button {
+  width: 144px !important;
+}
+
+.list {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.pirepsEmpty {
+  width: 100%;
+  text-align: center;
+  font-size: 24px;
+}

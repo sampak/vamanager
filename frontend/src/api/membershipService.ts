@@ -1,7 +1,15 @@
 import { axiosInstance } from './axios';
 import { updateRoleDTO } from '@shared/dto/updateRoleDTO';
 import { UpdateMembershipStatusDTO } from '@shared/dto/UpdateMembershipStatusDTO';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
+
+const queryKeys = {
+  getChart: (workspaceId: string, membershipId: string) => [
+    'membershipService.getChart',
+    workspaceId,
+    membershipId,
+  ],
+};
 
 const updateRole = (payload: {
   workspaceID: string;
@@ -46,8 +54,21 @@ const useResendInvite = () => {
   return useMutation(resendInvite);
 };
 
+const getChart = (workspaceId: string, membershipId: string) => {
+  return axiosInstance.get(
+    `/airline/${workspaceId}/memberships/${membershipId}/chart`
+  );
+};
+
+const useGetChart = (workspaceId: string, membershipId: string) => {
+  return useQuery(queryKeys.getChart(workspaceId, membershipId), () =>
+    getChart(workspaceId, membershipId)
+  );
+};
+
 export default {
   useUpdateRole,
   useUpdateStatus,
   useResendInvite,
+  useGetChart,
 };

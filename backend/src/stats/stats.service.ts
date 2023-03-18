@@ -42,7 +42,7 @@ export class StatsService {
           rating,
         };
       })
-      .sort((a, b) => a.rating + b.rating)
+      .sort((a, b) => b.rating - a.rating)
       .slice(0, 10);
 
     return {
@@ -79,6 +79,7 @@ export class StatsService {
         createdAt: 'desc',
       },
     });
+
     return prismaPireps.map((pirep) => prismaPirepToPirep(pirep));
   }
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Param,
   Put,
   SetMetadata,
@@ -60,5 +61,18 @@ export class MembershipsController {
     @Param('membershipID') membershipID: string
   ) {
     return await this.membershipService.resendInvite(currentUser, membershipID);
+  }
+
+  @Get('/:membershipID/chart')
+  async getMembershipChart(
+    @CurrentUser() CurrentUser: AuthedUser,
+    @Param('airlineId') airlineId: string,
+    @Param('membershipID') membershipID: string
+  ) {
+    return await this.membershipService.getChart(
+      CurrentUser,
+      airlineId,
+      membershipID
+    );
   }
 }

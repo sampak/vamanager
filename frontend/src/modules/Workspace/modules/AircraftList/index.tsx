@@ -2,7 +2,7 @@ import airlineService from 'api/airlineService';
 import AircraftCard from 'components/AircraftCard';
 import Loading from 'components/Loading';
 import Title from 'components/Title';
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import EmptyState from './components/EmptyState';
 import styles from './styles.module.scss';
@@ -11,11 +11,13 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { navigateInsideWorkspace } from 'utils/navigateInsideWorkspace';
 import { useNavigate } from 'react-router-dom';
 import ErrorNoti from 'components/ErrorNoti';
+import AuthContext from 'contexts/auth';
 
 const AircraftList = () => {
   const { workspaceId } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState('');
+  const { user } = useContext(AuthContext);
   const { data, refetch, isFetching } = airlineService.useGetAircrafts(
     workspaceId!
   );
@@ -24,14 +26,20 @@ const AircraftList = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <Title black>Company Aircrafts</Title>
-        <div
-          onClick={() =>
-            navigateInsideWorkspace(navigate, workspaceId, '/aircrafts/dealer')
-          }
-          className={styles.createButton}
-        >
-          <FontAwesomeIcon icon={faCirclePlus} /> Buy Aircraft
-        </div>
+        {user?.uiConfiguration?.canManageAircrafts && (
+          <div
+            onClick={() =>
+              navigateInsideWorkspace(
+                navigate,
+                workspaceId,
+                '/aircrafts/dealer'
+              )
+            }
+            className={styles.createButton}
+          >
+            <FontAwesomeIcon icon={faCirclePlus} /> Buy Aircraft
+          </div>
+        )}
       </div>
       {!!error.length && <ErrorNoti className={styles.error} text={error} />}
       {isFetching && <Loading className={styles.loading} />}

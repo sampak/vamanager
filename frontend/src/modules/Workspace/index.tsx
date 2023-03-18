@@ -7,6 +7,8 @@ import Users from './modules/Users';
 import WelcomeModal from 'components/WelcomeModal';
 import Pireps from './modules/Pireps';
 import PirepModule from './modules/Pirep';
+import NotFound from 'components/NotFound';
+import UserDashboard from './modules/UserDashboard';
 
 const WorkspaceRoutes = () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -57,7 +59,8 @@ const WorkspaceRoutes = () => {
               </Routes>
             }
           />
-          <Route path="*" element={<>test</>} />
+          <Route path="/" element={<UserDashboard />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
 
         {firstExperience && <WelcomeModal />}

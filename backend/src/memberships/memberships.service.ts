@@ -4,6 +4,8 @@ import {
   Memberships,
   membership_role,
   membership_status,
+  Pireps,
+  prisma,
   Users,
   users_status,
 } from '@prisma/client';
@@ -14,6 +16,8 @@ import { config } from 'src/config';
 import emails from 'src/utils/emails';
 import { InvitationEmail } from '@shared/emails/Invitation.email';
 import { AuthedUser } from 'src/dto/AuthedUser';
+import * as moment from 'moment';
+import { groupByDates } from 'src/utils/groupByDates';
 
 @Injectable()
 export class MembershipsService {
@@ -147,5 +151,39 @@ export class MembershipsService {
     } as InvitationEmail);
 
     return { action: 'CREATE', value: membership.id };
+  }
+
+  async getChart(currentUser: AuthedUser, airlineId, membershipID: string) {
+    const company = await this.prismaService.airlines.findFirst({
+      where: {
+        icao: airlineId,
+      },
+    });
+
+    const membership = await this.prismaService.memberships.findFirst({
+      where: {
+        airlineId: company.id,
+        id: membershipID,
+      },
+    });
+
+    const history = 30;
+    const startDate = moment(new Date())
+      .subtract(history, 'days')
+      .startOf('day');
+    const endDate = moment().startOf('day');
+
+    const prismaPireps = await this.prismaService.pireps.findMany({
+      where: {
+        airlineId: company.id,
+        pilotId: membership.userId,
+        createdAt: {
+          gt: startDate.toDate(),
+        },
+      },
+    });
+
+    const historyDates = await groupByDates(prismaPireps, startDate, endDate);
+    return historyDates;
   }
 }
