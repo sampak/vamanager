@@ -11,8 +11,21 @@ import { MembershipsModule } from './memberships/memberships.module';
 import { PirepsModule } from './pireps/pireps.module';
 import { TrackerModule } from './tracker/tracker.module';
 import { StatsModule } from './stats/stats.module';
+import { ScheduleModule as CronModule } from '@nestjs/schedule';
 @Module({
-  imports: [AuthModule, UserModule, AirportModule, AirlineModule, AircraftModule, ScheduleModule, MembershipsModule, PirepsModule, TrackerModule, StatsModule],
+  imports: [
+    AuthModule,
+    UserModule,
+    AirportModule,
+    AirlineModule,
+    AircraftModule,
+    ScheduleModule,
+    MembershipsModule,
+    PirepsModule,
+    TrackerModule,
+    StatsModule,
+    CronModule.forRoot(),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

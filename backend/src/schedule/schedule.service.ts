@@ -17,6 +17,8 @@ import * as moment from 'moment';
 import prismaScheduleToSchedule from 'src/adapters/prismaScheduleToSchedule';
 import getScheduleConfiguration from 'src/ui-configuration/schedule';
 import { CurrentUser } from 'src/decorators/CurrentUser.decorator';
+import { Cron } from '@nestjs/schedule';
+import { CronExpression } from '@nestjs/schedule/dist';
 
 @Injectable()
 export class ScheduleService {
@@ -245,5 +247,37 @@ export class ScheduleService {
     );
 
     return { scheduleId: scheduleId, url: url };
+  }
+
+  @Cron(CronExpression.EVERY_2_HOURS)
+  async removedCreatingSchedules() {
+    console.log('[CRON] Running cleaning schedules');
+    const prismaSchedules = await this.prismaService.schedules.findMany({
+      where: {
+        status: schedule_status.CREATING,
+      },
+    });
+
+    const schedulesToRemove = await Promise.all(
+      prismaSchedules.filter((prismaSchedule) => {
+        const diff = moment
+          .utc(new Date())
+          .diff(prismaSchedule.createdAt, 'hour');
+
+        if (diff >= 2) {
+          return true;
+        }
+        return false;
+      })
+    );
+
+    await this.prismaService.schedules.deleteMany({
+      where: {
+        id: {
+          in: schedulesToRemove.map((schedule) => schedule.id),
+        },
+      },
+    });
+    console.log(`[CRON] Removed ${schedulesToRemove.length} schedules`);
   }
 }
