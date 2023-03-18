@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Memberships, pirep_status } from '@prisma/client';
+import { Memberships, pirep_status, users_status } from '@prisma/client';
 import prismaAirlineToAirline from 'src/adapters/prismaAirlineToAirline';
 import prismaMembershipToMembership from 'src/adapters/prismaMembershipToMembership';
 import prismaPirepToPirep from 'src/adapters/prismaPirepToPirep';
@@ -19,6 +19,9 @@ export class StatsService {
     });
 
     const prismaUserRanking = await this.prismaService.users.findMany({
+      where: {
+        status: users_status.ACTIVE,
+      },
       include: {
         memberships: true,
       },
