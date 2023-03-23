@@ -6,7 +6,7 @@ import config from '../config';
 
 const autoUpdater = new NsisUpdater({
   provider: 'generic' as any,
-  url: process.env.UPDATE_URL,
+  url: 'http://update.server435386.nazwa.pl/',
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -40,6 +40,13 @@ autoUpdater.on('update-not-available', () => {
   config.mainWindow?.webContents.send(EventsType.SEND_DOWNLOAD_STATUS, {
     isAvailable: false,
   });
+
+  config.mainWindow?.hide();
+  setTimeout(() => {
+    config.mainWindow?.setSize(1024, 728);
+    config.mainWindow?.center();
+    config.mainWindow?.show();
+  }, 500);
 });
 
 autoUpdater.on('download-progress', (data) => {

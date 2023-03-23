@@ -17,7 +17,6 @@ ipcMain.on(EventsType.CHECK_IS_UPDATE, () => {
       }, 500);
       return;
     }
-
     autoUpdater.checkForUpdates();
   }, 1000);
 });

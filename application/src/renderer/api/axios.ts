@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getToken } from './user';
 
 export const axiosInstance = axios.create({
-  baseURL: window.electron.ipcRenderer.API_URL,
+  baseURL: 'https://stg.vamanager.pl',
   headers: {
     'content-type': 'application/json',
   },
