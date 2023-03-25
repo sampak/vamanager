@@ -47,7 +47,7 @@ const RoadMap = () => {
       version: '0.3.0',
       description:
         'We want to introduce a live map on our website so that other users can see who is flying in our amazing application!',
-      complete: false,
+      complete: true,
     },
     {
       title: 'Economy and application',
