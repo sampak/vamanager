@@ -66,7 +66,7 @@ export const checkFlightPhase = async (state: State) => {
 
   if (
     state.acars.flightPhase === FlightPhase.BOARDING &&
-    state.acars.groundSpeed > 3 &&
+    state.acars.groundSpeed > 2 &&
     isGearDown &&
     isOnGround
   ) {

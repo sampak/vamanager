@@ -37,7 +37,7 @@ ipcMain.on(EventsType.START_TRACKING, async (event, data) => {
       distance: state.distance,
     } as Tracker);
   } catch (error: any) {
-    console.log('error catched');
+    console.log('error catched', error);
     event.reply(EventsType.TRACKING_STATUS, {
       error: error.response.data,
     });

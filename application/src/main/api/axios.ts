@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../config';
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL ?? 'http://localhost:4000',
+  baseURL: 'https://stg.vamanager.pl',
   headers: {
     'content-type': 'application/json',
   },
@@ -24,7 +24,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   function (error) {
-    console.log(error.response.data);
+    console.log(error);
     return Promise.reject(error);
   }
 );
