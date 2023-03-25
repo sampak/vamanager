@@ -149,9 +149,7 @@ const checkFlightStatus = () => {
   insertPositionHistory();
 
   const timeDiff = moment(new Date()).diff(state.lastTrackedTime, 'second');
-  console.log(timeDiff);
   if (!state.acars.init && timeDiff > 10) {
-    console.log('Sending Position');
     state.lastTrackedTime = new Date();
     trackerService.sendTracker(state.trackerId, state);
   }
@@ -194,7 +192,7 @@ const getSimData = () => {
         state.sim.sim_paused = value.pause;
         state.sim.engines = [value.engine_one, value.engine_two];
         state.sim.weight.zfw = value.zfw * 256;
-        state.acars.transponder = value.transponder;
+        state.acars.transponder = value.transponder.toString(16).toUpperCase();
         state.acars.fuel.total = calculateTotalFuel(value);
         if (state.pirep) {
           state.distance = getDistance(

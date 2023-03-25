@@ -43,6 +43,7 @@ const Flight = () => {
     styles.icon,
     -80 + (acars?.acars?.heading ?? 0)
   );
+
   const departureIcon = createLeafletIcon(faPlaneDeparture, styles.icon);
   const arrivalIcon = createLeafletIcon(faPlaneArrival, styles.icon);
   const routeIcon = createLeafletIcon(faSquare, styles.icon);

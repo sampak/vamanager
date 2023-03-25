@@ -2,7 +2,8 @@ import axios from 'axios';
 import { getToken } from './user';
 
 export const axiosInstance = axios.create({
-  baseURL: 'https://stg.vamanager.pl',
+  // baseURL: 'https://stg.vamanager.pl',
+  baseURL: 'http://localhost:4000',
   headers: {
     'content-type': 'application/json',
   },

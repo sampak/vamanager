@@ -55,6 +55,7 @@ ipcMain.on(EventsType.SUBMIT_PIREP, async (event) => {
     event.reply(EventsType.SUBMIT_PIREP_RESPONSE, {
       success: true,
     } as SubmitPirepResponse);
+    simConnect.stopTracking();
   } catch (e) {
     console.log(e);
     event.reply(EventsType.SUBMIT_PIREP_RESPONSE, {

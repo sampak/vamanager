@@ -166,7 +166,7 @@ export const bindVariables = (obj: any) => {
   obj.add('aircraftType', 0x3d00, fsuipc.Type.String, 256); // * String
   obj.add('latitude', 0x0560, fsuipc.Type.Int64);
   obj.add('longitude', 0x0568, fsuipc.Type.Int64);
-  obj.add('heading', 0x0580, fsuipc.Type.Int64);
+  obj.add('heading', 0x0580, fsuipc.Type.Int32);
   obj.add('groundAltitude', 0x3324, fsuipc.Type.Int32); // *  Ground altitude in Metres x 256. // Init32
   obj.add('qnh', 0x0330, fsuipc.Type.Int64);
   obj.add('temp', 0x0e8c, fsuipc.Type.Int32);
@@ -191,6 +191,6 @@ export const bindVariables = (obj: any) => {
   obj.add('fuel_left_main_capacity', 0x0b80, fsuipc.Type.Int32, 4);
   obj.add('fuel_center_main_capacity', 0x0b78, fsuipc.Type.Int32, 4);
   obj.add('fuel_right_main_capacity', 0x0b98, fsuipc.Type.Int32, 4);
-  obj.add('transponder', 0x0354, fsuipc.Type.Int32, 2);
+  obj.add('transponder', 0x0354, fsuipc.Type.Int16, 2);
   obj.add('zfw', 0x3bfc, fsuipc.Type.Byte, 4);
 };
