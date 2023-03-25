@@ -198,6 +198,7 @@ export const TRANSLATIONS_EN = {
     schedules: 'Schedules',
     aircrafts: 'Aircrafts',
     users: 'Pilots',
+    company: 'Company',
     logOut: 'Log Out',
 
     roles: {

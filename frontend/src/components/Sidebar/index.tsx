@@ -10,6 +10,8 @@ import {
   faRightFromBracket,
   faUsers,
   faBook,
+  faBuilding,
+  faGlobe,
 } from '@fortawesome/free-solid-svg-icons';
 import Logo from 'components/Logo';
 import { matchPath, useNavigate, useParams } from 'react-router-dom';
@@ -18,6 +20,7 @@ import { getLettersFromName } from 'utils/getLettersFromName';
 import { useTranslation } from 'react-i18next';
 import useLogout from 'hooks/useLogout';
 import { navigateInsideWorkspace } from 'utils/navigateInsideWorkspace';
+import SidebarDropdown from 'components/SidebarDropdown';
 
 enum MenuOptions {
   Home = 'Home',
@@ -62,6 +65,8 @@ const Sidebar = () => {
     if (option === MenuOptions.Pireps) {
       return isPathActive(`/workspace/${workspaceId}/pireps`, location);
     }
+
+    return false;
   };
 
   const isHome = isMenuOptionActive(MenuOptions.Home);
@@ -150,46 +155,30 @@ const Sidebar = () => {
           </div>
           <div className={styles.optionName}>{t('schedules')}</div>
         </div>
-        <div
-          onClick={() =>
-            navigateInsideWorkspace(navigate, workspaceId!, '/aircrafts')
-          }
-          className={classNames(styles.option)}
-        >
-          <div className={styles.iconBox}>
-            <FontAwesomeIcon
-              icon={faPlaneUp}
-              className={classNames(
-                styles.optionIcon,
-                tutorialCreateAircraft,
-                isAircrafts && styles.activeIcon
-              )}
-            />
-          </div>
-          <div
-            className={classNames(styles.optionName, tutorialCreateAircraft)}
-          >
-            {t('aircrafts')}
-          </div>
-        </div>
 
-        <div
-          onClick={() =>
-            navigateInsideWorkspace(navigate, workspaceId!, '/users')
-          }
-          className={classNames(styles.option)}
-        >
-          <div className={styles.iconBox}>
-            <FontAwesomeIcon
-              icon={faUsers}
-              className={classNames(
-                styles.optionIcon,
-                isUsers && styles.activeIcon
-              )}
-            />
-          </div>
-          <div className={classNames(styles.optionName)}>{t('users')}</div>
-        </div>
+        <SidebarDropdown
+          className={tutorialCreateAircraft}
+          firstExperience={!!firstExperience?.length}
+          icon={faGlobe}
+          title={t("company")}
+          options={[
+            {
+              icon: faPlaneUp,
+              className: tutorialCreateAircraft,
+              title: t('aircrafts'),
+              onClick: () =>
+                navigateInsideWorkspace(navigate, workspaceId!, '/aircrafts'),
+              active: isAircrafts,
+            },
+            {
+              icon: faUsers,
+              title: t('users'),
+              onClick: () =>
+                navigateInsideWorkspace(navigate, workspaceId!, '/users'),
+              active: isUsers,
+            },
+          ]}
+        />
 
         <div onClick={() => logout()} className={classNames(styles.option)}>
           <div className={styles.iconBox}>

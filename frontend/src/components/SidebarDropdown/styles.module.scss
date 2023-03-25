@@ -1,0 +1,120 @@
+@import 'src/styles/colors.scss';
+
+$iconColor: black;
+$activeIconColor: $logoColor;
+
+.wrapper {
+  position: relative;
+  margin-bottom: 12px;
+  margin-top: 12px;
+  user-select: none;
+}
+
+.carrot {
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    .optionIcon {
+      color: $logoColor;
+    }
+  }
+}
+
+.option {
+  display: flex;
+  gap: 22px;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+
+  &:hover {
+    .optionIcon {
+      color: $logoColor;
+    }
+  }
+}
+
+.iconBox {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.optionIcon {
+  width: 18px !important;
+  height: 18px !important;
+  font-size: 14px !important;
+  transition: color 0.2s;
+}
+
+.optionName {
+  width: 115px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  width: 120px;
+  margin-left: 2px;
+}
+
+.optione {
+  display: flex;
+  gap: 22px;
+  font-size: 14px;
+  padding-top: 24px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    .optionIcon {
+      color: $logoColor;
+    }
+  }
+}
+
+.optionNameMenu {
+  width: 120px;
+  margin-left: 4px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.createAircraftAnimation {
+  animation-name: anim;
+  animation-duration: 2s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
+.activeIcon {
+  color: $logoColor;
+}
+
+@keyframes anim {
+  0% {
+    color: $iconColor;
+  }
+
+  50% {
+    color: $activeButtonColor;
+  }
+
+  100% {
+    color: $iconColor;
+  }
+}
