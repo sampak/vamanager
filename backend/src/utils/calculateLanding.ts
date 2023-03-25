@@ -10,7 +10,7 @@ export const calculateLanding = (tracker: Tracker[]): LandingScore => {
       tracker.eventType === EventType.LANDING
   );
 
-  const landing_rate = landingEvent.landing_rate;
+  const landing_rate = landingEvent?.landing_rate ?? 0;
 
   if (landing_rate <= 350) {
     return LandingScore.PERFECT;

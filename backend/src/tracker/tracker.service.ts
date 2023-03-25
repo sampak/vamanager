@@ -296,11 +296,12 @@ export class TrackerService {
       );
     }
 
-    const landingRate = prismaTrackers.find(
-      (tracker) =>
-        tracker.type === type_of_tracker.EVENT &&
-        tracker.eventType === EventType.LANDING
-    ).landing_rate;
+    const landingRate =
+      prismaTrackers.find(
+        (tracker) =>
+          tracker.type === type_of_tracker.EVENT &&
+          tracker.eventType === EventType.LANDING
+      )?.landing_rate ?? 0;
 
     let emailTemplate = emails.Templates.ACCEPTED_PIREP;
 

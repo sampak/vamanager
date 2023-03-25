@@ -13,6 +13,7 @@ import { TrackerModule } from './tracker/tracker.module';
 import { StatsModule } from './stats/stats.module';
 import { ScheduleModule as CronModule } from '@nestjs/schedule';
 import { LoggerMiddleware } from './middleware/logger.middleware';
+import { LivemapModule } from './livemap/livemap.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
     TrackerModule,
     StatsModule,
     CronModule.forRoot(),
+    LivemapModule,
   ],
   controllers: [AppController],
   providers: [AppService],
