@@ -16,6 +16,13 @@
   }
 }
 
+.disableHightlight {
+  cursor: auto;
+  &:hover {
+    border-color: $mainBackgroundColor !important;
+  }
+}
+
 .progress {
   position: absolute;
   width: 0%;

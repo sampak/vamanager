@@ -20,6 +20,7 @@ import { navigateInsideWorkspace } from 'utils/navigateInsideWorkspace';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PirepStatus } from '@shared/base/PirepStatus';
 import DefaultAvatar from 'components/DefaultAvatar';
+import classNames from 'classnames';
 
 const PirepCard: FC<Props> = ({ pirep, disableShow }) => {
   const { workspaceId } = useParams();
@@ -55,11 +56,18 @@ const PirepCard: FC<Props> = ({ pirep, disableShow }) => {
   // };
 
   const handleClick = () => {
+    if (disableShow) return;
     navigateInsideWorkspace(navigate, workspaceId, `/pirep/${pirep.id}`);
   };
 
   return (
-    <div onClick={() => handleClick()} className={styles.wrapper}>
+    <div
+      onClick={() => handleClick()}
+      className={classNames(
+        styles.wrapper,
+        disableShow && styles.disableHightlight
+      )}
+    >
       <div className={styles.progress}></div>
       <div className={styles.card}>
         <div className={styles.header}>
