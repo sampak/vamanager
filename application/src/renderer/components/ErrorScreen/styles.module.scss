@@ -1,0 +1,78 @@
+@import '../../styles/colors.scss';
+
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 999999999;
+  background: #f0f0f0;
+  overflow: hidden;
+}
+
+.logo {
+  z-index: 99999;
+  padding-top: 24px;
+  padding-left: 10vw;
+}
+
+.wrapper {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 80vh;
+  flex-direction: column;
+  justify-content: center;
+  background: #f0f0f0;
+}
+.emoji {
+  font-size: 84px;
+
+  padding-left: 10vw;
+}
+
+.title {
+  font-size: 42px;
+  padding-top: 24px;
+  padding-bottom: 14px;
+
+  padding-left: 10vw;
+}
+
+.subTitle {
+  color: black !important;
+  width: 23vw;
+
+  padding-left: 10vw;
+}
+
+.buttonsWrapper {
+  margin-top: 44px;
+  display: flex;
+  width: 20vw;
+  gap: 20px;
+
+  padding-left: 10vw;
+}
+
+.color {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  transform: translateX(-100%);
+  width: 20%;
+  height: 100vh;
+  background: $logoColor;
+}
+
+@media (max-width: 1300px) {
+  .buttonsWrapper {
+    flex-direction: column;
+    width: 60vw;
+  }
+  .subTitle {
+    width: 80vw !important;
+  }
+  .color {
+    display: none;
+  }
+}

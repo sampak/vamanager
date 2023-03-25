@@ -7,6 +7,7 @@ import AuthContext from '../../contexts/auth';
 import { User } from '@shared/base/User';
 import LoadingScreen from '../LoadingScreen';
 import { EventsType } from '../../../dto/Events';
+import ErrorScreen from '../ErrorScreen';
 
 const ProtectedRoute: FC<Props> = ({ children }) => {
   const access_token = getToken();
@@ -63,7 +64,7 @@ const ProtectedRoute: FC<Props> = ({ children }) => {
   const showErrorScreen = isError;
 
   if (showErrorScreen) {
-    return <>Error</>;
+    return <ErrorScreen />;
   }
 
   if (showLoadingScreen) {

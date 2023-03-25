@@ -1,9 +1,9 @@
 import axios from 'axios';
 import config from '../config';
+import env from '../../env';
 
 export const axiosInstance = axios.create({
-  // baseURL: 'https://stg.vamanager.pl',
-  baseURL: 'http://localhost:4000',
+  baseURL: env.API_URL,
   headers: {
     'content-type': 'application/json',
   },

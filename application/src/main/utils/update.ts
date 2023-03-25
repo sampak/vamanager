@@ -3,10 +3,11 @@ import { ipcMain, ipcRenderer } from 'electron';
 import log from 'electron-log';
 import { NsisUpdater } from 'electron-updater';
 import config from '../config';
+import env from '../../env';
 
 const autoUpdater = new NsisUpdater({
   provider: 'generic' as any,
-  url: 'http://update.server435386.nazwa.pl/',
+  url: env.UPDATE_URL,
 });
 
 if (process.env.NODE_ENV === 'production') {

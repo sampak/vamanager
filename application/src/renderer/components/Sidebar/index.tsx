@@ -93,7 +93,7 @@ const Sidebar = () => {
       <div className={styles.border}></div>
 
       <div className={styles.options}>
-        <div
+        {/* <div
           onClick={() => navigateInsideWorkspace(navigate, workspaceId!, '')}
           className={styles.option}
         >
@@ -107,7 +107,7 @@ const Sidebar = () => {
             />
           </div>
           <div className={styles.optionName}>{t('home')}</div>
-        </div>
+        </div> */}
         <div
           onClick={() =>
             navigateInsideWorkspace(navigate, workspaceId!, '/pireps')

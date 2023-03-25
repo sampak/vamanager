@@ -14,9 +14,10 @@ const WorkspaceRoutes = () => {
           <Route
             path="*"
             element={
-              <>
-                <FlightProgress percent={0} />
-              </>
+              <Pireps />
+              // <>
+              //   <FlightProgress percent={0} />
+              // </>
             }
           />
         </Routes>
