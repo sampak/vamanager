@@ -70,12 +70,6 @@ const SignUp: FC = () => {
 
   const handleSignIn = () => navigate('/auth/signin');
 
-  useEffect(() => {
-    if (!queryEmail) {
-      navigate('/roadmap');
-    }
-  }, [queryEmail]);
-
   return (
     <div className={styles.content}>
       {!!error.length && (
