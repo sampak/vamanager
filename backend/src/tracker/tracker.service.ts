@@ -275,7 +275,8 @@ export class TrackerService {
       airDistance,
       pirep.passangers,
       fuelBurned,
-      isCorrectDestination
+      isCorrectDestination,
+      true
     );
 
     if (isCorrectAircraft === false) {
@@ -312,7 +313,7 @@ export class TrackerService {
       emailTemplate = emails.Templates.REJECTED_PIREP;
     }
 
-    emails.sendEmail(pirep.pilot.email, emails.Templates.REJECTED_PIREP, {
+    emails.sendEmail(pirep.pilot.email, emailTemplate, {
       subject: `VAManager - The status of your PIREP has been changed`,
       firstName: pirep.pilot.firstName,
       link: `${
